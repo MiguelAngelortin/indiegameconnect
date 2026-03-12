@@ -1,0 +1,45 @@
+:root {
+    --background-nav: #0d1117;
+    --background: #161b22;
+    --fuente: #c9d1d9;
+    --fuente-hover: #9683ec;
+}
+
+nav {
+    background: var(--background-nav);
+    border-bottom: 1px solid #9683ec;
+    padding: 0.75rem 1.25rem !important;
+    min-height: 60px;
+}
+
+.nav-link {
+    color: var(--fuente);
+}
+
+.nav-link:hover {
+    color: var(--fuente-hover);
+}
+
+body {
+    background: var(--background);
+    color: var(--fuente);
+}
+
+.navbar-toggler {
+    border-color: var(--fuente);
+}
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.btn-registro {
+    background: var(--fuente-hover);
+    color: #0d0d14 !important;
+    border-radius: 6px;
+    padding: 6px 14px !important;
+}
+
+.btn-registro:hover {
+    background: var(--fuente);
+    color: #0d0d14 !important;
+}
