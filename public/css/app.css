@@ -1,8 +1,8 @@
 :root {
     --background-nav: #0d1117;
     --background: #161b22;
-    --fuente: #c9d1d9;
-    --fuente-hover: #9683ec;
+    --font: #c9d1d9;
+    --font-hover: #9683ec;
 }
 
 nav {
@@ -13,33 +13,33 @@ nav {
 }
 
 .nav-link {
-    color: var(--fuente);
+    color: var(--font);
 }
 
 .nav-link:hover {
-    color: var(--fuente-hover);
+    color: var(--font-hover);
 }
 
 body {
     background: var(--background);
-    color: var(--fuente);
+    color: var(--font);
 }
 
 .navbar-toggler {
-    border-color: var(--fuente);
+    border-color: var(--font);
 }
 .navbar-toggler-icon {
     filter: invert(1);
 }
 
-.btn-registro {
-    background: var(--fuente-hover);
+.btn-register {
+    background: var(--font-hover);
     color: #0d0d14 !important;
     border-radius: 6px;
     padding: 6px 14px !important;
 }
 
-.btn-registro:hover {
-    background: var(--fuente);
+.btn-register:hover {
+    background: var(--font);
     color: #0d0d14 !important;
 }

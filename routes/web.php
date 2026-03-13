@@ -1,25 +1,19 @@
 <?php
 
+use App\Http\Controllers\DeveloperController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GameController;
 
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/juegos', function () {
-    return view('juegos');
-});
-
-Route::get('/juegos/{juego_id}', function () {
-    return view('juegos.show');
-});
-
-Route::get('/desarrolladores', function () {
-    return view('desarrolladores');
-});
+Route::get('/developers', [DeveloperController::class, 'index']);
 
 
+Route::get('/games', [GameController::class, 'index']);
+Route::get('/games/{game_id}', [GameController::class, 'show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

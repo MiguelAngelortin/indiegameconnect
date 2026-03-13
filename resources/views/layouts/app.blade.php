@@ -26,7 +26,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#">Iniciar sesión</a></li>
-                    <li class="nav-item"><a class="nav-link btn-registro" href="#">Registrarse</a></li>
+                    <li class="nav-item"><a class="nav-link btn-register" href="#">Registrarse</a></li>
                 </ul>
             </div>
         </div>
