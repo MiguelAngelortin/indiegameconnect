@@ -58,3 +58,19 @@ nav {
     font-family: 'Nunito', sans-serif;
     font-size: 1.2rem;
 }
+
+/* ===== CARDS ===== */
+
+.list-group{
+    border: 1px solid #9683ec;
+}
+
+.list-group-item {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+}
+
+.section-title {
+    font-family: 'Orbitron', sans-serif !important;
+}

@@ -22,14 +22,38 @@
     <section>
         <div class="container">
             <div class="row">
-            <div class="col-4">
-            <ul class="list-group">
-                <li class="list-group-item">Hollow Knight - Metroidvania</li>
-                <li class="list-group-item">Hades - Roguelike</li>
-            </ul>
-                
+                {{-- TOP GAMES --}}
+                <div class="col-4">
+                    <div>
+                        <h2 class="section-title">Top Games</h2>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">Hollow Knight - Metroidvania</li>
+                        <li class="list-group-item">Hades - Roguelike</li>
+                    </ul>
+                </div>
+                {{-- Top Developers --}}
+                <div class="col-4">
+                    <div>
+                        <h2 class="section-title">Top Developers</h2>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">Hollow Knight - Metroidvania</li>
+                        <li class="list-group-item">Hades - Roguelike</li>
+                    </ul>
+                </div>
+
+                {{-- In Deveopment --}}
+                <div class="col-4">
+                    <div>
+                        <h2 class="section-title">In Development</h2>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">Hollow Knight - Metroidvania</li>
+                        <li class="list-group-item">Hades - Roguelike</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-        </div>
-    </section>  
+    </section>
 @endsection
