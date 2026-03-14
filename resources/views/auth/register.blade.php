@@ -2,6 +2,13 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
+        <section>
+            <select name="role" id="role">
+                <option value="user">User</option>
+                <option value="developer">Developer</option>
+            </select>
+        </section>
+
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />

@@ -36,7 +36,8 @@ nav {
     color: #0d0d14 !important;
     border-radius: 6px;
     padding: 6px 14px !important;
-    text-decoration: none
+    text-decoration: none;
+    display: inline-block;
 }
 .btn-register:hover {
     background: var(--font);
