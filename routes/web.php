@@ -13,7 +13,10 @@ Route::get('/developers', [DeveloperController::class, 'index']);
 
 
 Route::get('/games', [GameController::class, 'index']);
+Route::get('/games/create', [GameController::class,'create'])->middleware(['auth', 'role:developer']);
+Route::post('/games/store', [GameController::class,'store'])->middleware(['auth', 'role:developer']);
 Route::get('/games/{game_id}', [GameController::class, 'show']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

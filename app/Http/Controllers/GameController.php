@@ -13,4 +13,12 @@ class GameController extends Controller
     public function show($game_id) {
     return view("games.show");
     }
+
+    public function create(){
+        return view("games.create");
+    }
+
+    public function store(){
+        
+    }
 }
