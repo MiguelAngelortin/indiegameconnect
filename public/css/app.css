@@ -74,3 +74,17 @@ nav {
 .section-title {
     font-family: 'Orbitron', sans-serif !important;
 }
+
+.feature-card{
+    padding: 1.2rem;
+text-align: center;
+}
+
+.doubles {
+    background-color: #0d1117;
+    margin-bottom: 1.2rem;
+}
+
+.feature-card:first-child {
+    border-right: 5px solid #161b22;
+}
