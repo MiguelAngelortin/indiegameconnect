@@ -4,18 +4,20 @@
     --background: #161b22;
     --font: #c9d1d9;
     --font-hover: #9683ec;
+    --border: #30363d;
+    --dark: #0d0d14;
+    --orbitron: 'Orbitron', sans-serif;
+    --nunito: 'Nunito', sans-serif;
 }
-
 /* ===== BODY ===== */
 body {
     background: var(--background);
     color: var(--font);
 }
-
 /* ===== NAVBAR ===== */
 nav {
     background: var(--background-nav);
-    border-bottom: 1px solid #9683ec;
+    border-bottom: 1px solid var(--font-hover);
     padding: 0.75rem 1.25rem !important;
     min-height: 60px;
 }
@@ -33,7 +35,7 @@ nav {
 }
 .btn-register {
     background: var(--font-hover);
-    color: #0d0d14 !important;
+    color: var(--dark) !important;
     border-radius: 6px;
     padding: 6px 14px !important;
     text-decoration: none;
@@ -41,63 +43,66 @@ nav {
 }
 .btn-register:hover {
     background: var(--font);
-    color: #0d0d14 !important;
+    color: var(--dark) !important;
 }
-
 /* ===== HERO ===== */
 .hero {
-    color: #9683ec;
+    color: var(--font-hover);
     padding: 3rem 0;
 }
 .hero h1 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--orbitron);
     font-size: 3.5rem;
     font-weight: 700 !important;
 }
-
 .hero p {
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--nunito);
     font-size: 1.2rem;
 }
-
 /* ===== CARDS ===== */
-
-.list-group{
-    border: 1px solid #9683ec;
+.list-group {
+    border: 1px solid var(--font-hover);
 }
-
 .list-group-item {
-    background-color: #0d1117;
-    color: #c9d1d9;
-    border: 1px solid #30363d;
+    background-color: var(--background-nav);
+    color: var(--font);
+    border: 1px solid var(--border);
 }
-
 .section-title {
-    font-family: 'Orbitron', sans-serif !important;
+    font-family: var(--orbitron) !important;
 }
-
-.feature-card{
+.feature-card {
     padding: 1.2rem;
-text-align: center;
+    text-align: center;
 }
-
 .doubles {
-    background-color: #0d1117;
+    background-color: var(--background-nav);
     margin-bottom: 1.2rem;
 }
-
 .feature-card:first-child {
-    border-right: 5px solid #161b22;
+    border-right: 5px solid var(--background);
 }
-
-/* Games create */
-.games-form{
+/* ===== FORMULARIO ===== */
+.games-form {
     border-radius: 1.5rem;
     margin-top: 1.2rem;
     padding: 2rem;
-    background-color: #0d1117;
-    box-shadow: 0px 0px 15px 2px #9683ec;
+    background-color: var(--background-nav);
+    box-shadow: 0px 0px 10px 1px var(--font-hover);
 }
-.form-title{
+.form-title {
+    font-family: var(--orbitron);
     text-align: center;
+}
+.genre-pill {
+    font-family: var(--orbitron);
+    background-color: var(--background);
+    border: 2px solid var(--font-hover);
+    border-radius: 1rem;
+    padding: 0.5rem;
+    margin: 0.2rem;
+}
+.genre-pill-active {
+    background-color: var(--font-hover);
+    color: var(--dark);
 }

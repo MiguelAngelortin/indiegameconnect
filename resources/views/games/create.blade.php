@@ -6,7 +6,7 @@
 
 <div class="container">
 <div class="row justify-content-center">
-<div class="col-4 games-form">
+<div class="col-12 col-md-8 col-lg-4 games-form">
     <h1 class="form-title">Game Creator</h1>
 
     <form action="/games/store" method="POST">
@@ -23,6 +23,20 @@
         <label for="description">Description:</label>
         <textarea class="form-control" name="description" id="description"></textarea>
         </div>
+
+        {{-- genres --}}
+        <div class="mb-3">
+            <label>Genres:</label>
+            <div class="genres-container">
+                @foreach($genres as $genre)
+                <label class="genre-pill">
+                    <input type="checkbox" name="genres[]" value="{{ $genre->id }}" hidden>
+                    {{ $genre->name }}
+                </label>
+                @endforeach
+            </div>
+        </div>
+
 
         {{-- Status --}}
         <div class="mb-3">
@@ -47,7 +61,7 @@
         </select>
         </div>
 
-        <h4>Not required but recommended fields:</h4>
+        <h4>Optional fields:</h4>
 
         {{-- Publisher --}}
         <div class="mb-3">
@@ -85,3 +99,13 @@
 </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.querySelectorAll('.genre-pill').forEach(pill => {
+            pill.addEventListener('mousedown', function() {
+                this.classList.toggle('genre-pill-active');
+            });
+        });
+    </script>
+@endpush

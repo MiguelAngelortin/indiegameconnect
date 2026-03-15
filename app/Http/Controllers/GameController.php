@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -15,7 +16,8 @@ class GameController extends Controller
     }
 
     public function create(){
-        return view("games.create");
+        $genres = Genre::all();
+        return view("games.create", compact('genres'));
     }
 
     public function store(){
