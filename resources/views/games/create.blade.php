@@ -12,6 +12,16 @@
     <form action="/games/store" method="POST">
         @csrf
 
+        @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
         {{-- Title --}}
         <div class="mb-3">
         <label for="title">Title:</label>
@@ -30,7 +40,7 @@
             <div class="genres-container">
                 @foreach($genres as $genre)
                 <label class="genre-pill">
-                    <input type="checkbox" name="genres[]" value="{{ $genre->id }}" hidden>
+                    <input type="checkbox" name="genres[]" value="{{ $genre->id }}">
                     {{ $genre->name }}
                 </label>
                 @endforeach
@@ -103,10 +113,12 @@
 @push('scripts')
     <script>
         document.querySelectorAll('.genre-pill').forEach(pill => {
-            pill.addEventListener('mousedown', function() {
-                this.classList.toggle('genre-pill-active');
-                const checkbox = this.querySelector('input[type="checkbox"]');
+            pill.addEventListener('click', function(e) {
+                e.preventDefault();
+                    const checkbox = this.querySelector('input[type="checkbox"]');
                 checkbox.checked = !checkbox.checked;
+                this.classList.toggle('genre-pill-active');
+
             });
         });
     </script>

@@ -106,3 +106,7 @@ nav {
     background-color: var(--font-hover);
     color: var(--dark);
 }
+
+.genre-pill input[type="checkbox"] {
+    display: none;
+}
