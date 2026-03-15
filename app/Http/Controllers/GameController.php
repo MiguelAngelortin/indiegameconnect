@@ -36,7 +36,6 @@ class GameController extends Controller
             'version'=> ['nullable','string'],
         ]);
 
-        dd($request->all());
 
         //ver usuario actual
 //  dd(auth()->user());
