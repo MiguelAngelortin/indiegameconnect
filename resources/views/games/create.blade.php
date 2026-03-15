@@ -53,9 +53,9 @@
         <div class="mb-3">
         <label for="engine">Engine:</label>
         <select class="form-control" name="engine" id="engine" required>
-        <option value="unreal">Unreal</option>
-        <option value="unity">Unity</option>
-        <option value="godot">Godot</option>
+        <option value="Unreal">Unreal</option>
+        <option value="Unity">Unity</option>
+        <option value="Godot">Godot</option>
         <option value="GameMaker">GameMaker</option>
         <option value="Other">Other</option>
         </select>
@@ -105,6 +105,8 @@
         document.querySelectorAll('.genre-pill').forEach(pill => {
             pill.addEventListener('mousedown', function() {
                 this.classList.toggle('genre-pill-active');
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
             });
         });
     </script>

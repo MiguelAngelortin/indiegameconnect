@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('engine', ['Unity','Unreal','Godot','GameMaker','Other']);
             $table->string('download_url')->nullable();
             $table->string('cover_image')->nullable();
-            $table->string('version');
+            $table->string('version')->nullable();
             $table->timestamps();
         });
     }

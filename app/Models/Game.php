@@ -15,7 +15,8 @@ class Game extends Model
         'engine',    
         'download_url',    
         'cover_image',    
-        'version',    
+        'version',
+        'user_id',
     ];
 
     public function user(){
