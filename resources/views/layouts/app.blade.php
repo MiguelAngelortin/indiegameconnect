@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
-            <img src="#logo" alt="IndieGameConnect Logo">
+            <img class="navbar-logo" src="{{ asset('img/4.png') }}" alt="Logo">
             <button class="navbar-toggler"
                     data-bs-toggle="collapse"
                     data-bs-target="#menu">

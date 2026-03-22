@@ -18,7 +18,7 @@ body {
 nav {
     background: var(--background-nav);
     border-bottom: 1px solid var(--font-hover);
-    padding: 0.75rem 1.25rem !important;
+    padding: 0.4rem 0.2rem !important;
     min-height: 60px;
 }
 .nav-link {
@@ -33,6 +33,16 @@ nav {
 .navbar-toggler-icon {
     filter: invert(1);
 }
+
+.navbar-logo{
+    height: 60px;
+    width: auto; 
+}
+
+.navbar-nav.me-auto {
+    margin-left: 1.9rem;
+}
+
 .btn-register {
     background: var(--font-hover);
     color: var(--dark) !important;
