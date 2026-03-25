@@ -26,7 +26,7 @@ class GamePost extends Model
         return $this->hasMany(GamePostLike::class);
     }
 
-    public function Comments(){
+    public function comments(){
         return $this->hasMany(GamePostComment::class);
     }
 }

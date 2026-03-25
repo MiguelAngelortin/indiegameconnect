@@ -14,9 +14,9 @@ namespace App\Http\Controllers;
         }
 
         public function show($game_id) {
-
-        $game = Game::findOrFail($game_id);
-        return view("games.show", compact('game'));
+        $game = Game::with(['user', 'genres'])->findOrFail($game_id);
+        $posts = $game->gamePosts()->orderBy('created_at', 'desc')->paginate(5);
+        return view("games.show", compact('game','posts'));
         }
 
         public function create(){

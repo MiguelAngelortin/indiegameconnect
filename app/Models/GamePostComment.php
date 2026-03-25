@@ -26,6 +26,6 @@ class GamePostComment extends Model
     }
 
     public function replies(){
-        return $this->hasMany(GamePostComment::class);
+        return $this->hasMany(GamePostComment::class, 'parent_id');
     }
 }
