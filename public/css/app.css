@@ -120,3 +120,11 @@ nav {
 .genre-pill input[type="checkbox"] {
     display: none;
 }
+
+/* ===== GAME SHOW ===== */
+
+.game_img {
+    border:solid #9683ec;
+    border-radius: 0.5rem;
+    max-width: 100%;
+}
