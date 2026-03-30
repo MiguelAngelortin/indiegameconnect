@@ -13,6 +13,13 @@
 body {
     background: var(--background);
     color: var(--font);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
 }
 /* ===== NAVBAR ===== */
 nav {
@@ -41,6 +48,15 @@ nav {
 
 .navbar-nav.me-auto {
     margin-left: 1.9rem;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: var(--background-nav);
+    border-top: 1px solid var(--font-hover);
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 2rem;
 }
 
 .btn-register {

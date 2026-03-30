@@ -34,7 +34,14 @@
             </div>
             <div class="col-4">
                 {{-- card del dev --}}
-                
+                <span>{{ $game->user->name }}</span>
+                @if ($game->user->bio)
+                <span>{{ $game->user->bio }}</span>
+                @endif
+
+                @if ($game->user->profile_img)
+                <img src="{{ $game->user->profile_img }}" alt="profile_image">
+                @endif
             </div>
         </div>
         {{-- devlog --}}
