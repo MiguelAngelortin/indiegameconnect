@@ -15,10 +15,10 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if ($request->user()->role !== $role) {
+        if ($request->user()->role === 'admin' || $request->user()->role === $role) {
+            return $next($request);
+        } else {
             return redirect('/');
-    } else {
-        return $next($request);
-    }
+        }
     }
 }

@@ -124,7 +124,12 @@ nav {
 /* ===== GAME SHOW ===== */
 
 .game_img {
-    border:solid #9683ec;
-    border-radius: 0.5rem;
+    border:solid #30363d;
     max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .navbar-nav.ms-auto {
+        margin-left: 1.9rem !important;
+    }
 }

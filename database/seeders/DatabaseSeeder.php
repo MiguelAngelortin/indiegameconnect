@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(GenreSeeder::class,
+        $this->call([GenreSeeder::class,
         AdminSeeder::class,
-        );
+        ]);
 
         User::factory()->create([
             'name' => 'Test User',

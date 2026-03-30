@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
     @stack('styles')
+    
 </head>
 <body>
     <nav class="navbar navbar-expand-md">
@@ -25,11 +26,27 @@
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/games">Games</a></li>
                     <li class="nav-item"><a class="nav-link" href="/developers">Developers</a></li>
+                    @auth
+    @if(Auth::user()->role === 'developer' || Auth::user()->role === 'admin')
+        <li class="nav-item"><a class="nav-link" href="/games/create">Create Game</a></li>
+    @endif
+@endauth
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-                    <li class="nav-item"><a class="nav-link btn-register" href="/register">Register</a></li>
-                </ul>
+    @guest
+        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+        <li class="nav-item"><a class="nav-link btn-register" href="/register">Register</a></li>
+    @endguest
+    @auth
+        <li class="nav-item"><span class="nav-link">{{ Auth::user()->name }}</span></li>
+        <li class="nav-item">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="nav-link">Logout</button>
+            </form>
+        </li>
+    @endauth
+</ul>
             </div>
         </div>
     </nav>
