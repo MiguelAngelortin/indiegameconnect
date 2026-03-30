@@ -34,7 +34,7 @@
             </div>
             <div class="col-4">
                 {{-- card del dev --}}
-                dev
+                
             </div>
         </div>
         {{-- devlog --}}
