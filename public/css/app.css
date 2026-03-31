@@ -60,6 +60,7 @@ footer {
 }
 
 .btn-register {
+    font-weight: bold;
     background: var(--font-hover);
     color: var(--dark) !important;
     border-radius: 6px;
@@ -140,12 +141,33 @@ footer {
 /* ===== GAME SHOW ===== */
 
 .game_img {
-    border:solid #30363d;
+    border: 2px solid #30363d;
     max-width: 100%;
+    max-height: 300px;
+    object-fit: cover;
 }
 
 @media (max-width: 768px) {
     .navbar-nav.ms-auto {
         margin-left: 1.9rem !important;
     }
+}
+
+.genre-tag {
+    background-color: var(--font-hover);
+    color: var(--dark);
+    border-radius: 1rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    display: inline-block;
+    margin: 0.2rem;
+}
+
+.game-title {
+    font-family: var(--orbitron);
+}
+
+.post-img {
+    max-width: 100%;
+    border-radius: 0.5rem;
 }
