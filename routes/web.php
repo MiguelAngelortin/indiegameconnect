@@ -21,6 +21,9 @@ Route::get('/games/{game_id}/posts/create', [GamePostController::class, 'create'
 Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer']);
 
 Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
+Route::post('/games/{game_id}/posts/{post_id}/like', [GamePostController::class, 'like'])->middleware('auth');
+
+Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostController::class, 'storeComment'])->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
