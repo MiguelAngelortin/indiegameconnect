@@ -33,5 +33,12 @@ public function store(Request $request, $game_id)
 
     return redirect('/games/' . $game_id);
 }
+
+public function show($game_id, $post_id)
+{
+    $game = Game::findOrFail($game_id);
+    $post = GamePost::findOrFail($post_id);
+    return view('games.posts.show', compact('game', 'post'));
+}
 }
 

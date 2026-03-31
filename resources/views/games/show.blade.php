@@ -54,9 +54,10 @@
     @endif
 @endauth
         @forelse ($posts as $post)
+        <a href="/games/{{ $game->id }}/posts/{{ $post->id }}" class="text-decoration-none">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5>{{ $post->title }}</h5>
+                    <h5 class="game-title">{{ $post->title }}</h5>
                     <p>{{ $post->content }}</p>
                     @if ($post->image_url)
                         <img class="post-img" src="{{ $post->image_url }}" alt="post_img">
@@ -65,6 +66,7 @@
                     <small>{{ $post->likes->count() }} likes</small>
                 </div>
             </div>
+            </a>
         @empty
             <p>No hay posts todavía.</p>
         @endforelse

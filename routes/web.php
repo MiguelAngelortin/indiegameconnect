@@ -20,6 +20,8 @@ Route::get('/games/{game_id}', [GameController::class, 'show']);
 Route::get('/games/{game_id}/posts/create', [GamePostController::class, 'create'])->middleware(['auth', 'role:developer']);
 Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer']);
 
+Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
