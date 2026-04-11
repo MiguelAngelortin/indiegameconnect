@@ -199,3 +199,17 @@ footer {
     margin-left: 1rem;
     padding: 0.5rem 1rem;
 }
+
+.dev-card {
+    background-color: var(--background-nav);
+    border: 1px solid var(--purple);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.dev-card h5 {
+    font-family: var(--orbitron);
+    color: var(--purple);
+}
+

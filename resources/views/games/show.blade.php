@@ -34,8 +34,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-4 mt-4 mt-lg-0">
                 {{-- Dev card --}}
+                <div class="dev-card">
                 <h5>{{ $game->user->name }}</h5>
                 @if ($game->user->bio)
                     <p>{{ $game->user->bio }}</p>
@@ -43,6 +44,7 @@
                 @if ($game->user->profile_img)
                     <img src="{{ $game->user->profile_img }}" alt="profile_image">
                 @endif
+            </div>
             </div>
         </div>
         {{-- Devlog --}}
