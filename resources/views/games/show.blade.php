@@ -34,46 +34,53 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-4 mt-4 mt-lg-0">
+            <div class="col-12 col-lg-4 mt-4 ">
+                
                 {{-- Dev card --}}
                 <div class="dev-card">
-                <h5>{{ $game->user->name }}</h5>
-                @if ($game->user->bio)
-                    <p>{{ $game->user->bio }}</p>
-                @endif
-                @if ($game->user->profile_img)
-                    <img src="{{ $game->user->profile_img }}" alt="profile_image">
-                @endif
-            </div>
-            </div>
-        </div>
-        {{-- Devlog --}}
-<div class="row mt-4">
-    <div class="col-12">
-        @auth
-    @if(Auth::user()->id === $game->user_id)
-        <a href="/games/{{ $game->id }}/posts/create" class="btn-register mb-3">New Post</a>
-    @endif
-@endauth
-        @forelse ($posts as $post)
-        <a href="/games/{{ $game->id }}/posts/{{ $post->id }}" class="text-decoration-none">
-            <div class="card post-card mb-3">
-                <div class="card-body">
-                    <h5 class="game-title">{{ $post->title }}</h5>
-                    <p>{{ $post->content }}</p>
-                    @if ($post->image_url)
-                        <img class="post-img" src="{{ $post->image_url }}" alt="post_img">
+                    <h5>{{ $game->user->name }}</h5>
+                    @if ($game->user->bio)
+                        <p>{{ $game->user->bio }}</p>
                     @endif
-                    <small>{{ $post->created_at->diffForHumans() }}</small>
-                    <small>{{ $post->likes->count() }} likes</small>
+                    @if ($game->user->profile_img)
+                        <img src="{{ $game->user->profile_img }}" alt="profile_image">
+                    @endif
                 </div>
             </div>
-            </a>
-        @empty
-            <p>No hay posts todavía.</p>
-        @endforelse
-        {{ $posts->links() }}
-    </div>
-</div>
+        </div>
+
+        {{-- Devlog --}}
+        <div class="row mt-4 justify-content-center">
+            <div class="col-12 col-lg-8">
+                @auth
+                    @if (Auth::user()->id === $game->user_id)
+                        <a href="/games/{{ $game->id }}/posts/create" class="btn-register mb-3">New Post</a>
+                    @endif
+                @endauth
+                @forelse ($posts as $post)
+                    <a href="/games/{{ $game->id }}/posts/{{ $post->id }}" class="text-decoration-none">
+                        <div class="card post-card mb-3">
+                            <div class="card-body">
+                                <h5 class="game-title">{{ $post->title }}</h5>
+                                <p>{{ $post->content }}</p>
+                                @if ($post->image_url)
+                                    <div class="post-img-container">
+                                        <img class="post-img" src="{{ $post->image_url }}" alt="post_img">
+                                    </div>
+                                @endif
+
+                            </div>
+                            <div class="post-meta mt-2">
+                                <small>🤍 {{ $post->likes->count() }} likes</small>
+                                <small>{{ $post->created_at->diffForHumans() }}</small>
+                            </div>
+                        </div>
+                    </a>
+                @empty
+                    <p>No hay posts todavía.</p>
+                @endforelse
+                {{ $posts->links() }}
+            </div>
+        </div>
     </div>
 @endsection
