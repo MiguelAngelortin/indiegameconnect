@@ -55,7 +55,7 @@
 @endauth
         @forelse ($posts as $post)
         <a href="/games/{{ $game->id }}/posts/{{ $post->id }}" class="text-decoration-none">
-            <div class="card mb-3">
+            <div class="card post-card mb-3">
                 <div class="card-body">
                     <h5 class="game-title">{{ $post->title }}</h5>
                     <p>{{ $post->content }}</p>
