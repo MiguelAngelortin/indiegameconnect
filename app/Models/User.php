@@ -48,4 +48,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function ratings(){
+    return $this->hasMany(UserRating::class, 'developer_id');
+}
+
+public function follows(){
+    return $this->hasMany(UserFollow::class, 'developer_id');
+}
+
+public function following(){
+    return $this->hasMany(UserFollow::class, 'user_id');
+}
 }
