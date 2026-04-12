@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
-            <img class="navbar-logo" src="{{ asset('img/4.png') }}" alt="Logo">
+            <a href="/"><img class="navbar-logo" src="{{ asset('img/4.png') }}" alt="Logo"></a>
             <button class="navbar-toggler"
                     data-bs-toggle="collapse"
                     data-bs-target="#menu">
@@ -38,7 +38,7 @@
         <li class="nav-item"><a class="nav-link btn-register" href="/register">Register</a></li>
     @endguest
     @auth
-        <li class="nav-item"><span class="nav-link">{{ Auth::user()->name }}</span></li>
+        <li class="nav-item"><a class="nav-link" href="/users/{{ Auth::user()->id }}">{{ Auth::user()->name }}</a></li>
         <li class="nav-item">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

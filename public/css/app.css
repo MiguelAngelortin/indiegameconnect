@@ -355,6 +355,21 @@ footer {
 .role-badge {
     position: absolute;
     top: 1rem;
+    left: 1rem;
+    font-size: 0.75rem;
+}
+
+.edit-profile-link {
+    position: absolute;
+    top: 1rem;
     right: 1rem;
     font-size: 0.75rem;
+    color: var(--font);
+    opacity: 0.6;
+    text-decoration: none;
+}
+
+.edit-profile-link:hover {
+    opacity: 1;
+    color: var(--purple);
 }
