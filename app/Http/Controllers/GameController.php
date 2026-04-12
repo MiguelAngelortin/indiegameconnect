@@ -9,8 +9,24 @@ namespace App\Http\Controllers;
 
     class GameController extends Controller
     {
-        public function index() {
-            return view("games");
+        public function index(Request $request) {
+            $genres = Genre::all();
+            $games = Game::with(['genres','user'])
+            ->when($request->search, function($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%');
+            })
+            ->when($request->genre, function($query) use ($request) {
+                $query->whereHas('genres', function($q) use ($request) {
+                    $q->where('genres.id', $request->genre);
+                });
+            })
+            ->when($request->status, function($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->paginate(12);
+
+
+            return view('games', compact('games','genres'));
         }
 
         public function show($game_id) {

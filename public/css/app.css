@@ -274,3 +274,66 @@ footer {
     color: var(--purple);
 }
 
+/* ===== GAME CARD ===== */
+.game-card {
+    background-color: var(--background-nav);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.game-card:hover {
+    border-color: var(--purple);
+}
+
+.game-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.game-card-body {
+    padding: 0.75rem;
+    color: var(--font);
+}
+
+.game-card-body h6 {
+    color: var(--font);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.game-card-img-container{
+    width: 100%;
+    height: 200px;
+    background-color: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.game-card img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.form-control, .form-select {
+    background-color: var(--background-nav);
+    color: var(--font);
+    border: 1px solid var(--border);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--background-nav);
+    color: var(--font);
+    border-color: var(--purple);
+    box-shadow: none;
+}
+
+.form-select option {
+    background-color: var(--background-nav);
+    color: var(--font);
+}
