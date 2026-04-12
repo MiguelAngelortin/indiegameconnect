@@ -373,3 +373,55 @@ footer {
     opacity: 1;
     color: var(--purple);
 }
+
+/* ===== TRUST LEVEL ===== */
+.trust-bar-container {
+    background-color: var(--background);
+    border-radius: 1rem;
+    height: 12px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+}
+
+.trust-bar {
+    height: 100%;
+    border-radius: 1rem;
+    transition: width 0.3s;
+}
+
+.trust-positive { background-color: #4caf50; }
+.trust-mixed { background-color: #ff9800; }
+.trust-negative { background-color: #f44336; }
+
+.btn-unfollow {
+    background: transparent;
+    color: var(--purple) !important;
+    border: 2px solid var(--purple);
+    border-radius: 6px;
+    padding: 6px 14px !important;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-unfollow:hover {
+    background: var(--purple);
+    color: var(--dark) !important;
+}
+
+.rate-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1.2px;
+    border-radius: 50%;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.rate-btn:hover {
+    transform: scale(1.2);
+    box-shadow: 0px 0px 8px 2px var(--purple);
+}
+
+.rate-btn.voted {
+    box-shadow: 0px 0px 8px 2px var(--purple);
+}

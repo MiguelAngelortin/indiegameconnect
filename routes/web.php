@@ -28,6 +28,8 @@ Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostControll
 
 // ===== USERS =====
 Route::get('/users/{user_id}', [UserController::class, 'show']);
+Route::post('/users/{user_id}/follow', [UserController::class, 'follow'])->middleware('auth');
+Route::post('/users/{user_id}/rate', [UserController::class, 'rate'])->middleware('auth');
 
 // ===== DASHBOARD =====
 Route::get('/dashboard', function () {
