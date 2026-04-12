@@ -337,3 +337,24 @@ footer {
     background-color: var(--background-nav);
     color: var(--font);
 }
+
+/* USERS */
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--purple);
+}
+
+.dev-card {
+    position: relative;
+}
+
+.role-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.75rem;
+}
