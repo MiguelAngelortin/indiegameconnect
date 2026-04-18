@@ -16,6 +16,9 @@ Route::get('/developers', [DeveloperController::class, 'index']);
 // ===== GAMES =====
 Route::get('/games', [GameController::class, 'index']);
 Route::get('/games/create', [GameController::class, 'create'])->middleware(['auth', 'role:developer']);
+Route::get('/games/{game_id}/edit', [GameController::class, 'edit'])->middleware(['auth', 'role:developer']);
+Route::patch('/games/{game_id}', [GameController::class, 'update'])->middleware(['auth', 'role:developer']);
+Route::delete('/games/{game_id}', [GameController::class, 'destroy'])->middleware(['auth', 'role:developer']);
 Route::get('/games/{game_id}', [GameController::class, 'show']);
 Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer']);
 

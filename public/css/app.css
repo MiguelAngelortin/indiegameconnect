@@ -157,9 +157,64 @@ footer {
 }
 
 @media (min-width: 992px) {
-    .col-lg-game-img {
+    .col-lg-game-img{
         width: 19%;
     }
+}
+
+.game-edit-link {
+    font-family: var(--orbitron);
+    font-size: 0.65rem;
+    background: var(--border);
+    color: var(--font) !important;
+    border-radius: 6px;
+    text-decoration: none;
+    padding: 4px 10px;
+    display: inline-block;
+}
+
+.game-edit-link:hover {
+    background: var(--font);
+    color: var(--dark) !important;
+}
+
+.game-delete-link {
+    font-family: var(--orbitron);
+    font-size: 0.65rem;
+    background: var(--border);
+    color: var(--font) !important;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    padding: 4px 10px;
+    display: inline-block;
+}
+
+.game-delete-form {
+    display: flex;
+    align-items: center;
+}
+
+.game-delete-link:hover {
+    background: #f44336;
+    color: var(--dark) !important;
+}
+
+.btn-post{
+    font-family: var(--orbitron);
+    font-size: large;
+    background: var(--border);
+    color: var(--font) !important;
+    border-radius: 6px;
+    text-decoration: none;
+    padding: 6px 14px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-post:hover {
+    background: var(--font);
+    color: var(--dark) !important;
 }
 .btn-download {
     font-family: var(--orbitron);

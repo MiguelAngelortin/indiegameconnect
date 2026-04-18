@@ -74,4 +74,44 @@ namespace App\Http\Controllers;
 
             return redirect ('/games/'.$game->id);
         }
+
+        public function edit($game_id){
+            $game = Game::with('genres')->findOrFail($game_id);
+            $genres = Genre::all();
+            if(auth()->user()->id  !== $game->user_id) {
+                return redirect('/games/' . $game_id);
+            }
+            return view ('games.edit', compact('game', 'genres'));
+        }
+
+        public function update(Request $request, $game_id){
+            $game = Game::findOrFail($game_id);
+            if(auth()->user()->id !== $game->user_id) {
+                return redirect('/games/' . $game_id);
+            }
+            $request->validate([
+                'title'       => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string'],
+        'genres'      => ['required', 'array', 'min:1'],
+        'status'      => ['required', 'in:alpha,beta,release,cancelled'],
+        'engine'      => ['required', 'in:Unity,Unreal,Godot,GameMaker,Other'],
+        'publisher'   => ['nullable', 'string'],
+        'release_date'=> ['nullable', 'date'],
+        'cover_image' => ['nullable', 'string'],
+        'download_url'=> ['nullable', 'string'],
+        'version'     => ['nullable', 'string'],
+            ]);
+            $game->update($request->except('genres', '_token', '_method'));
+            $game->genres()->sync($request->genres);
+            return redirect('/games/' . $game_id);
+        }
+
+        public function destroy($game_id) {
+            $game = Game::findOrFail($game_id);
+            if(auth()->user()->id !== $game->user_id) {
+                return redirect ('/games/' . $game_id);
+            }
+            $game->delete();
+            return redirect('/games');
+        }
     }

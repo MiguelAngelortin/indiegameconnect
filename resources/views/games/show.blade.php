@@ -5,6 +5,18 @@
         <div class="row g-3 align-items-stretch justify-content-center">
             {{-- Imagen del juego --}}
             <div class="col-12 col-lg-game-img">
+                @auth
+                    @if (Auth::user()->id === $game->user_id)
+                        <div class="d-flex gap-2 mb-1 justify-content-end">
+                            <a href="/games/{{ $game->id }}/edit" class="game-edit-link">Edit</a>
+                            <form method="POST" action="/games/{{ $game->id }}" class="game-delete-form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="game-delete-link" onclick="return confirm('¿Seguro que quieres borrar este juego?')">Delete</button>
+                            </form>
+                        </div>
+                    @endif
+                @endauth
                 <img class="game_img" src="{{ $game->cover_image }}" alt="game_img">
             </div>
             {{-- Info del juego --}}
@@ -29,7 +41,7 @@
                 </div>
             </div>
             {{-- Card developer --}}
-            <div class="col-12 col-lg-2 d-flex">
+            <div class="col-12 col-lg-game-img d-flex">
                 <div class="dev-card w-100 text-center">
                     <h5>{{ $game->user->name }}</h5>
                     @if ($game->user->profile_img)
@@ -38,7 +50,7 @@
                     <div class="mt-2">
                         <small>👥 {{ $game->user->follows()->count() }} followers</small>
                     </div>
-                    <a href="/users/{{ $game->user->id }}" class="btn-register mt-3 d-inline-block">Ver perfil</a>
+                    <a href="/users/{{ $game->user->id }}" class="btn-register mt-3 d-inline-block">Show Profile</a>
                 </div>
             </div>
         </div>
@@ -47,7 +59,7 @@
             <div class="col-12 col-lg-8">
                 @auth
                     @if (Auth::user()->id === $game->user_id)
-                        <a href="/games/{{ $game->id }}/posts/create" class="btn-register mb-3">New Post</a>
+                        <a href="/games/{{ $game->id }}/posts/create" class="btn-post mb-3">Create a new Post</a>
                     @endif
                 @endauth
                 @forelse ($posts as $post)
@@ -69,7 +81,7 @@
                         </div>
                     </a>
                 @empty
-                    <p>No hay posts todavía.</p>
+                    <p>No posts yet.</p>
                 @endforelse
                 {{ $posts->links() }}
             </div>
