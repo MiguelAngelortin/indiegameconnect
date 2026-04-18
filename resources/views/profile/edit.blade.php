@@ -30,6 +30,25 @@
                         <input type="text" id="profile_img" name="profile_img" class="form-control" value="{{ auth()->user()->profile_img }}">
                         @error('profile_img') <div class="text-danger">{{ $message }}</div> @enderror
                     </div>
+                    @if(auth()->user()->role === 'developer' || auth()->user()->role === 'admin')
+    <h4 class="form-title mt-4 mb-3">Donation links</h4>
+    <div class="mb-3">
+        <label for="donation_kofi" class="form-label">Ko-fi URL:</label>
+        <input type="text" id="donation_kofi" name="donation_kofi" class="form-control" value="{{ auth()->user()->donation_kofi }}" placeholder="https://ko-fi.com/...">
+    </div>
+    <div class="mb-3">
+        <label for="donation_paypal" class="form-label">PayPal URL:</label>
+        <input type="text" id="donation_paypal" name="donation_paypal" class="form-control" value="{{ auth()->user()->donation_paypal }}" placeholder="https://paypal.me/...">
+    </div>
+    <div class="mb-3">
+        <label for="donation_patreon" class="form-label">Patreon URL:</label>
+        <input type="text" id="donation_patreon" name="donation_patreon" class="form-control" value="{{ auth()->user()->donation_patreon }}" placeholder="https://patreon.com/...">
+    </div>
+    <div class="mb-3">
+        <label for="donation_other" class="form-label">Other donation URL:</label>
+        <input type="text" id="donation_other" name="donation_other" class="form-control" value="{{ auth()->user()->donation_other }}" placeholder="https://...">
+    </div>
+@endif
                     <button type="submit" class="btn-register">Save changes</button>
                 </form>
             </div>

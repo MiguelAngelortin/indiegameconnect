@@ -70,5 +70,16 @@
         <button onclick="document.getElementById('loginModal').classList.remove('active')" class="modal-close">&times;</button>
     </div>
 </div>
+{{-- Modal profile updated --}}
+@if(session('status') === 'profile-updated')
+<div id="successModal" class="modal-overlay active">
+    <div class="games-form text-center" style="position:relative;">
+        <button onclick="document.getElementById('successModal').classList.remove('active')" class="modal-close">&times;</button>
+        <h5 class="game-title mb-3">✅ Profile updated!</h5>
+        <p>Your changes have been saved successfully.</p>
+        <button onclick="document.getElementById('successModal').classList.remove('active')" class="btn-register">OK</button>
+    </div>
+</div>
+@endif
 </body>
 </html>

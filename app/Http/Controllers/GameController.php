@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
     use App\Models\Genre;
     use App\Models\Game;
+    use App\Models\GameFollow;
 
     use Illuminate\Http\Request;
 
@@ -114,4 +115,22 @@ namespace App\Http\Controllers;
             $game->delete();
             return redirect('/games');
         }
+
+        public function follow($game_id)
+{
+    $follow = GameFollow::where('user_id', auth()->user()->id)
+        ->where('game_id', $game_id)
+        ->first();
+
+    if ($follow) {
+        $follow->delete();
+    } else {
+        GameFollow::create([
+            'user_id' => auth()->user()->id,
+            'game_id' => $game_id,
+        ]);
+    }
+
+    return redirect()->back();
+}
     }

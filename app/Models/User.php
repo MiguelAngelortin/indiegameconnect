@@ -24,6 +24,10 @@ class User extends Authenticatable
         'role',
         'bio',
         'profile_img',
+        'donation_kofi',
+        'donation_paypal',
+        'donation_patreon',
+        'donation_other',
     ];
 
     /**
@@ -49,15 +53,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function ratings(){
-    return $this->hasMany(UserRating::class, 'developer_id');
-}
+    public function ratings()
+    {
+        return $this->hasMany(UserRating::class, 'developer_id');
+    }
 
-public function follows(){
-    return $this->hasMany(UserFollow::class, 'developer_id');
-}
+    public function follows()
+    {
+        return $this->hasMany(UserFollow::class, 'developer_id');
+    }
 
-public function following(){
-    return $this->hasMany(UserFollow::class, 'user_id');
-}
+    public function following()
+    {
+        return $this->hasMany(UserFollow::class, 'user_id');
+    }
 }

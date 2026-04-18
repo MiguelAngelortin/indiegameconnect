@@ -28,6 +28,10 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'bio' => ['nullable', 'string'],
             'profile_img' => ['nullable', 'string'],
+            'donation_kofi'    => ['nullable', 'string', 'url'],
+            'donation_paypal'  => ['nullable', 'string', 'url'],
+            'donation_patreon' => ['nullable', 'string', 'url'],
+            'donation_other'   => ['nullable', 'string', 'url'],
         ];
     }
 }

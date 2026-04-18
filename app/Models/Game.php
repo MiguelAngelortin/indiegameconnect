@@ -30,4 +30,8 @@ class Game extends Model
     public function gamePosts(){
         return $this->hasMany(GamePost::class);
     }
+
+    public function follows(){
+    return $this->hasMany(GameFollow::class);
+}
 }

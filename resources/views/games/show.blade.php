@@ -38,6 +38,28 @@
                     @if ($game->download_url)
                         <a href="{{ $game->download_url }}" target="_blank" class="btn-download d-flex align-items-center justify-content-center flex-fill">Download Game</a>
                     @endif
+                    @guest
+                        <button onclick="document.getElementById('loginModal').classList.add('active')" class="btn-download d-flex align-items-center justify-content-center">
+                            Follow
+                        </button>
+                    @endguest
+                    @auth
+                        @if (Auth::user()->id !== $game->user_id)
+                            <form method="POST" action="/games/{{ $game->id }}/follow" class="d-flex">
+                                @csrf
+                                @php
+                                    $isFollowingGame = $game->follows()->where('user_id', Auth::user()->id)->exists();
+                                @endphp
+                                <button type="submit" class="btn-download d-flex align-items-center justify-content-center {{ $isFollowingGame ? 'btn-unfollow' : '' }}">
+    @if($isFollowingGame)
+        Unfollow<br>Game
+    @else
+        Follow<br>Game
+    @endif
+</button>
+                            </form>
+                        @endif
+                    @endauth
                 </div>
             </div>
             {{-- Card developer --}}
