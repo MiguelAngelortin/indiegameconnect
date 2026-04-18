@@ -15,14 +15,14 @@ Route::get('/developers', [DeveloperController::class, 'index']);
 
 // ===== GAMES =====
 Route::get('/games', [GameController::class, 'index']);
-Route::get('/games/{game_id}', [GameController::class, 'show']);
 Route::get('/games/create', [GameController::class, 'create'])->middleware(['auth', 'role:developer']);
+Route::get('/games/{game_id}', [GameController::class, 'show']);
 Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer']);
 
 // ===== GAME POSTS =====
-Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
 Route::get('/games/{game_id}/posts/create', [GamePostController::class, 'create'])->middleware(['auth', 'role:developer']);
 Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer']);
+Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
 Route::post('/games/{game_id}/posts/{post_id}/like', [GamePostController::class, 'like'])->middleware('auth');
 Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostController::class, 'storeComment'])->middleware('auth');
 

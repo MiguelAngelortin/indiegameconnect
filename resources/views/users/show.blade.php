@@ -20,6 +20,15 @@
                     @if ($user->bio)
                         <p class="mt-3">{{ $user->bio }}</p>
                     @endif
+                    @guest
+    @if ($user->role === 'developer' || $user->role === 'admin')
+        <div class="mt-3">
+            <button onclick="document.getElementById('loginModal').classList.add('active')" class="btn-register">
+                Follow
+            </button>
+        </div>
+    @endif
+@endguest
                     @auth
                         @if (Auth::user()->id === $user->id)
                             <a href="/profile" class="edit-profile-link">Edit Profile</a>
@@ -101,7 +110,7 @@
                     {{-- Card donaciones --}}
                     <div class="dev-card flex-fill text-center">
                         <h4 class="game-title mb-3">Support this developer</h4>
-                        <p>If you enjoy their games, consider supporting their work.</p>
+                        <p>If you enjoy the game, consider supporting the developer.</p>
                         <p><small>Donations coming soon</small></p>
                     </div>
                 </div>

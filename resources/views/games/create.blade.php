@@ -89,6 +89,7 @@
         <div class="mb-3">
         <label for="cover_image">Cover image:</label>
         <input class="form-control" type="text" name="cover_image" id="cover_image">
+        <small class="text-muted">Recommended size: 600x900px or 2/3</small>
         </div>
 
         {{-- Download URL --}}

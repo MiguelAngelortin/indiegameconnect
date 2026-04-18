@@ -28,7 +28,7 @@
                         <h2 class="section-title">Feel Lucky?</h2>
                     </div>
                     <div>
-                        <p>Dont Know what to play next? <br> Press the button and find a random game to support an indie developer.</p>
+                        <p>Don't know what to play next? <br> Press the button and find a random game to support an indie developer.</p>
                         <a class="btn-register" href="/RandomGame">Random Game</a>
                     </div>
                 </div>

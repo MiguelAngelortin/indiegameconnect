@@ -23,17 +23,6 @@
                     @csrf
                 </form>
                 @endauth
-                {{-- Modal --}}
-                <div id="loginModal" class="modal-overlay">
-                    <div class="games-form text-center">
-                        <h5 class="game-title mb-3">Join the community!</h5>
-                        <p>Create an account to like and comment on posts.</p>
-                        <a href="/register" class="btn-register me-2">Register</a>
-                        <a href="/login" class="btn-register">Login</a>
-                        <br><br>
-                        <button onclick="document.getElementById('loginModal').classList.remove('active')" class="nav-link">Close</button>
-                    </div>
-                </div>
             </div>
             {{-- Comments --}}
             <div class="mt-4">

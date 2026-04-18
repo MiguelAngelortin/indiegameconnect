@@ -140,11 +140,50 @@ footer {
 
 /* ===== GAME SHOW ===== */
 
+.text-muted {
+    color: var(--font) !important;
+    opacity: 0.5;
+}
+.game-details {
+    font-weight: bolder;
+    text-decoration:underline;
+}
+
+.game-details-card {
+    background-color: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+}
+
+@media (min-width: 992px) {
+    .col-lg-game-img {
+        width: 19%;
+    }
+}
+.btn-download {
+    font-family: var(--orbitron);
+    font-weight: bold;
+    font-size: x-large;
+    background: var(--purple);
+    color: var(--dark) !important;
+    border-radius: 6px;
+    text-decoration: none;
+    padding: 6px 14px;
+}
+
+.btn-download:hover {
+    background: var(--font);
+    color: var(--dark) !important;
+}
 .game_img {
-    border: 2px solid #30363d;
-    max-width: 100%;
-    max-height: 300px;
+    width: 100%;
+    aspect-ratio: 2/3;
     object-fit: cover;
+    object-position: top;
+    display: block;
+    border: 2px solid var(--border);
+    border-radius: 0.5rem;
 }
 
 @media (max-width: 768px) {
@@ -187,7 +226,7 @@ footer {
 
 .post-card {
     background-color: var(--background-nav);
-    border: 1px solid var(--purple);
+    border: 3px solid var(--border);
     color: var(--font);
     border-radius: 0.5rem;
 }
@@ -195,6 +234,14 @@ footer {
 .post-card .card-body {
     background-color: var(--background-nav);
     color: var(--font);
+}
+
+.post-card:hover{
+    box-shadow: 0px 0px 10px 1px var(--font);
+    border: 3px solid var(--purple);
+    transition: 0.25s;
+    transform: scale(1.02);
+
 }
 
 .post-meta {
@@ -228,6 +275,11 @@ footer {
     justify-content: center;
 }
 
+.modal-overlay .nav-link {
+    margin-top: 0.5rem;
+    display: inline-block;
+}
+
 .modal-overlay.active {
     display: flex;
 }
@@ -243,6 +295,22 @@ footer {
 
 .modal-overlay p {
     font-size: 1.1rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--font);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--purple);
 }
 
 .comment-card {
@@ -265,8 +333,17 @@ footer {
     background-color: var(--background-nav);
     border: 1px solid var(--purple);
     border-radius: 1rem;
-    padding: 1.5rem;
+    padding: 1.9rem;
     text-align: center;
+}
+
+.dev-card .profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--purple);
+    margin-bottom: 0.5rem;
 }
 
 .dev-card h5 {
@@ -424,4 +501,8 @@ footer {
 
 .rate-btn.voted {
     box-shadow: 0px 0px 8px 2px var(--purple);
+}
+
+.btn-register, .btn-unfollow {
+    font-family: var(--orbitron);
 }

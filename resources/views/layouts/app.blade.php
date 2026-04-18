@@ -58,5 +58,17 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
+
+    {{-- Modal login --}}
+<div id="loginModal" class="modal-overlay">
+    <div class="games-form text-center" style="position:relative;">
+        <h5 class="game-title mb-3">Join the community!</h5>
+        <p>Create an account to like, comment and follow developers.</p>
+        <a href="/register" class="btn-register me-2">Register</a>
+        <a href="/login" class="btn-register">Login</a>
+        <br><br>
+        <button onclick="document.getElementById('loginModal').classList.remove('active')" class="modal-close">&times;</button>
+    </div>
+</div>
 </body>
 </html>
