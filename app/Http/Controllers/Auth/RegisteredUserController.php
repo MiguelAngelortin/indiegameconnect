@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 
 class RegisteredUserController extends Controller
 {
@@ -44,10 +46,10 @@ class RegisteredUserController extends Controller
             'role' => $request->role,
         ]);
 
-        event(new Registered($user));
-
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+Mail::to($user->email)->send(new WelcomeMail($user));
+
+return redirect('/');
     }
 }
