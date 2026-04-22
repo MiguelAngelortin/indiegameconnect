@@ -37,10 +37,12 @@
                     </div>
                     @if ($game->download_url)
                         <a href="{{ $game->download_url }}" target="_blank" class="btn-download d-flex align-items-center justify-content-center flex-fill">Download Game</a>
+                    @else
+                        <span class="btn-download d-flex align-items-center justify-content-center flex-fill" style="opacity: 0.4; cursor: not-allowed;">Not available yet</span>
                     @endif
                     @guest
                         <button onclick="document.getElementById('loginModal').classList.add('active')" class="btn-download d-flex align-items-center justify-content-center">
-                            Follow
+                            Follow<br>Game
                         </button>
                     @endguest
                     @auth
@@ -51,12 +53,12 @@
                                     $isFollowingGame = $game->follows()->where('user_id', Auth::user()->id)->exists();
                                 @endphp
                                 <button type="submit" class="btn-download d-flex align-items-center justify-content-center {{ $isFollowingGame ? 'btn-unfollow' : '' }}">
-    @if($isFollowingGame)
-        Unfollow<br>Game
-    @else
-        Follow<br>Game
-    @endif
-</button>
+                                    @if($isFollowingGame)
+                                        Unfollow<br>Game
+                                    @else
+                                        Follow<br>Game
+                                    @endif
+                                </button>
                             </form>
                         @endif
                     @endauth

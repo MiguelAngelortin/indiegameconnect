@@ -29,10 +29,10 @@
         </div>
     </form>
     {{-- Grid de juegos --}}
-    <div class="row g-3">
+    <div class="row g-3 align-items-start">
         @forelse ($games as $game)
             {{-- card aquí --}}
-            <div class="col-6 col-md-4 col-lg-3">
+            <div class="col-6 col-md-4 col-lg-2 d-flex">
     <a href="/games/{{ $game->id }}" class="text-decoration-none">
         <div class="game-card">
             <div class="game-card-img-container">
@@ -41,10 +41,13 @@
             <div class="game-card-body">
                 <h6 class="game-title">{{ $game->title }}</h6>
                 <div>
-                    @foreach ($game->genres as $genre)
-                        <span class="genre-tag">{{ $genre->name }}</span>
-                    @endforeach
-                </div>
+    @foreach ($game->genres->take(4) as $genre)
+        <span class="genre-tag">{{ $genre->name }}</span>
+    @endforeach
+    @if($game->genres->count() > 4)
+        <span class="genre-tag">+{{ $game->genres->count() - 4 }}</span>
+    @endif
+</div>
             </div>
         </div>
     </a>

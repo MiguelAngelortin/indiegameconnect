@@ -4,13 +4,12 @@ use App\Http\Controllers\DeveloperController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GamePostController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // ===== PUBLIC ROUTES =====
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index']);
 Route::get('/developers', [DeveloperController::class, 'index']);
 
 // ===== GAMES =====

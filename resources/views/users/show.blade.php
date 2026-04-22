@@ -21,14 +21,15 @@
                         <p class="mt-3">{{ $user->bio }}</p>
                     @endif
                     @guest
-    @if ($user->role === 'developer' || $user->role === 'admin')
-        <div class="mt-3">
-            <button onclick="document.getElementById('loginModal').classList.add('active')" class="btn-register">
-                Follow
-            </button>
-        </div>
-    @endif
-@endguest
+                        @if ($user->role === 'developer' || $user->role === 'admin')
+                            <div class="mt-3">
+                                <button onclick="document.getElementById('loginModal').classList.add('active')"
+                                    class="btn-register">
+                                    Follow
+                                </button>
+                            </div>
+                        @endif
+                    @endguest
                     @auth
                         @if (Auth::user()->id === $user->id)
                             <a href="/profile" class="edit-profile-link">Edit Profile</a>
@@ -81,37 +82,66 @@
                         @auth
                             @if (Auth::user()->id !== $user->id)
                                 <div class="mt-3">
-    <small class="d-block mb-2">Rate this developer</small>
-    <div class="d-flex gap-4 justify-content-center">
-        <form method="POST" action="/users/{{ $user->id }}/rate">
-            @csrf
-            <input type="hidden" name="rating" value="1">
-            <button type="submit" class="rate-btn {{ $userRating && $userRating->rating == 1 ? 'voted' : '' }}">
-    <img src="{{ asset('img/feliz-ico.png') }}" alt="Positive" style="height:40px;">
-</button>
-        </form>
-        <form method="POST" action="/users/{{ $user->id }}/rate">
-            @csrf
-            <input type="hidden" name="rating" value="-1">
-            <button type="submit" class="rate-btn {{ $userRating && $userRating->rating == -1 ? 'voted' : '' }}">
-    <img src="{{ asset('img/triste-ico.png') }}" alt="Negative" style="height:40px;">
-</button>
-        </form>
-    </div>
-    @if ($userRating)
-    <small class="d-block mt-2">
-        {{ $userRating->rating == 1 ? 'You rated this developer positively' : 'You rated this developer negatively' }}
-    </small>
-@endif
-</div>
+                                    <small class="d-block mb-2">Rate this developer</small>
+                                    <div class="d-flex gap-4 justify-content-center">
+                                        <form method="POST" action="/users/{{ $user->id }}/rate">
+                                            @csrf
+                                            <input type="hidden" name="rating" value="1">
+                                            <button type="submit"
+                                                class="rate-btn {{ $userRating && $userRating->rating == 1 ? 'voted' : '' }}">
+                                                <img src="{{ asset('img/feliz-ico.png') }}" alt="Positive"
+                                                    style="height:40px;">
+                                            </button>
+                                        </form>
+                                        <form method="POST" action="/users/{{ $user->id }}/rate">
+                                            @csrf
+                                            <input type="hidden" name="rating" value="-1">
+                                            <button type="submit"
+                                                class="rate-btn {{ $userRating && $userRating->rating == -1 ? 'voted' : '' }}">
+                                                <img src="{{ asset('img/triste-ico.png') }}" alt="Negative"
+                                                    style="height:40px;">
+                                            </button>
+                                        </form>
+                                    </div>
+                                    @if ($userRating)
+                                        <small class="d-block mt-2">
+                                            {{ $userRating->rating == 1 ? 'You rated this developer positively' : 'You rated this developer negatively' }}
+                                        </small>
+                                    @endif
+                                </div>
                             @endif
                         @endauth
                     </div>
                     {{-- Card donaciones --}}
                     <div class="dev-card flex-fill text-center">
                         <h4 class="game-title mb-3">Support this developer</h4>
-                        <p>If you enjoy the game, consider supporting the developer.</p>
-                        <p><small>Donations coming soon</small></p>
+                        <h5>Want to donate to this developer? <br><br>Ceck these links:</h5>
+                        @if($user->donation_kofi || $user->donation_paypal || $user->donation_patreon || $user->donation_other)
+                            <div class="d-flex flex-row flex-wrap gap-3 mt-3 justify-content-center">
+                                @if ($user->donation_kofi)
+                                    <a href="{{ $user->donation_kofi }}" target="_blank" class="btn-donation">
+                                        <img src="{{ asset('img/kofi.png') }}" alt="Ko-fi">
+                                    </a>
+                                @endif
+                                @if ($user->donation_paypal)
+                                    <a href="{{ $user->donation_paypal }}" target="_blank" class="btn-donation">
+                                        <img src="{{ asset('img/paypal.png') }}" alt="PayPal">
+                                    </a>
+                                @endif
+                                @if ($user->donation_patreon)
+                                    <a href="{{ $user->donation_patreon }}" target="_blank" class="btn-donation">
+                                        <img src="{{ asset('img/patreon.png') }}" alt="Patreon">
+                                    </a>
+                                @endif
+                                @if ($user->donation_other)
+                                    <a href="{{ $user->donation_other }}" target="_blank" class="btn-other d-flex align-items-center gap-2">
+                                        OTHER
+                                    </a>
+                                @endif
+                            </div>
+                        @else
+                            <p><small>No donation links yet.</small></p>
+                        @endif
                     </div>
                 </div>
             @endif
@@ -123,7 +153,7 @@
                     <h4 class="game-title mb-3">Games</h4>
                     <div class="row g-3">
                         @forelse ($games as $game)
-                            <div class="col-6 col-md-4 col-lg-3">
+                            <div class="col-6 col-md-3 col-lg-2">
                                 <a href="/games/{{ $game->id }}" class="text-decoration-none">
                                     <div class="game-card">
                                         <div class="game-card-img-container">
@@ -131,11 +161,7 @@
                                         </div>
                                         <div class="game-card-body">
                                             <h6 class="game-title">{{ $game->title }}</h6>
-                                            <div>
-                                                @foreach ($game->genres as $genre)
-                                                    <span class="genre-tag">{{ $genre->name }}</span>
-                                                @endforeach
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </a>

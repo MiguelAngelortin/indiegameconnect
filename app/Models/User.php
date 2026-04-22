@@ -67,4 +67,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserFollow::class, 'user_id');
     }
+
+    public function getTrustLevelAttribute()
+{
+    $total = $this->ratings()->count();
+    if ($total === 0) return null;
+    $positive = $this->ratings()->where('rating', 1)->count();
+    $percent = round(($positive / $total) * 100);
+    $label = $percent >= 86 ? 'Very Positive' : ($percent >= 61 ? 'Positive' : ($percent >= 31 ? 'Mixed' : 'Negative'));
+    $class = $percent >= 31 ? ($percent >= 61 ? 'trust-positive' : 'trust-mixed') : 'trust-negative';
+    return compact('percent', 'label', 'class');
+}
 }
