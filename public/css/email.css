@@ -1,0 +1,176 @@
+    body {
+        margin: 0;
+        padding: 2rem;
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 0 30px rgba(150, 131, 236, 0.3);
+    }
+
+    .header {
+        background-color: #0d1117;
+        padding: 2rem;
+        text-align: center;
+        border-bottom: 3px solid #9683ec;
+        position: relative;
+    }
+
+    .header img.logo {
+        position: block;
+        margin: 0 auto 1rem auto;
+        height: 80px;
+        width: auto;
+        position: static;
+    }
+
+    .header h1 {
+        font-family: 'Orbitron', sans-serif;
+        color: #9683ec;
+        margin: 0;
+        font-size: 2rem;
+        letter-spacing: 3px;
+    }
+
+    .header .tagline {
+        color: #c9d1d9;
+        font-size: 0.85rem;
+        margin: 0.5rem 0 0 0;
+        opacity: 0.7;
+    }
+
+    .body {
+        background-color: #161b22;
+        padding: 2rem;
+        color: #c9d1d9;
+    }
+
+    .body h2 {
+        font-family: 'Orbitron', sans-serif;
+        color: #9683ec;
+        font-size: 1.2rem;
+    }
+
+    .features {
+        background-color: #0d1117;
+        border-left: 3px solid #9683ec;
+        border-radius: 0 0.5rem 0.5rem 0;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .features ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        color: #c9d1d9;
+    }
+
+    .features ul li {
+        padding: 0.4rem 0;
+    }
+
+    .features ul li::before {
+        content: 'X ';
+        color: #9683ec;
+        font-size: 0.7rem;
+    }
+    
+    .features h4{
+        color: #9683ec;
+    }
+
+    .cta {
+        text-align: center;
+        padding: 0.5rem 0 1rem 0;
+    }
+
+    .cta p {
+        font-family: 'Orbitron', sans-serif;
+        color: #9683ec;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .btn {
+        display: inline-block;
+        background-color: #9683ec;
+        color: #0d0d14 !important;
+        padding: 14px 36px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: bolder;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        box-shadow: 0 0 20px rgba(150, 131, 236, 0.5);
+    }
+
+    .footer {
+        background-color: #0d1117;
+        padding: 1rem 2rem;
+        text-align: center;
+        color: #c9d1d9;
+        font-size: 0.75rem;
+        border-top: 3px solid #9683ec;
+        opacity: 0.7;
+    }
+
+    .btn-donate {
+        width: 5.2rem;
+    }
+
+    .donate {
+    text-align: center;
+    padding: 1.5rem 0 0 0;
+    border-top: 1px solid #30363d;
+    margin-top: 1rem;
+}
+
+.donate p {
+    color: #9683ec;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+}
+
+.donate a {
+    display: inline-block;
+    margin: 0 0.5rem;
+}
+
+.donate-cards {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.donate-card {
+    background-color: #0d1117;
+    border: 1px solid #9683ec;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    flex: 1;
+    max-width: 200px;
+}
+
+.donate-card img {
+    width: 100%;
+    max-width: 80px;
+    display: block;
+    margin: 0 auto 0.5rem auto;
+}
+
+.donate-card span {
+    color: #c9d1d9;
+    font-size: 0.8rem;
+    font-family: 'Orbitron', sans-serif;
+}

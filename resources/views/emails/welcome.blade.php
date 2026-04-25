@@ -3,119 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #1a1a1a;
-            padding: 2rem;
-            margin: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            border-radius: 1rem;
-            overflow: hidden;
-            border: 2px solid #9683ec;
-        }
-        .header {
-            background-color: #0d1117;
-            padding: 2rem;
-            text-align: center;
-        }
-        .header h1 {
-            font-family: 'Orbitron', sans-serif;
-            color: #9683ec;
-            font-size: 1.8rem;
-            margin: 0;
-            letter-spacing: 2px;
-        }
-        .header p {
-            color: #c9d1d9;
-            font-size: 0.85rem;
-            margin: 0.5rem 0 0 0;
-        }
-        .body {
-            padding: 2rem;
-            background-color: #ffffff;
-            color: #1a1a1a;
-        }
-        .body h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: #0d1117;
-            font-size: 1.1rem;
-        }
-        .body p {
-            line-height: 1.6;
-            color: #333333;
-        }
-        .features {
-            background-color: #f4f0ff;
-            border-left: 3px solid #9683ec;
-            border-radius: 0 0.5rem 0.5rem 0;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .features ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            color: #333333;
-        }
-        .features ul li {
-            padding: 0.3rem 0;
-        }
-        .features ul li::before {
-            content: '▶ ';
-            color: #9683ec;
-            font-size: 0.7rem;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #9683ec;
-            color: #ffffff !important;
-            padding: 12px 28px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            margin-top: 1rem;
-        }
-        .footer {
-            background-color: #0d1117;
-            padding: 1rem 2rem;
-            text-align: center;
-            font-size: 0.75rem;
-            color: #c9d1d9;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/email.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>INDIEGAMECONNECT</h1>
-            <p>The indie game discovery platform</p>
-        </div>
-        <div class="body">
-            <h2>Welcome, {{ $user->name }}!</h2>
-            <p>Your account has been created successfully. You are now part of a community that supports indie game developers from day one.</p>
-            <div class="features">
-                <ul>
-                    <li>Discover and follow indie games</li>
-                    <li>Follow your favourite developers</li>
-                    <li>Like and comment on devlogs</li>
-                    <li>Support developers directly</li>
-                </ul>
-            </div>
-            <p>Ready to explore?</p>
-            <a href="{{ url('/') }}" class="btn">START EXPLORING</a>
-        </div>
-        <div class="footer">
-            <p>IndieGameConnect &copy; {{ date('Y') }} — You received this email because you registered on our platform.</p>
-        </div>
+    <img class="logo" src="{{ asset('img/4.png') }}" alt="Logo">
+    <h1>INDIE GAME CONNECT</h1>
+    <p class="tagline">The platform where indie developers share their games and players discover them before anyone else.</p>
+</div>
+
+<div class="body">
+    <h2>Welcome, {{ $user->name }}!</h2>
+    <p>Your account has been created successfully!</p>
+    <div class="features">
+        <h4>NOW YOU CAN ENJOY ALL OUR FEATURES:</h4>
+        <ul>
+            <li>Discover indie games and developers.</li>
+            <li>Follow them to find out everything.</li>
+            <li>Like and comment on posts.</li>
+            <li>Support developers directly.</li>
+        </ul>
     </div>
+    <div class="cta">
+        <p>Ready to explore?</p>
+        <a href="{{ url('/') }}" class="btn">START EXPLORING</a>
+    </div>
+    <div class="donate">
+    <p>Support our project or check our code:</p>
+    <div class="donate-cards">
+        <a href="https://github.com/MiguelAngelortin/indiegameconnect.git" class="donate-card">
+            <img src="/img/email/github_email.png" alt="GitHub">
+            <span>View on GitHub</span>
+        </a>
+        <a href="https://paypal.me/IndieGameConnect" class="donate-card">
+            <img src="/img/email/paypal_email.png" alt="PayPal">
+            <span>Support us</span>
+        </a>
+    </div>
+</div>
 </body>
 </html>
