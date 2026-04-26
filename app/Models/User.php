@@ -78,4 +78,9 @@ class User extends Authenticatable
     $class = $percent >= 31 ? ($percent >= 61 ? 'trust-positive' : 'trust-mixed') : 'trust-negative';
     return compact('percent', 'label', 'class');
 }
+
+public function followedGames()
+{
+    return $this->belongsToMany(Game::class, 'game_follows', 'user_id', 'game_id');
+}
 }

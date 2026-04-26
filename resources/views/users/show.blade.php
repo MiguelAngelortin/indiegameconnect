@@ -5,8 +5,8 @@
         {{-- Fila superior: perfil + trust + donaciones --}}
         <div class="row g-3 mb-4">
             {{-- Card perfil --}}
-            <div class="col-12 col-lg-6">
-                <div class="dev-card text-center h-100">
+            <div class="col-12 {{ $user->role === 'developer' || $user->role === 'admin' ? 'col-lg-6' : 'col-lg-4 mx-auto' }}">
+                <div class="dev-card text-center h-100 {{ $user->role === 'user' ? 'profile-card-user' : '' }}">
                     <img src="{{ $user->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
                         alt="avatar" class="profile-img mb-3">
                     <h3 class="game-title">{{ $user->name }}</h3>
@@ -174,5 +174,74 @@
                 </div>
             </div>
         @endif
+
+ {{-- Followed Games + Followed Developers --}}
+@if($followedGames->count() > 0 || $followedDevelopers->count() > 0)
+    <div class="row mt-4 mb-4 g-3">
+        {{-- Followed Games --}}
+        <div class="col-12 col-lg-6">
+            <div class="dev-card h-100" style="border-color: var(--border); border-width: 3px;">
+                <h4 class="game-title mb-3">Followed Games</h4>
+                @if($followedGames->count() > 0)
+                    <div class="row g-2">
+                        @foreach($followedGames as $game)
+                            <div class="col-6 col-md-4">
+                                <a href="/games/{{ $game->id }}" class="text-decoration-none">
+                                    <div class="game-card game-card-small">
+                                        <div class="game-card-img-container">
+                                            <img src="{{ $game->cover_image }}" alt="{{ $game->title }}">
+                                        </div>
+                                        <div class="game-card-body">
+                                            <h6 class="game-title">{{ $game->title }}</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                    @if($followedGamesCount > 6)
+                        <div class="text-end mt-2">
+                            <a href="/games?followed_by={{ $user->id }}" class="footer-link">
+                                View all ({{ $followedGamesCount }}) →
+                            </a>
+                        </div>
+                    @endif
+                @else
+                    <p><small>No followed games yet.</small></p>
+                @endif
+            </div>
+        </div>
+        {{-- Followed Developers --}}
+        <div class="col-12 col-lg-6">
+            <div class="dev-card h-100" style="border-color: var(--border); border-width: 3px;">
+                <h4 class="game-title mb-3">Followed Developers</h4>
+                @if($followedDevelopers->count() > 0)
+                    <div class="row g-2">
+                        @foreach($followedDevelopers as $follow)
+                            <div class="col-6 col-md-4">
+                                <a href="/users/{{ $follow->developer->id }}" class="text-decoration-none">
+                                    <div class="dev-card text-center dev-card-small">
+                                        <img src="{{ $follow->developer->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
+                                            alt="avatar" class="profile-img mb-2">
+                                        <h6 class="game-title">{{ $follow->developer->name }}</h6>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                    @if($followedDevelopersCount > 6)
+                        <div class="text-end mt-2">
+                            <a href="/developers?followed_by={{ $user->id }}" class="footer-link">
+                                View all ({{ $followedDevelopersCount }}) →
+                            </a>
+                        </div>
+                    @endif
+                @else
+                    <p><small>No followed developers yet.</small></p>
+                @endif
+            </div>
+        </div>
+    </div>
+@endif
     </div>
 @endsection
