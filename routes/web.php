@@ -7,6 +7,7 @@ use App\Http\Controllers\GamePostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 
 // ===== PUBLIC ROUTES =====
 Route::get('/', [HomeController::class, 'index']);
@@ -50,6 +51,17 @@ Route::middleware('auth')->group(function () {
 Route::get('/email-preview', function () {
     $user = App\Models\User::first();
     return new App\Mail\WelcomeMail($user);
+});
+
+//MAILING Contact
+
+Route::get('/contact', [ContactController::class, 'create']);
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+// LEGAL:
+
+Route::get('/legal', function () {
+    return view('legal');
 });
 
 require __DIR__.'/auth.php';

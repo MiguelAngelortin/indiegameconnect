@@ -53,9 +53,18 @@
     <main>
         @yield('content')
     </main>
+
+    {{-- Footer --}}
     <footer>
-        <p>IndieGameConnect &copy; {{ date('Y') }}</p>
-    </footer>
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <div style="width: 150px;"></div>
+        <p class="mb-0">IndieGameConnect &copy; {{ date('Y') }}</p>
+        <div style="width: 150px;" class="text-end">
+            <a class="footer-link me-3" href="/contact">Contact</a>
+            <a class="footer-link" href="/legal">Legal</a>
+        </div>
+    </div>
+</footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
 
@@ -78,6 +87,20 @@
         <h5 class="game-title mb-3">✅ Profile updated!</h5>
         <p>Your changes have been saved successfully.</p>
         <button onclick="document.getElementById('successModal').classList.remove('active')" class="btn-register">OK</button>
+    </div>
+</div>
+@endif
+
+{{-- Modal registro completado --}}
+@if(session('registered'))
+<div id="registeredModal" class="modal-overlay active">
+    <div class="games-form text-center" style="position:relative;">
+        <button onclick="document.getElementById('registeredModal').classList.remove('active')" class="modal-close">&times;</button>
+        <h5 class="game-title mb-3">Welcome to</h5>
+        <h5 class="modal-app-title">IndieGameConnect</h5>
+        <br>
+        <p>Your account has been created successfully. Start discovering indie games!</p>
+        <button onclick="document.getElementById('registeredModal').classList.remove('active')" class="btn-register">Start the journey</button>
     </div>
 </div>
 @endif

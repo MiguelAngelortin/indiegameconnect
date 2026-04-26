@@ -43,6 +43,15 @@
                         <label for="password_confirmation" class="form-label">Confirm password:</label>
                         <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
                     </div>
+                    <div class="mb-3 form-check">
+    <input type="checkbox" name="terms" id="terms" class="form-check-input" {{ old('terms') ? 'checked' : '' }}>
+    <label for="terms" class="form-check-label" style="font-size: 0.9rem;">
+        I agree to the <a href="/legal" style="color: var(--purple);">Terms and Conditions</a>
+    </label>
+    @error('terms')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
                     <button type="submit" class="btn-register">Register</button>
                 </form>
             </div>
