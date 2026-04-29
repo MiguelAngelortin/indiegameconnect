@@ -31,6 +31,9 @@ Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store']
 Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
 Route::post('/games/{game_id}/posts/{post_id}/like', [GamePostController::class, 'like'])->middleware('auth');
 Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostController::class, 'storeComment'])->middleware('auth');
+Route::get('/games/{game_id}/posts/{post_id}/edit', [GamePostController::class, 'edit'])->middleware(['auth', 'role:developer']);
+Route::patch('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'update'])->middleware(['auth', 'role:developer']);
+Route::delete('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'destroy'])->middleware(['auth', 'role:developer']);
 
 // ===== USERS =====
 Route::get('/users/{user_id}', [UserController::class, 'show']);

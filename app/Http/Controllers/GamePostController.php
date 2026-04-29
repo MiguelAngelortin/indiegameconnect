@@ -77,5 +77,40 @@ public function storeComment(Request $request, $game_id, $post_id)
 
     return redirect()->back();
 }
+
+public function edit($game_id, $post_id)
+{
+    $game = Game::findOrFail($game_id);
+    $post = GamePost::findOrFail($post_id);
+    if (auth()->user()->id !== $post->user_id) {
+        return redirect('/games/' . $game_id);
+    }
+    return view('games.posts.edit', compact('game', 'post'));
+}
+
+public function update(Request $request, $game_id, $post_id)
+{
+    $post = GamePost::findOrFail($post_id);
+    if (auth()->user()->id !== $post->user_id) {
+        return redirect('/games/' . $game_id);
+    }
+    $request->validate([
+        'title' => ['required', 'string', 'max:255'],
+        'content' => ['required', 'string'],
+        'image_url' => ['nullable', 'string'],
+    ]);
+    $post->update($request->only('title', 'content', 'image_url'));
+    return redirect('/games/' . $game_id . '/posts/' . $post_id);
+}
+
+public function destroy($game_id, $post_id)
+{
+    $post = GamePost::findOrFail($post_id);
+    if (auth()->user()->id !== $post->user_id) {
+        return redirect('/games/' . $game_id);
+    }
+    $post->delete();
+    return redirect('/games/' . $game_id);
+}
 }
 

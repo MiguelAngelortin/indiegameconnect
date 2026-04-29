@@ -6,8 +6,24 @@
     <div class="row justify-content-center">
         <div class="col-12 col-lg-8">
             <div class="post-view">
-                <h2 class="game-title">{{ $post->title }}</h2>
-                <small>{{ $post->created_at->diffForHumans() }} — {{ $post->user->name }}</small>
+                <div class="d-flex justify-content-between align-items-start">
+    <div>
+        <h2 class="game-title">{{ $post->title }}</h2>
+        <small>{{ $post->created_at->diffForHumans() }} — {{ $post->user->name }}</small>
+    </div>
+    @auth
+        @if(Auth::user()->id === $post->user_id)
+            <div class="d-flex gap-2">
+                <a href="/games/{{ $game->id }}/posts/{{ $post->id }}/edit" class="game-edit-link">Edit</a>
+                <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}" class="game-delete-form">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="game-delete-link" onclick="return confirm('¿Seguro que quieres borrar este post?')">Delete</button>
+                </form>
+            </div>
+        @endif
+    @endauth
+</div>
                 <p class="mt-3">{{ $post->content }}</p>
                 @if ($post->image_url)
                     <img class="post-img mb-3" src="{{ $post->image_url }}" alt="post_img">
