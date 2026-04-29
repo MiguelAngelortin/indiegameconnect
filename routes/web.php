@@ -34,6 +34,7 @@ Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostControll
 Route::get('/games/{game_id}/posts/{post_id}/edit', [GamePostController::class, 'edit'])->middleware(['auth', 'role:developer']);
 Route::patch('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'update'])->middleware(['auth', 'role:developer']);
 Route::delete('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'destroy'])->middleware(['auth', 'role:developer']);
+Route::delete('/games/{game_id}/posts/{post_id}/comments/{comment_id}', [GamePostController::class, 'destroyComment'])->middleware('auth');
 
 // ===== USERS =====
 Route::get('/users/{user_id}', [UserController::class, 'show']);
