@@ -27,6 +27,9 @@
                     <li class="nav-item"><a class="nav-link" href="/games">Games</a></li>
                     <li class="nav-item"><a class="nav-link" href="/developers">Developers</a></li>
                     @auth
+                    <li class="nav-item"><a class="nav-link" href="/feed">My Feed</a></li>
+                    @endauth
+                    @auth
     @if(Auth::user()->role === 'developer' || Auth::user()->role === 'admin')
         <li class="nav-item"><a class="nav-link" href="/games/create">Create Game</a></li>
     @endif

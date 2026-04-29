@@ -472,6 +472,13 @@ footer {
     padding: 1rem;
 }
 
+.dev-card-small h6 {
+    color: var(--purple);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .dev-card-small .profile-img {
     width: 70px;
     height: 70px;
@@ -516,7 +523,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* ===== GAME CARD ===== */
 .game-card {
     background-color: var(--background-nav);
-    border: 2px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: 0.5rem;
     overflow: hidden;
     transition: border-color 0.2s;

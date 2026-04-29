@@ -11,6 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+
         // Top 5 juegos más seguidos del mes
         $topGames = Game::with(['genres', 'user'])
             ->withCount(['follows' => function($query) {

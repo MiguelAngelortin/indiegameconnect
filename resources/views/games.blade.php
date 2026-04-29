@@ -29,11 +29,11 @@
         </div>
     </form>
     {{-- Grid de juegos --}}
-    <div class="row g-3 align-items-start">
+    <div class="row g-3">
         @forelse ($games as $game)
             {{-- card aquí --}}
             <div class="col-6 col-md-4 col-lg-2 d-flex">
-    <a href="/games/{{ $game->id }}" class="text-decoration-none">
+    <a href="/games/{{ $game->id }}" class="text-decoration-none w-100">
         <div class="game-card">
             <div class="game-card-img-container">
             <img src="{{ $game->cover_image }}" alt="{{ $game->title }}">

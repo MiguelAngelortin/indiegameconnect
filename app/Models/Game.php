@@ -34,4 +34,8 @@ class Game extends Model
     public function follows(){
     return $this->hasMany(GameFollow::class);
 }
+
+public function followers(){
+    return $this->belongsToMany(User::class, 'game_follows', 'game_id', 'user_id');
+}
 }

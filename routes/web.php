@@ -8,10 +8,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FeedController;
 
 // ===== PUBLIC ROUTES =====
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/developers', [DeveloperController::class, 'index']);
+Route::get('/feed', [FeedController::class, 'index'])->middleware('auth');
 
 // ===== GAMES =====
 Route::get('/games', [GameController::class, 'index']);

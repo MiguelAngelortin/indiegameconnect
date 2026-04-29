@@ -115,7 +115,7 @@
                     {{-- Card donaciones --}}
                     <div class="dev-card flex-fill text-center">
                         <h4 class="game-title mb-3">Support this developer</h4>
-                        <h5>Want to donate to this developer? <br><br>Ceck these links:</h5>
+                        <h5>Want to donate to this developer? <br><br>Check these links:</h5>
                         @if($user->donation_kofi || $user->donation_paypal || $user->donation_patreon || $user->donation_other)
                             <div class="d-flex flex-row flex-wrap gap-3 mt-3 justify-content-center">
                                 @if ($user->donation_kofi)
@@ -150,7 +150,7 @@
         @if ($games)
             <div class="row">
                 <div class="col-12">
-                    <h4 class="game-title mb-3">Games</h4>
+                    <h4 class="game-title mb-3">Games made by <span style="color: var(--purple);">{{ $user->name }}</span></h4>
                     <div class="row g-3">
                         @forelse ($games as $game)
                             <div class="col-6 col-md-3 col-lg-2">
@@ -181,7 +181,7 @@
         {{-- Followed Games --}}
         <div class="col-12 col-lg-6">
             <div class="dev-card h-100" style="border-color: var(--border); border-width: 3px;">
-                <h4 class="game-title mb-3">Followed Games</h4>
+               <h4 class="game-title mb-3"><span style="color: var(--purple);">{{ $user->name }}'s</span> Favourite Games</h4>
                 @if($followedGames->count() > 0)
                     <div class="row g-2">
                         @foreach($followedGames as $game)
@@ -214,7 +214,7 @@
         {{-- Followed Developers --}}
         <div class="col-12 col-lg-6">
             <div class="dev-card h-100" style="border-color: var(--border); border-width: 3px;">
-                <h4 class="game-title mb-3">Followed Developers</h4>
+                <h4 class="game-title mb-3"><span style="color: var(--purple);">{{ $user->name }}'s</span> Favourite Developers</h4>
                 @if($followedDevelopers->count() > 0)
                     <div class="row g-2">
                         @foreach($followedDevelopers as $follow)

@@ -75,7 +75,7 @@
 
         {{-- Publisher --}}
         <div class="mb-3">
-            <label for="publisher">Publisher:</label>
+            <label for="publisher">Publisher / Developer:</label>
             <input class="form-control" type="text" name="publisher" id="publisher" value="{{ $game->publisher }}">
         </div>
 
