@@ -4,10 +4,12 @@
 
 @section('content')
 <div class="container py-4">
-    <h2 class="section-title mb-4">Mi Feed</h2>
+    <div class="text-center">
+    <h1 class="section-title mb-4 d-inline-block">YOUR FEED</h1>
+    </div>
 
     @if($posts->isEmpty())
-        <p class="text-muted">No sigues ningún juego todavía. ¡Explora y sigue algunos para ver su actividad aquí!</p>
+        <p class="text-muted">You're not following any games yet. Explore and follow some to see their activity here!</p>
     @else
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">

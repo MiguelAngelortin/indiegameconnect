@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeedController;
+use App\Http\Controllers\AdminController;
 
 // ===== PUBLIC ROUTES =====
 Route::get('/', [HomeController::class, 'index']);
@@ -64,8 +65,19 @@ Route::get('/email-preview', function () {
 Route::get('/contact', [ContactController::class, 'create']);
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
-// LEGAL:
 
+// ADMIN:
+// ADMIN:
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/users', [AdminController::class, 'users']);
+    Route::get('/users/{user_id}/edit', [AdminController::class, 'editUser']);
+    Route::patch('/users/{user_id}', [AdminController::class, 'updateUser']);
+    Route::post('/users/{user_id}/ban', [AdminController::class, 'banUser']);
+    Route::delete('/users/{user_id}', [AdminController::class, 'destroyUser']);
+});
+
+// LEGAL:
 Route::get('/legal', function () {
     return view('legal');
 });

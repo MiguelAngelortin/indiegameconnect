@@ -28,6 +28,7 @@ class User extends Authenticatable
         'donation_paypal',
         'donation_patreon',
         'donation_other',
+        'is_banned'
     ];
 
     /**

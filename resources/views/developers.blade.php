@@ -5,7 +5,10 @@
 
         {{-- Top 3 del mes --}}
         @if($topDevelopers->count() > 0)
-            <h2 class="game-title mb-3">🏆 Top Developers this month</h2>
+        <div class="text-center">
+            <h1 class="section-title mb-3" style="white-space: nowrap;">Top Developers this month</h1>
+            <br>
+            </div>
             <div class="row g-3 mb-5 align-items-end justify-content-center">
                 {{-- 2º puesto --}}
                 @if(isset($topDevelopers[1]))
@@ -69,10 +72,12 @@
                 @endif
             </div>
         @endif
-
+            <hr>
         {{-- Buscador --}}
         <div class="mb-4">
+
             <form method="GET" action="/developers">
+                <label for="search"><h2>Search Developer:</h2></label>
                 <input type="text" name="search" class="form-control" placeholder="Search developers..." value="{{ request('search') }}">
             </form>
         </div>
