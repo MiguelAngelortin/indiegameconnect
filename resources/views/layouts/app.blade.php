@@ -87,9 +87,22 @@
 <div id="successModal" class="modal-overlay active">
     <div class="games-form text-center" style="position:relative;">
         <button onclick="document.getElementById('successModal').classList.remove('active')" class="modal-close">&times;</button>
-        <h5 class="game-title mb-3">✅ Profile updated!</h5>
+        <h5 class="game-title mb-3">Profile updated!</h5>
         <p>Your changes have been saved successfully.</p>
         <button onclick="document.getElementById('successModal').classList.remove('active')" class="btn-register">OK</button>
+    </div>
+</div>
+@endif
+
+{{-- Modal password updated --}}
+
+@if(session('status') === 'password-updated')
+<div id="passwordModal" class="modal-overlay active">
+    <div class="games-form text-center" style="position:relative;">
+        <button onclick="document.getElementById('passwordModal').classList.remove('active')" class="modal-close">&times;</button>
+        <h5 class="game-title mb-3">Password updated!</h5>
+        <p>Your password has been changed successfully.</p>
+        <button onclick="document.getElementById('passwordModal').classList.remove('active')" class="btn-register">OK</button>
     </div>
 </div>
 @endif

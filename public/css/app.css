@@ -596,16 +596,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 .game-card-body {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.5rem;
     color: var(--font);
     text-align: center;
-    min-height: 80px;
 }
 
 .game-card-body h6 {
     color: var(--font);
     font-size: 1.2rem;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .game-card .genre-tag {
     font-size: 0.6rem;
