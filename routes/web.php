@@ -67,7 +67,6 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 
 
 // ADMIN:
-// ADMIN:
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::get('/users', [AdminController::class, 'users']);
@@ -75,6 +74,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::patch('/users/{user_id}', [AdminController::class, 'updateUser']);
     Route::post('/users/{user_id}/ban', [AdminController::class, 'banUser']);
     Route::delete('/users/{user_id}', [AdminController::class, 'destroyUser']);
+    Route::get('/games', [AdminController::class, 'games']);
+Route::delete('/games/{game_id}', [AdminController::class, 'destroyGame']);
+Route::get('/posts', [AdminController::class, 'posts']);
+Route::delete('/posts/{post_id}', [AdminController::class, 'destroyPost']);
 });
 
 // LEGAL:

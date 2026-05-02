@@ -79,5 +79,58 @@ public function destroyUser($user_id)
     return redirect('/admin/users');
 }
 
+public function games(Request $request)
+{
+    $sortBy = $request->sort ?? 'id';
+    $sortDir = $request->direction ?? 'asc';
+
+    $allowedSorts = ['id', 'title', 'status', 'created_at'];
+    if (!in_array($sortBy, $allowedSorts)) {
+        $sortBy = 'id';
+    }
+
+    $games = Game::with(['user', 'genres'])
+        ->when($request->search, function ($query) use ($request) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        })
+        ->orderBy($sortBy, $sortDir)
+        ->paginate(20);
+
+    return view('admin.games', compact('games', 'sortBy', 'sortDir'));
+}
+
+public function destroyGame($game_id)
+{
+    $game = Game::findOrFail($game_id);
+    $game->delete();
+    return redirect('/admin/games');
+}
+
+public function posts(Request $request)
+{
+    $sortBy = $request->sort ?? 'id';
+    $sortDir = $request->direction ?? 'asc';
+
+    $allowedSorts = ['id', 'title', 'created_at'];
+    if (!in_array($sortBy, $allowedSorts)) {
+        $sortBy = 'id';
+    }
+
+    $posts = GamePost::with(['game', 'user'])
+        ->when($request->search, function ($query) use ($request) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        })
+        ->orderBy($sortBy, $sortDir)
+        ->paginate(20);
+
+    return view('admin.posts', compact('posts', 'sortBy', 'sortDir'));
+}
+
+public function destroyPost($post_id)
+{
+    $post = GamePost::findOrFail($post_id);
+    $post->delete();
+    return redirect('/admin/posts');
+}
 
 }
