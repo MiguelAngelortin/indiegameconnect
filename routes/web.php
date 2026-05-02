@@ -78,6 +78,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 Route::delete('/games/{game_id}', [AdminController::class, 'destroyGame']);
 Route::get('/posts', [AdminController::class, 'posts']);
 Route::delete('/posts/{post_id}', [AdminController::class, 'destroyPost']);
+Route::get('/report', [AdminController::class, 'report']);
 });
 
 // LEGAL:

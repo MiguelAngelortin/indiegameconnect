@@ -7,7 +7,10 @@
         <div class="text-center mb-4">
             <h2 class="section-title d-inline-block px-4">ADMIN PANEL</h2>
         </div>
-
+        <div class=" mb-3 justify-content-end d-flex">
+            <a href="/admin/report" class="btn-pdf"><h4>Download Report PDF</h4></a>
+        </div>
+        <div class="admin-content">
         {{-- Quick links --}}
         <div class="row g-3 mb-4">
             <div class="col-12 col-md-4">
@@ -72,4 +75,6 @@
             </div>
         </div>
     </div>
+    </div>
+    
 @endsection
