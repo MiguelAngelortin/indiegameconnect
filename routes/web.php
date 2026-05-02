@@ -86,4 +86,15 @@ Route::get('/legal', function () {
     return view('legal');
 });
 
+// Registro — 5 por hora por IP (esto se configura en otro sitio, lo vemos)
+
+// Crear juego — 1 al día por usuario
+Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:1,1440']);
+
+// Crear post — 5 por hora
+Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:5,60']);
+
+// Comentarios — 30 por hora
+Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostController::class, 'storeComment'])->middleware(['auth', 'throttle:30,60']);
+
 require __DIR__.'/auth.php';
