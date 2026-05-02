@@ -54,12 +54,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//email debug:
-Route::get('/email-preview', function () {
-    $user = App\Models\User::first();
-    return new App\Mail\WelcomeMail($user);
-});
-
 //MAILING Contact
 
 Route::get('/contact', [ContactController::class, 'create']);
