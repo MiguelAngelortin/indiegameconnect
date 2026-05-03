@@ -7,7 +7,8 @@
             <div class="row">
                 <div class="col-12">
                     <h1 class="text-center">Discover your next great indie</h1>
-                    <p class="text-center">The platform where indie developers share their games and players discover them before anyone else.</p>
+                    <p class="text-center">The platform where indie developers share their games and players discover them
+                        before anyone else.</p>
                     <div class="text-center">
                         <a href="/games" class="btn-register">Let's discover games</a>
                     </div>
@@ -17,26 +18,40 @@
     </section>
 
     {{-- Functions --}}
-    <section class="doubles">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="feature-card col-6">
-                    <h2 class="section-title">Feel Lucky?</h2>
-                    <p>Don't know what to play next? <br> Press the button and find a random game.</p>
-                    @if($randomGame)
-                        <a class="btn-register" href="/games/{{ $randomGame->id }}">Random Game</a>
-                    @endif
-                </div>
-                <div class="feature-card col-6">
-                    <h2 class="section-title">Join the community</h2>
+    <section class="doubles w-100">
+        <div class="row align-items-center g-0 mx-0">
+            <div class="feature-card col-12 col-md-6">
+                @guest
+                    <h2 class="doubles-title">Join the community</h2>
+                @endguest
+                @auth
+                    <h2 class="doubles-title">Support the community</h2>
+                @endauth
+                @guest
                     <p>Support indie games and developers is easier if you are logged.</p>
-                    @guest
-                        <a class="btn-register" href="/register">Register</a>
-                    @endguest
-                    @auth
-                        <a class="btn-register" href="/games">Explore Games</a>
-                    @endauth
-                </div>
+                    <a class="btn-register" href="/register">Register</a>
+                @endguest
+                @auth
+                    <p>Want to support IndieGameConnect? Help us keep the platform alive.</p>
+                    <div class="d-flex gap-3 justify-content-center mt-3">
+                        <a href="https://ko-fi.com/indiegameconnect" target="_blank" class="btn-donation">
+                            <img src="{{ asset('img/kofi.png') }}" alt="Ko-fi">
+                        </a>
+                        <a href="https://www.paypal.com/paypalme/indiegameconnect" target="_blank" class="btn-donation">
+                            <img src="{{ asset('img/paypal.png') }}" alt="PayPal">
+                        </a>
+                        <a href="https://www.patreon.com/c/IndieGameConnect" target="_blank" class="btn-donation">
+                            <img src="{{ asset('img/patreon.png') }}" alt="Patreon">
+                        </a>
+                    </div>
+                @endauth
+            </div>
+            <div class="feature-card col-12 col-md-6">
+                <h2 class="doubles-title">Feel Lucky?</h2>
+                <p>Don't know what to play next? <br> Press the button and find a random game.</p>
+                @if ($randomGame)
+                    <a class="btn-register" href="/games/{{ $randomGame->id }}">Random Game</a>
+                @endif
             </div>
         </div>
     </section>
@@ -71,7 +86,8 @@
                             @forelse($topDevelopers as $dev)
                                 <a href="/users/{{ $dev->id }}" class="text-decoration-none">
                                     <div class="home-list-item">
-                                        <img src="{{ $dev->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}" alt="{{ $dev->name }}">
+                                        <img src="{{ $dev->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
+                                            alt="{{ $dev->name }}">
                                         <span>{{ $dev->name }}</span>
                                     </div>
                                 </a>

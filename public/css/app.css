@@ -28,6 +28,14 @@ nav {
     padding: 0.4rem 0.2rem !important;
     min-height: 60px;
 }
+
+.admin-nav-link {
+    color: var(--purple) !important;
+}
+
+.admin-nav-link:hover {
+    color: var(--font) !important;
+}
 .nav-link {
     color: var(--font);
 }
@@ -51,7 +59,6 @@ nav {
 }
 
 /* ===== FOOTER ===== */
-/* ===== FOOTER ===== */
 footer {
     background: var(--background-nav);
     border-top: 1px solid var(--purple);
@@ -69,6 +76,23 @@ footer {
 .footer-link:hover {
     color: var(--purple);
     opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .feature-card {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+    .feature-card .btn-register {
+        width: 100%;
+        text-align: center;
+    }
+    .feature-card:first-child {
+        border-right: none !important;
+        border-bottom: 5px solid var(--background);
+    }
 }
 
 .btn-register {
@@ -117,13 +141,22 @@ footer {
     border-radius: 0.5rem 0.5rem 0 0;
     text-transform: uppercase;
 }
+
+.doubles-title {
+    font-family: var(--orbitron) !important;
+    text-align: center;
+    text-transform: uppercase;
+}
 .feature-card {
     padding: 1.2rem;
     text-align: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 .doubles {
     background-color: var(--background-nav);
     margin-bottom: 1.2rem;
+    width: 100%;
 }
 .feature-card:first-child {
     border-right: 5px solid var(--background);
