@@ -9,7 +9,7 @@
 <div class="col-12 col-md-8 col-lg-4 games-form">
     <h1 class="form-title">Edit Game</h1>
 
-    <form action="/games/{{ $game->id }}" method="POST">
+    <form action="/games/{{ $game->id }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
@@ -87,10 +87,16 @@
 
         {{-- Cover image --}}
         <div class="mb-3">
-            <label for="cover_image">Cover image:</label>
-            <input class="form-control" type="text" name="cover_image" id="cover_image" value="{{ $game->cover_image }}">
-            <small class="text-muted">Recommended size: 600x900px or 2/3</small>
+    <label for="cover_image">Cover image:</label>
+    @if($game->cover_image)
+        <div class="mb-2">
+            <img src="{{ $game->cover_image }}" style="width: 80px; border-radius: 4px;">
+            <small class="d-block text-muted">Current cover</small>
         </div>
+    @endif
+    <input class="form-control" type="file" name="cover_image" id="cover_image" accept="image/*">
+    <small class="text-muted">Recommended size: 600x900px or 2/3. Leave empty to keep current.</small>
+</div>
 
         {{-- Download URL --}}
         <div class="mb-3">

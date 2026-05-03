@@ -20,7 +20,7 @@
 
 @if($errors->any())
     <div class="alert-box alert-box-error mb-4">
-        <p class="mb-2">⚠️ Please fix the following errors:</p>
+        <p class="mb-2">Please fix the following errors:</p>
         <ul class="mb-0">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>

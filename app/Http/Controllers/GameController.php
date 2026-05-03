@@ -50,39 +50,41 @@ class GameController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'genres' => ['required', 'array', 'min:1'],
-            'status' => ['required', 'in:alpha,beta,release,cancelled'],
-            'engine' => ['required', 'in:Unity,Unreal,Godot,GameMaker,Other'],
-            'publisher' => ['nullable', 'string'],
-            'release_date' => ['nullable', 'date'],
-            'cover_image' => ['nullable', 'string'],
-            'download_url' => ['nullable', 'string'],
-            'version' => ['nullable', 'string'],
-        ]);
+{
+    $request->validate([
+        'title' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string'],
+        'genres' => ['required', 'array', 'min:1'],
+        'status' => ['required', 'in:alpha,beta,release,cancelled'],
+        'engine' => ['required', 'in:Unity,Unreal,Godot,GameMaker,Other'],
+        'publisher' => ['nullable', 'string'],
+        'release_date' => ['nullable', 'date'],
+        'cover_image' => ['nullable', 'image', 'max:2048'],
+        'download_url' => ['nullable', 'string'],
+        'version' => ['nullable', 'string'],
+    ]);
 
-        // ver usuario actual
-        //  dd(auth()->user());
-
-        $game = Game::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'user_id' => auth()->user()->id,
-            'status' => $request->status,
-            'engine' => $request->engine,
-            'publisher' => $request->publisher,
-            'release_date' => $request->release_date,
-            'cover_image' => $request->cover_image,
-            'download_url' => $request->download_url,
-            'version' => $request->version,
-        ]);
-        $game->genres()->attach($request->genres);
-
-        return redirect('/games/'.$game->id);
+    $coverPath = null;
+    if ($request->hasFile('cover_image')) {
+        $coverPath = $request->file('cover_image')->store('covers', 'public');
     }
+
+    $game = Game::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'user_id' => auth()->user()->id,
+        'status' => $request->status,
+        'engine' => $request->engine,
+        'publisher' => $request->publisher,
+        'release_date' => $request->release_date,
+        'cover_image' => $coverPath ? asset('storage/' . $coverPath) : null,
+        'download_url' => $request->download_url,
+        'version' => $request->version,
+    ]);
+    $game->genres()->attach($request->genres);
+
+    return redirect('/games/'.$game->id);
+}
 
     public function edit($game_id)
     {
@@ -96,28 +98,36 @@ class GameController extends Controller
     }
 
     public function update(Request $request, $game_id)
-    {
-        $game = Game::findOrFail($game_id);
-        if (auth()->user()->id !== $game->user_id) {
-            return redirect('/games/'.$game_id);
-        }
-        $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'genres' => ['required', 'array', 'min:1'],
-            'status' => ['required', 'in:alpha,beta,release,cancelled'],
-            'engine' => ['required', 'in:Unity,Unreal,Godot,GameMaker,Other'],
-            'publisher' => ['nullable', 'string'],
-            'release_date' => ['nullable', 'date'],
-            'cover_image' => ['nullable', 'string'],
-            'download_url' => ['nullable', 'string'],
-            'version' => ['nullable', 'string'],
-        ]);
-        $game->update($request->except('genres', '_token', '_method'));
-        $game->genres()->sync($request->genres);
-
+{
+    $game = Game::findOrFail($game_id);
+    if (auth()->user()->id !== $game->user_id) {
         return redirect('/games/'.$game_id);
     }
+    $request->validate([
+        'title' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string'],
+        'genres' => ['required', 'array', 'min:1'],
+        'status' => ['required', 'in:alpha,beta,release,cancelled'],
+        'engine' => ['required', 'in:Unity,Unreal,Godot,GameMaker,Other'],
+        'publisher' => ['nullable', 'string'],
+        'release_date' => ['nullable', 'date'],
+        'cover_image' => ['nullable', 'image', 'max:2048'],
+        'download_url' => ['nullable', 'string'],
+        'version' => ['nullable', 'string'],
+    ]);
+
+    $data = $request->except('genres', '_token', '_method', 'cover_image');
+
+    if ($request->hasFile('cover_image')) {
+        $coverPath = $request->file('cover_image')->store('covers', 'public');
+        $data['cover_image'] = asset('storage/' . $coverPath);
+    }
+
+    $game->update($data);
+    $game->genres()->sync($request->genres);
+
+    return redirect('/games/'.$game_id);
+}
 
     public function destroy($game_id)
     {

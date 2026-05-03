@@ -27,7 +27,7 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
             'bio' => ['nullable', 'string'],
-            'profile_img' => ['nullable', 'string'],
+            'profile_img' => ['nullable', 'image', 'max:2048'],
             'donation_kofi'    => ['nullable', 'string', 'url'],
             'donation_paypal'  => ['nullable', 'string', 'url'],
             'donation_patreon' => ['nullable', 'string', 'url'],

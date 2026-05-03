@@ -9,7 +9,7 @@
 <div class="col-12 col-md-8 col-lg-4 games-form">
     <h1 class="form-title">Game Creator</h1>
 
-    <form action="/games/store" method="POST">
+    <form action="/games/store" method="POST" enctype="multipart/form-data">
         @csrf
 
         @if($errors->any())
@@ -86,10 +86,10 @@
 
         {{-- Cover image --}}
         <div class="mb-3">
-        <label for="cover_image">Cover image:</label>
-        <input class="form-control" type="text" name="cover_image" id="cover_image" value="{{ old('cover_image') }}">
-        <small class="text-muted">Recommended size: 600x900px or 2/3</small>
-        </div>
+    <label for="cover_image">Cover image:</label>
+    <input class="form-control" type="file" name="cover_image" id="cover_image" accept="image/*">
+    <small class="text-muted">Recommended size: 600x900px or 2/3 ratio</small>
+</div>
 
         {{-- Download URL --}}
         <div class="mb-3">
