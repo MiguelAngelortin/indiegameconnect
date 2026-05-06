@@ -28,7 +28,7 @@
                     @endforeach
                 </div>
                 <p>{{ $game->description }}</p>
-                <div class="d-flex align-items-stretch gap-3 mt-3">
+                <div class="d-flex gap-2 mt-3">
                     <div class="game-details-card">
                         <small class="game-details">Game details:</small><br>
                         <small>Engine: {{ $game->engine }}</small><br>
@@ -36,10 +36,10 @@
                         <small>Version: {{ $game->version }}</small>
                     </div>
                     @if ($game->download_url)
-                        <a href="{{ $game->download_url }}" target="_blank" class="btn-download d-flex align-items-center justify-content-center flex-fill">Download Game</a>
-                    @else
-                        <span class="btn-download d-flex align-items-center justify-content-center flex-fill" style="opacity: 0.4; cursor: not-allowed;">Not available yet</span>
-                    @endif
+    <a href="{{ $game->download_url }}" target="_blank" class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill">Download Game</a>
+@else
+    <span class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill" style="opacity: 0.4; cursor: not-allowed;">Not available yet</span>
+@endif
                     @guest
                         <button onclick="document.getElementById('loginModal').classList.add('active')" class="btn-download d-flex align-items-center justify-content-center">
                             Follow<br>Game

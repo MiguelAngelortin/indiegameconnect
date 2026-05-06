@@ -19,19 +19,19 @@ Route::get('/feed', [FeedController::class, 'index'])->middleware('auth');
 // ===== GAMES =====
 Route::get('/games', [GameController::class, 'index']);
 Route::get('/games/create', [GameController::class, 'create'])->middleware(['auth', 'role:developer']);
+Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:1,1440']);
+Route::get('/games/{game_id}', [GameController::class, 'show']);
 Route::get('/games/{game_id}/edit', [GameController::class, 'edit'])->middleware(['auth', 'role:developer']);
 Route::patch('/games/{game_id}', [GameController::class, 'update'])->middleware(['auth', 'role:developer']);
 Route::delete('/games/{game_id}', [GameController::class, 'destroy'])->middleware(['auth', 'role:developer']);
-Route::get('/games/{game_id}', [GameController::class, 'show']);
 Route::post('/games/{game_id}/follow', [GameController::class, 'follow'])->middleware('auth');
-Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer']);
 
 // ===== GAME POSTS =====
 Route::get('/games/{game_id}/posts/create', [GamePostController::class, 'create'])->middleware(['auth', 'role:developer']);
-Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer']);
+Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:5,60']);
 Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
 Route::post('/games/{game_id}/posts/{post_id}/like', [GamePostController::class, 'like'])->middleware('auth');
-Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostController::class, 'storeComment'])->middleware('auth');
+Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostController::class, 'storeComment'])->middleware(['auth', 'throttle:30,60']);
 Route::get('/games/{game_id}/posts/{post_id}/edit', [GamePostController::class, 'edit'])->middleware(['auth', 'role:developer']);
 Route::patch('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'update'])->middleware(['auth', 'role:developer']);
 Route::delete('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'destroy'])->middleware(['auth', 'role:developer']);
@@ -47,20 +47,23 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// ===== PROFILE (auth) =====
+// ===== PROFILE =====
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//MAILING Contact
-
+// ===== CONTACT =====
 Route::get('/contact', [ContactController::class, 'create']);
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
+// ===== LEGAL =====
+Route::get('/legal', function () {
+    return view('legal');
+});
 
-// ADMIN:
+// ===== ADMIN =====
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::get('/users', [AdminController::class, 'users']);
@@ -69,26 +72,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/users/{user_id}/ban', [AdminController::class, 'banUser']);
     Route::delete('/users/{user_id}', [AdminController::class, 'destroyUser']);
     Route::get('/games', [AdminController::class, 'games']);
-Route::delete('/games/{game_id}', [AdminController::class, 'destroyGame']);
-Route::get('/posts', [AdminController::class, 'posts']);
-Route::delete('/posts/{post_id}', [AdminController::class, 'destroyPost']);
-Route::get('/report', [AdminController::class, 'report']);
+    Route::delete('/games/{game_id}', [AdminController::class, 'destroyGame']);
+    Route::get('/posts', [AdminController::class, 'posts']);
+    Route::delete('/posts/{post_id}', [AdminController::class, 'destroyPost']);
+    Route::get('/report', [AdminController::class, 'report']);
 });
-
-// LEGAL:
-Route::get('/legal', function () {
-    return view('legal');
-});
-
-// Registro — 5 por hora por IP (esto se configura en otro sitio, lo vemos)
-
-// Crear juego — 1 al día por usuario
-Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:1,1440']);
-
-// Crear post — 5 por hora
-Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:5,60']);
-
-// Comentarios — 30 por hora
-Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostController::class, 'storeComment'])->middleware(['auth', 'throttle:30,60']);
 
 require __DIR__.'/auth.php';

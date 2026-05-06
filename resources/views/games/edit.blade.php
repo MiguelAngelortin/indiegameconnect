@@ -99,10 +99,15 @@
 </div>
 
         {{-- Download URL --}}
-        <div class="mb-3">
-            <label for="download_url">Download URL:</label>
-            <input class="form-control" type="text" name="download_url" id="download_url" value="{{ $game->download_url }}">
-        </div>
+<div class="mb-3">
+    <label for="download_url">Download URL:</label>
+    <input class="form-control" type="text" name="download_url" id="download_url" value="{{ $game->download_url }}">
+    <small class="text-muted">Don't have a link yet? Upload your game to one of these services:</small>
+    <div class="d-flex gap-2 mt-1">
+        <a href="https://itch.io/upload-new" target="_blank" class="btn btn-sm btn-outline-light">itch.io</a>
+        <a href="https://gamejolt.com/dashboard" target="_blank" class="btn btn-sm btn-outline-light">GameJolt</a>
+    </div>
+</div>
 
         {{-- Version --}}
         <div class="mb-3">

@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Nunito:wght@400;600&display=swap"
         rel="stylesheet">
     @stack('styles')
-
 </head>
 
 <body>
@@ -77,6 +76,7 @@
             </div>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
 
@@ -92,6 +92,7 @@
                 class="modal-close">&times;</button>
         </div>
     </div>
+
     {{-- Modal profile updated --}}
     @if (session('status') === 'profile-updated')
         <div id="successModal" class="modal-overlay active">
@@ -107,7 +108,6 @@
     @endif
 
     {{-- Modal password updated --}}
-
     @if (session('status') === 'password-updated')
         <div id="passwordModal" class="modal-overlay active">
             <div class="games-form text-center" style="position:relative;">
@@ -136,6 +136,21 @@
             </div>
         </div>
     @endif
+
+    {{-- Modal throttle --}}
+    @if (session('throttle_error'))
+        <div id="throttleModal" class="modal-overlay active">
+            <div class="games-form text-center" style="position:relative;">
+                <button onclick="document.getElementById('throttleModal').classList.remove('active')"
+                    class="modal-close">&times;</button>
+                <h5 class="game-title mb-3">Slow down!</h5>
+                <p>{{ session('throttle_error') }}</p>
+                <button onclick="document.getElementById('throttleModal').classList.remove('active')"
+                    class="btn-register">OK</button>
+            </div>
+        </div>
+    @endif
+
 </body>
 
 </html>

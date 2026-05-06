@@ -21,15 +21,20 @@ class GamePostController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
-            'image_url' => ['nullable', 'string'],
+            'image_url' => ['nullable', 'image', 'max:2048'],
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image_url')) {
+            $imagePath = $request->file('image_url')->store('posts', 'public');
+        }
 
         GamePost::create([
             'game_id' => $game_id,
             'user_id' => auth()->user()->id,
             'title' => $request->title,
             'content' => $request->content,
-            'image_url' => $request->image_url,
+            'image_url' => $imagePath ? asset('storage/' . $imagePath) : null,
         ]);
 
         return redirect('/games/' . $game_id);
@@ -94,12 +99,20 @@ class GamePostController extends Controller
         if (auth()->user()->id !== $post->user_id) {
             return redirect('/games/' . $game_id);
         }
+
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
-            'image_url' => ['nullable', 'string'],
+            'image_url' => ['nullable', 'image', 'max:2048'],
         ]);
-        $post->update($request->only('title', 'content', 'image_url'));
+
+        $data = $request->only('title', 'content');
+        if ($request->hasFile('image_url')) {
+            $imagePath = $request->file('image_url')->store('posts', 'public');
+            $data['image_url'] = asset('storage/' . $imagePath);
+        }
+
+        $post->update($data);
         return redirect('/games/' . $game_id . '/posts/' . $post_id);
     }
 

@@ -17,7 +17,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}">
+                <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
 
@@ -33,9 +33,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Image URL <small class="text-muted">(opcional)</small></label>
-                        <input type="text" name="image_url" class="form-control"
-                               value="{{ old('image_url', $post->image_url) }}">
+                        <label class="form-label">Image <small class="text-muted">(opcional)</small></label>
+                        @if($post->image_url)
+                            <div class="mb-2">
+                                <img src="{{ asset($post->image_url) }}" style="max-width: 200px; border-radius: 4px;">
+                                <small class="d-block text-muted">Current image. Leave empty to keep it.</small>
+                            </div>
+                        @endif
+                        <input type="file" name="image_url" class="form-control" accept="image/*">
                     </div>
 
                     <div class="d-flex gap-2 justify-content-end">

@@ -149,7 +149,7 @@ public function report()
         'topGames', 'topDevelopers'
     ));
 
-    return $pdf->download('indiegameconnect-report.pdf');
+    return $pdf->stream('indiegameconnect-report.pdf');
 }
 
 }

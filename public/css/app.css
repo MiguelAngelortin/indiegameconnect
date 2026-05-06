@@ -93,6 +93,52 @@ footer {
         border-right: none !important;
         border-bottom: 5px solid var(--background);
     }
+    .navbar-nav.ms-auto {
+        margin-left: 1.9rem !important;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--purple);
+    }
+    .navbar-collapse {
+        padding-top: 0.5rem;
+    }
+    .navbar-collapse .nav-item {
+        padding: 0.3rem 0;
+    }
+    .navbar-collapse .nav-link {
+        padding-left: 1.5rem !important;
+    }
+
+    .game-card-body h6 {
+    font-size: 0.85rem !important;
+}
+
+ .col-lg-game-img {
+        width: 75% !important;
+        margin: 0 auto;
+    }
+    .game_img {
+        aspect-ratio: 2/3;
+        width: 100%;
+    }
+
+    .btn-download {
+        width: auto;
+    }
+
+    .game-details-card {
+    flex: 1;
+}
+
+.game-details-card {
+    width: 50%;
+}
+
+.game-details-card + form,
+.game-details-card + button {
+    width: 50%;
+}
+
 }
 
 .btn-register {
@@ -305,11 +351,7 @@ footer {
     border-radius: 0.5rem;
 }
 
-@media (max-width: 768px) {
-    .navbar-nav.ms-auto {
-        margin-left: 1.9rem !important;
-    }
-}
+
 
 .genre-tag {
     background-color: var(--purple);
