@@ -592,7 +592,7 @@ footer {
     width: 150px;
     height: 150px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 0.5rem;
     border: 3px solid var(--purple);
 }
 
@@ -655,7 +655,7 @@ footer {
     width: 120px;
     height: 120px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 0.5rem;
     border: 2px solid var(--purple);
     margin-bottom: 0.5rem;
 }
@@ -786,7 +786,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 120px;
     height: 120px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 0.5rem;
     border: 3px solid var(--purple);
 }
 

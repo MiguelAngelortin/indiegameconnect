@@ -35,7 +35,7 @@
                 <a href="/games/{{ $game->id }}" class="text-decoration-none w-100">
                     <div class="game-card">
                         <div class="game-card-img-container">
-                            <img src="{{ $game->cover_image }}" alt="{{ $game->title }}">
+                            <img src="{{ $game->cover_image ? asset($game->cover_image) : asset('img/default_cover.jpg') }}" alt="{{ $game->title }}">
                         </div>
                         <div class="game-card-body">
                             <h6 class="game-title">{{ $game->title }}</h6>
@@ -56,6 +56,9 @@
         @endforelse
     </div>
     {{-- Paginación --}}
-    {{ $games->links() }}
+    {{-- Paginación --}}
+<div class="d-flex justify-content-center mt-4">
+    {{ $games->links('pagination::bootstrap-5') }}
+</div>
 </div>
 @endsection

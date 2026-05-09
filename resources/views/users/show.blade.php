@@ -7,7 +7,7 @@
             {{-- Card perfil --}}
             <div class="col-12 {{ $user->role === 'developer' || $user->role === 'admin' ? 'col-lg-6' : 'col-lg-4 mx-auto' }}">
                 <div class="dev-card text-center h-100 {{ $user->role === 'user' ? 'profile-card-user' : '' }}">
-                    <img src="{{ $user->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
+                    <img src="{{ $user->profile_img ? asset($user->profile_img) : 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
                         alt="avatar" class="profile-img mb-3">
                     <h3 class="game-title">{{ $user->name }}</h3>
                     <span class="genre-tag role-badge">{{ ucfirst($user->role) }}</span>
@@ -143,7 +143,7 @@
                                 <a href="/games/{{ $game->id }}" class="text-decoration-none">
                                     <div class="game-card">
                                         <div class="game-card-img-container">
-                                            <img src="{{ $game->cover_image }}" alt="{{ $game->title }}">
+                                            <img src="{{ $game->cover_image ? asset($game->cover_image) : asset('img/default_cover.jpg') }}" alt="{{ $game->title }}">
                                         </div>
                                         <div class="game-card-body">
                                             <h6 class="game-title">{{ $game->title }}</h6>
@@ -174,7 +174,7 @@
                                         <a href="/games/{{ $game->id }}" class="text-decoration-none">
                                             <div class="game-card game-card-small">
                                                 <div class="game-card-img-container">
-                                                    <img src="{{ $game->cover_image }}" alt="{{ $game->title }}">
+                                                    <img src="{{ $game->cover_image ? asset($game->cover_image) : asset('img/default_cover.jpg') }}" alt="{{ $game->title }}">
                                                 </div>
                                                 <div class="game-card-body">
                                                     <h6 class="game-title">{{ $game->title }}</h6>
@@ -206,7 +206,7 @@
                                     <div class="col-6 col-md-4">
                                         <a href="/users/{{ $follow->developer->id }}" class="text-decoration-none">
                                             <div class="dev-card text-center dev-card-small">
-                                                <img src="{{ $follow->developer->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
+                                                <img src="{{ $follow->developer->profile_img ? asset($follow->developer->profile_img) : 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
                                                     alt="avatar" class="profile-img mb-2">
                                                 <h6 class="game-title">{{ $follow->developer->name }}</h6>
                                             </div>

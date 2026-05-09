@@ -112,7 +112,7 @@
         </div>
 
         <div class="mt-4">
-            {{ $developers->links() }}
+            {{ $developers->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
     </div>
 @endsection

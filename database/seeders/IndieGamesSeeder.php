@@ -7,47 +7,56 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Game;
 use App\Models\Genre;
+use App\Models\GamePost;
 
 class IndieGamesSeeder extends Seeder
 {
     public function run(): void
     {
+        // ─── ADMIN ────────────────────────────────────────────────
+        $admin = User::create([
+            'name'     => 'Admin',
+            'email'    => 'admin@indiegameconnect.com',
+            'password' => Hash::make('password'),
+            'role'     => 'admin',
+        ]);
+
         // ─── DEVELOPERS ───────────────────────────────────────────
         $developers = [
-            ['name' => 'Team Cherry',         'email' => 'teamcherry@indiegameconnect.com'],
-            ['name' => 'Extremely OK Games',  'email' => 'extremelyok@indiegameconnect.com'],
-            ['name' => 'ConcernedApe',        'email' => 'concernedape@indiegameconnect.com'],
-            ['name' => 'Giant Sparrow',       'email' => 'giantsparrow@indiegameconnect.com'],
-            ['name' => 'Toby Fox',            'email' => 'tobyfox@indiegameconnect.com'],
-            ['name' => 'Nomada Studio',       'email' => 'nomadastudio@indiegameconnect.com'],
-            ['name' => 'Magic Design Studios','email' => 'magicdesign@indiegameconnect.com'],
-            ['name' => 'Massive Monster',     'email' => 'massivemonster@indiegameconnect.com'],
-            ['name' => 'Lucas Pope',          'email' => 'lucaspope@indiegameconnect.com'],
-            ['name' => 'Campo Santo',         'email' => 'camposanto@indiegameconnect.com'],
-            ['name' => 'Infinite Fall',       'email' => 'infinitefall@indiegameconnect.com'],
-            ['name' => 'MINTROCKET',          'email' => 'mintrocket@indiegameconnect.com'],
-            ['name' => 'Edmund McMillen',     'email' => 'edmundmcmillen@indiegameconnect.com'],
-            ['name' => 'Supergiant Games',    'email' => 'supergiant@indiegameconnect.com'],
-            ['name' => 'The Game Kitchen',    'email' => 'gamekitchen@indiegameconnect.com'],
-            ['name' => 'Motion Twin',         'email' => 'motiontwin@indiegameconnect.com'],
-            ['name' => 'LocalThunk',          'email' => 'localthunk@indiegameconnect.com'],
-            ['name' => 'Mega Crit Games',     'email' => 'megacrit@indiegameconnect.com'],
-            ['name' => 'Thunder Lotus Games', 'email' => 'thunderlotus@indiegameconnect.com'],
-            ['name' => 'GoodbyeWorld Games',  'email' => 'goodbyeworld@indiegameconnect.com'],
-            ['name' => 'Daniel Mullins Games','email' => 'danielmullins@indiegameconnect.com'],
-            ['name' => 'Digital Sun',         'email' => 'digitalsun@indiegameconnect.com'],
-            ['name' => 'Billy Basso',         'email' => 'billybasso@indiegameconnect.com'],
-            ['name' => 'Playdead',            'email' => 'playdead@indiegameconnect.com'],
-            ['name' => 'Coldblood Inc.',      'email' => 'coldblood@indiegameconnect.com'],
+            ['name' => 'Team Cherry',         'email' => 'teamcherry@indiegameconnect.com',   'profile_img' => 'img/developers/teamcherry.png'],
+            ['name' => 'Extremely OK Games',  'email' => 'extremelyok@indiegameconnect.com',  'profile_img' => 'img/developers/exOKgames.png'],
+            ['name' => 'ConcernedApe',        'email' => 'concernedape@indiegameconnect.com', 'profile_img' => 'img/developers/concernedape.jpeg'],
+            ['name' => 'Giant Sparrow',       'email' => 'giantsparrow@indiegameconnect.com', 'profile_img' => 'img/developers/giant_sparrow.png'],
+            ['name' => 'Toby Fox',            'email' => 'tobyfox@indiegameconnect.com',      'profile_img' => 'img/developers/toby_fox.webp'],
+            ['name' => 'Nomada Studio',       'email' => 'nomadastudio@indiegameconnect.com', 'profile_img' => 'img/developers/nomada_studio.png'],
+            ['name' => 'Massive Monster',     'email' => 'massivemonster@indiegameconnect.com','profile_img' => 'img/developers/massive_monster.jpg'],
+            ['name' => 'Lucas Pope',          'email' => 'lucaspope@indiegameconnect.com',    'profile_img' => 'img/developers/lucas_pope.png'],
+            ['name' => 'Campo Santo',         'email' => 'camposanto@indiegameconnect.com',   'profile_img' => 'img/developers/campo_santo.jpeg'],
+            ['name' => 'Infinite Fall',       'email' => 'infinitefall@indiegameconnect.com', 'profile_img' => 'img/developers/infinite_fall.png'],
+            ['name' => 'MINTROCKET',          'email' => 'mintrocket@indiegameconnect.com',   'profile_img' => 'img/developers/mintrocket.png'],
+            ['name' => 'Edmund McMillen',     'email' => 'edmundmcmillen@indiegameconnect.com','profile_img' => 'img/developers/edmund_mcmillen.jpg'],
+            ['name' => 'Supergiant Games',    'email' => 'supergiant@indiegameconnect.com',   'profile_img' => 'img/developers/supergiant_games.png'],
+            ['name' => 'The Game Kitchen',    'email' => 'gamekitchen@indiegameconnect.com',  'profile_img' => 'img/developers/the_game_kitchen.png'],
+            ['name' => 'Motion Twin',         'email' => 'motiontwin@indiegameconnect.com',   'profile_img' => 'img/developers/motion_twin.png'],
+            ['name' => 'LocalThunk',          'email' => 'localthunk@indiegameconnect.com',   'profile_img' => 'img/developers/localthunk.png'],
+            ['name' => 'Mega Crit Games',     'email' => 'megacrit@indiegameconnect.com',     'profile_img' => 'img/developers/megacrit.webp'],
+            ['name' => 'Thunder Lotus Games', 'email' => 'thunderlotus@indiegameconnect.com', 'profile_img' => 'img/developers/thunder_lotus.webp'],
+            ['name' => 'GoodbyeWorld Games',  'email' => 'goodbyeworld@indiegameconnect.com', 'profile_img' => 'img/developers/goodbye_world.jpeg'],
+            ['name' => 'Daniel Mullins Games','email' => 'danielmullins@indiegameconnect.com','profile_img' => 'img/developers/daniel_mullins.png'],
+            ['name' => 'Digital Sun',         'email' => 'digitalsun@indiegameconnect.com',   'profile_img' => 'img/developers/digital_sun.jpg'],
+            ['name' => 'Billy Basso',         'email' => 'billybasso@indiegameconnect.com',   'profile_img' => 'img/developers/billy_bassao.webp'],
+            ['name' => 'Playdead',            'email' => 'playdead@indiegameconnect.com',     'profile_img' => 'img/developers/playdead.webp'],
+            ['name' => 'Coldblood Inc.',      'email' => 'coldblood@indiegameconnect.com',    'profile_img' => 'img/developers/cooldblod_inc.png'],
         ];
 
         $createdDevs = [];
         foreach ($developers as $dev) {
             $createdDevs[$dev['name']] = User::create([
-                'name'     => $dev['name'],
-                'email'    => $dev['email'],
-                'password' => Hash::make('password'),
-                'role'     => 'developer',
+                'name'        => $dev['name'],
+                'email'       => $dev['email'],
+                'password'    => Hash::make('password'),
+                'role'        => 'developer',
+                'profile_img' => $dev['profile_img'],
             ]);
         }
 
@@ -55,7 +64,7 @@ class IndieGamesSeeder extends Seeder
         $genres = Genre::all()->keyBy('name');
 
         // ─── JUEGOS ───────────────────────────────────────────────
-        $games = [
+        $gamesData = [
             [
                 'title'        => 'Hollow Knight',
                 'description'  => 'Un épico juego de acción y aventura ambientado en un reino subterráneo de insectos. Explora cavernas retorcidas, lucha contra criaturas corrompidas y descubre los secretos de un reino olvidado.',
@@ -64,7 +73,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.5.78',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/hollow_knight.webp',
                 'download_url' => 'https://store.steampowered.com/app/367520/Hollow_Knight/',
                 'genres'       => ['Action', 'Adventure', 'Platformer'],
             ],
@@ -76,7 +85,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'alpha',
                 'engine'       => 'Unity',
                 'version'      => null,
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/hollow_knight_silksong.webp',
                 'download_url' => null,
                 'genres'       => ['Action', 'Adventure', 'Platformer'],
             ],
@@ -88,7 +97,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '1.4.0',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/celeste.jpg',
                 'download_url' => 'https://store.steampowered.com/app/504230/Celeste/',
                 'genres'       => ['Platformer', 'Adventure'],
             ],
@@ -100,7 +109,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'alpha',
                 'engine'       => 'Other',
                 'version'      => null,
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/earthblade.png',
                 'download_url' => null,
                 'genres'       => ['Action', 'Adventure'],
             ],
@@ -112,7 +121,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unreal',
                 'version'      => '1.0',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/what_remains_of_edith_finch.jpg',
                 'download_url' => 'https://store.steampowered.com/app/501300/What_Remains_of_Edith_Finch/',
                 'genres'       => ['Adventure', 'Narrative'],
             ],
@@ -124,7 +133,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '1.6.8',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/stardew_valley.png',
                 'download_url' => 'https://store.steampowered.com/app/413150/Stardew_Valley/',
                 'genres'       => ['RPG', 'Simulation'],
             ],
@@ -136,7 +145,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'alpha',
                 'engine'       => 'Other',
                 'version'      => null,
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/haunted_chocolatier.jpg',
                 'download_url' => null,
                 'genres'       => ['RPG', 'Simulation'],
             ],
@@ -148,19 +157,19 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'GameMaker',
                 'version'      => '1.001',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/undertale.jpg',
                 'download_url' => 'https://store.steampowered.com/app/391540/Undertale/',
                 'genres'       => ['RPG', 'Adventure'],
             ],
             [
                 'title'        => 'Deltarune',
-                'description'  => 'Kris, Susie y Ralsei deben sallar un Oscuro Pozo sellando la Fuente Oscura. Un RPG con combates únicos donde puedes elegir perdonar o luchar contra tus enemigos.',
+                'description'  => 'Kris, Susie y Ralsei deben sellar un Oscuro Pozo sellando la Fuente Oscura. Un RPG con combates únicos donde puedes elegir perdonar o luchar contra tus enemigos.',
                 'user_id'      => $createdDevs['Toby Fox']->id,
                 'release_date' => '2018-10-31',
                 'status'       => 'beta',
                 'engine'       => 'GameMaker',
                 'version'      => '1.10',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/deltarune.jpg',
                 'download_url' => 'https://store.steampowered.com/app/1671400/Deltarune/',
                 'genres'       => ['RPG', 'Adventure'],
             ],
@@ -172,20 +181,20 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.04',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/gris.webp',
                 'download_url' => 'https://store.steampowered.com/app/983870/GRIS/',
                 'genres'       => ['Platformer', 'Adventure', 'Narrative'],
             ],
             [
                 'title'        => 'Neva',
                 'description'  => 'Una mujer y su lobo luchan juntos por sobrevivir en un mundo que se desmorona. Un juego de acción con un vínculo emocional único entre personajes.',
-                'user_id'      => $createdDevs['Magic Design Studios']->id,
+                'user_id'      => $createdDevs['Nomada Studio']->id,
                 'release_date' => '2024-10-15',
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.0',
-                'cover_image'  => null,
-                'download_url' => 'https://store.steampowered.com/app/1598530/Neva/',
+                'cover_image'  => 'img/games/neva.jpg',
+                'download_url' => 'https://store.steampowered.com/app/2420660/Neva/',
                 'genres'       => ['Action', 'Adventure'],
             ],
             [
@@ -196,7 +205,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.3.3',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/cult_of_the_lamb.jpg',
                 'download_url' => 'https://store.steampowered.com/app/1313140/Cult_of_the_Lamb/',
                 'genres'       => ['Roguelike', 'Strategy', 'Action'],
             ],
@@ -208,7 +217,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '1.4.12',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/papers_please.jpg',
                 'download_url' => 'https://store.steampowered.com/app/239030/Papers_Please/',
                 'genres'       => ['Strategy', 'Narrative', 'Simulation'],
             ],
@@ -220,7 +229,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.09',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/firewatch.jpg',
                 'download_url' => 'https://store.steampowered.com/app/383870/Firewatch/',
                 'genres'       => ['Adventure', 'Narrative'],
             ],
@@ -232,7 +241,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '3.07',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/night_in_the_woods.jpg',
                 'download_url' => 'https://store.steampowered.com/app/481510/Night_in_the_Woods/',
                 'genres'       => ['Adventure', 'Platformer', 'Narrative'],
             ],
@@ -244,7 +253,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.0.2',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/dave_the_diver.jpg',
                 'download_url' => 'https://store.steampowered.com/app/1868140/DAVE_THE_DIVER/',
                 'genres'       => ['Adventure', 'RPG', 'Simulation'],
             ],
@@ -256,7 +265,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '1.0',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/the_binding_of_isaac.jpg',
                 'download_url' => 'https://store.steampowered.com/app/113200/The_Binding_of_Isaac/',
                 'genres'       => ['Roguelike', 'Action'],
             ],
@@ -268,7 +277,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '1.38425',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/hades.jpg',
                 'download_url' => 'https://store.steampowered.com/app/1145360/Hades/',
                 'genres'       => ['Roguelike', 'Action', 'RPG'],
             ],
@@ -280,7 +289,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '4.0.67',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/blasphemous.jpg',
                 'download_url' => 'https://store.steampowered.com/app/774361/Blasphemous/',
                 'genres'       => ['Action', 'Platformer'],
             ],
@@ -292,7 +301,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '3.5.5',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/dead_cells.jpg',
                 'download_url' => 'https://store.steampowered.com/app/588650/Dead_Cells/',
                 'genres'       => ['Roguelike', 'Action', 'Platformer'],
             ],
@@ -304,7 +313,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '1.0.1n',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/balatro.jpg',
                 'download_url' => 'https://store.steampowered.com/app/2379780/Balatro/',
                 'genres'       => ['Roguelike', 'Strategy'],
             ],
@@ -316,7 +325,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '2.3',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/slay_the_spire.jpg',
                 'download_url' => 'https://store.steampowered.com/app/646570/Slay_the_Spire/',
                 'genres'       => ['Roguelike', 'Strategy'],
             ],
@@ -328,7 +337,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '3.7',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/spiritfarer.jpg',
                 'download_url' => 'https://store.steampowered.com/app/972660/Spiritfarer/',
                 'genres'       => ['Adventure', 'Simulation', 'Narrative'],
             ],
@@ -340,7 +349,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.6.1',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/before_your_eyes.jpg',
                 'download_url' => 'https://store.steampowered.com/app/1099600/Before_Your_Eyes/',
                 'genres'       => ['Narrative', 'Adventure'],
             ],
@@ -352,7 +361,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.10',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/inscryption.webp',
                 'download_url' => 'https://store.steampowered.com/app/1092790/Inscryption/',
                 'genres'       => ['Roguelike', 'Strategy', 'Narrative'],
             ],
@@ -364,7 +373,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Unity',
                 'version'      => '1.15.00',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/moonlighter.jpg',
                 'download_url' => 'https://store.steampowered.com/app/606940/Moonlighter/',
                 'genres'       => ['RPG', 'Action', 'Roguelike'],
             ],
@@ -376,7 +385,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '1.1.7',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/animal_well.jpg',
                 'download_url' => 'https://store.steampowered.com/app/813230/ANIMAL_WELL/',
                 'genres'       => ['Adventure', 'Platformer'],
             ],
@@ -388,7 +397,7 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'release',
                 'engine'       => 'Other',
                 'version'      => '1.0',
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/inside.jpg',
                 'download_url' => 'https://store.steampowered.com/app/304430/INSIDE/',
                 'genres'       => ['Platformer', 'Adventure'],
             ],
@@ -400,25 +409,121 @@ class IndieGamesSeeder extends Seeder
                 'status'       => 'alpha',
                 'engine'       => 'Other',
                 'version'      => null,
-                'cover_image'  => null,
+                'cover_image'  => 'img/games/neverway.webp',
                 'download_url' => null,
                 'genres'       => ['RPG', 'Simulation', 'Adventure'],
             ],
         ];
 
-        foreach ($games as $gameData) {
+        $createdGames = [];
+        foreach ($gamesData as $gameData) {
             $genreNames = $gameData['genres'];
             unset($gameData['genres']);
-
             $game = Game::create($gameData);
-
             $genreIds = collect($genreNames)
                 ->map(fn($name) => $genres->get($name)?->id)
-                ->filter()
-                ->values()
-                ->toArray();
-
+                ->filter()->values()->toArray();
             $game->genres()->attach($genreIds);
+            $createdGames[$game->title] = $game;
+        }
+
+        // ─── POSTS ────────────────────────────────────────────────
+        $posts = [
+            [
+                'game'      => 'Hollow Knight',
+                'user_id'   => $createdDevs['Team Cherry']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/hollow_knight_post_1.webp',
+            ],
+            [
+                'game'      => 'Hollow Knight',
+                'user_id'   => $createdDevs['Team Cherry']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/hollow_knight_post_2.jpg',
+            ],
+            [
+                'game'      => 'Celeste',
+                'user_id'   => $createdDevs['Extremely OK Games']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/celeste_post_1.webp',
+            ],
+            [
+                'game'      => 'Stardew Valley',
+                'user_id'   => $createdDevs['ConcernedApe']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/stardew_valley_post_1.jpg',
+            ],
+            [
+                'game'      => 'Stardew Valley',
+                'user_id'   => $createdDevs['ConcernedApe']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/stardew_valley_post_2.jpg',
+            ],
+            [
+                'game'      => 'Undertale',
+                'user_id'   => $createdDevs['Toby Fox']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/undertale_post_1.jpg',
+            ],
+            [
+                'game'      => 'Deltarune',
+                'user_id'   => $createdDevs['Toby Fox']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/deltarune_post_1.png',
+            ],
+            [
+                'game'      => 'Neva',
+                'user_id'   => $createdDevs['Nomada Studio']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/neva_post_1.jpg',
+            ],
+            [
+                'game'      => 'Hades',
+                'user_id'   => $createdDevs['Supergiant Games']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/hades_post_1.png',
+            ],
+            [
+                'game'      => 'Slay the Spire',
+                'user_id'   => $createdDevs['Mega Crit Games']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/slay_the_spire_post_1.jpg',
+            ],
+            [
+                'game'      => 'Neverway',
+                'user_id'   => $createdDevs['Coldblood Inc.']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/neverway_post_1.png',
+            ],
+            [
+                'game'      => 'Neverway',
+                'user_id'   => $createdDevs['Coldblood Inc.']->id,
+                'title'     => 'Post',
+                'content'   => 'Post de prueba.',
+                'image_url' => 'img/posts/neverway_post_2.jpg',
+            ],
+        ];
+
+        foreach ($posts as $postData) {
+            $game = $createdGames[$postData['game']];
+            GamePost::create([
+                'game_id'   => $game->id,
+                'user_id'   => $postData['user_id'],
+                'title'     => $postData['title'],
+                'content'   => $postData['content'],
+                'image_url' => $postData['image_url'],
+            ]);
         }
     }
 }

@@ -17,7 +17,7 @@
                         </div>
                     @endif
                 @endauth
-                <img class="game_img" src="{{ $game->cover_image }}" alt="game_img">
+                <img class="game_img" src="{{ $game->cover_image ? asset($game->cover_image) : asset('img/default_cover.jpg') }}" alt="game_img">
             </div>
             {{-- Info del juego --}}
             <div class="col-12 col-lg-6">
@@ -65,7 +65,7 @@
                 <div class="dev-card w-100 text-center">
                     <h5>{{ $game->user->name }}</h5>
                     @if ($game->user->profile_img)
-                        <img src="{{ $game->user->profile_img }}" alt="profile_image" class="profile-img my-3">
+                        <img src="{{ asset($game->user->profile_img) }}" alt="profile_image" class="profile-img my-3">
                     @endif
                     <div class="mt-2">
                         <small>{{ $game->user->follows()->count() }} {{ __('games.followers') }}</small>
@@ -90,7 +90,7 @@
                                 <p>{{ $post->content }}</p>
                                 @if ($post->image_url)
                                     <div class="post-img-container">
-                                        <img class="post-img" src="{{ $post->image_url }}" alt="post_img">
+                                        <img class="post-img" src="{{ $post->image_url ? asset($post->image_url) : asset('img/default_cover.jpg') }}" alt="post_img">
                                     </div>
                                 @endif
                             </div>
