@@ -13,11 +13,11 @@
                         @auth
                             @if(Auth::user()->id === $post->user_id)
                                 <div class="d-flex gap-2">
-                                    <a href="/games/{{ $game->id }}/posts/{{ $post->id }}/edit" class="game-edit-link">Edit</a>
+                                    <a href="/games/{{ $game->id }}/posts/{{ $post->id }}/edit" class="game-edit-link">{{ __('games.edit_post') }}</a>
                                     <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}" class="game-delete-form" id="form-post-{{ $post->id }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="game-delete-link" onclick="openDeleteModal('form-post-{{ $post->id }}', 'post')">Delete</button>
+                                        <button type="button" class="game-delete-link" onclick="openDeleteModal('form-post-{{ $post->id }}', 'post')">{{ __('games.delete_post') }}</button>
                                     </form>
                                 </div>
                             @endif
@@ -30,7 +30,7 @@
                     <button type="button" class="btn-register mt-2 mb-2"
                         @auth onclick="document.getElementById('like-form').submit()" @endauth
                         @guest onclick="document.getElementById('loginModal').classList.add('active')" @endguest>
-                        {!! $userLiked ? '<span style="filter: drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000);">❤️</span>' : '🤍' !!} {{ $post->likes->count() }} Likes
+                        {!! $userLiked ? '<span style="filter: drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000);">❤️</span>' : '🤍' !!} {{ $post->likes->count() }} {{ __('games.likes') }}
                     </button>
                     @auth
                         <form id="like-form" method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/like" style="display:none;">
@@ -41,17 +41,17 @@
 
                 {{-- Comments --}}
                 <div class="mt-4">
-                    <h5 class="game-title">Comments</h5>
+                    <h5 class="game-title">{{ __('games.comments') }}</h5>
                     @auth
                         <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/store" class="mb-4">
                             @csrf
                             <div class="mb-3">
-                                <textarea name="content" class="form-control" rows="3" placeholder="Write a comment..." required></textarea>
+                                <textarea name="content" class="form-control" rows="3" placeholder="{{ __('games.write_comment') }}" required></textarea>
                                 @error('content')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn-register">Comment</button>
+                            <button type="submit" class="btn-register">{{ __('games.comment_btn') }}</button>
                         </form>
                     @endauth
 
@@ -69,21 +69,21 @@
                                             <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/{{ $comment->id }}" class="game-delete-form" id="form-comment-{{ $comment->id }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="game-delete-link" onclick="openDeleteModal('form-comment-{{ $comment->id }}', 'comment')">Delete</button>
+                                                <button type="button" class="game-delete-link" onclick="openDeleteModal('form-comment-{{ $comment->id }}', 'comment')">{{ __('games.delete_btn') }}</button>
                                             </form>
                                         @endif
                                     @endauth
                                 </div>
                                 @auth
-                                    <button class="btn btn-sm btn-outline-secondary mb-2" onclick="toggleReply('reply-{{ $comment->id }}')">Reply</button>
+                                    <button class="btn btn-sm btn-outline-secondary mb-2" onclick="toggleReply('reply-{{ $comment->id }}')">{{ __('games.reply_btn') }}</button>
                                     <div id="reply-{{ $comment->id }}" style="display:none;" class="mt-2 mb-2">
                                         <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/store">
                                             @csrf
                                             <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                                             <div class="mb-2">
-                                                <textarea name="content" class="form-control" rows="2" placeholder="Write a reply..." required></textarea>
+                                                <textarea name="content" class="form-control" rows="2" placeholder="{{ __('games.write_reply') }}" required></textarea>
                                             </div>
-                                            <button type="submit" class="btn-register">Reply</button>
+                                            <button type="submit" class="btn-register">{{ __('games.reply_btn') }}</button>
                                         </form>
                                     </div>
                                 @endauth
@@ -103,7 +103,7 @@
                                                         <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/{{ $reply->id }}" class="game-delete-form" id="form-reply-{{ $reply->id }}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="button" class="game-delete-link" onclick="openDeleteModal('form-reply-{{ $reply->id }}', 'reply')">Delete</button>
+                                                            <button type="button" class="game-delete-link" onclick="openDeleteModal('form-reply-{{ $reply->id }}', 'reply')">{{ __('games.delete_btn') }}</button>
                                                         </form>
                                                     @endif
                                                 @endauth
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                     @empty
-                        <p>No comments yet.</p>
+                        <p>{{ __('games.no_comments') }}</p>
                     @endforelse
                 </div>
             </div>
@@ -125,11 +125,11 @@
     <div id="deleteModal" class="modal-overlay">
         <div class="games-form text-center" style="position:relative;">
             <button onclick="closeDeleteModal()" class="modal-close">&times;</button>
-            <h5 class="game-title mb-3" id="deleteModalTitle">Are you sure?</h5>
-            <p id="deleteModalText">This action cannot be undone.</p>
+            <h5 class="game-title mb-3" id="deleteModalTitle">{{ __('games.are_you_sure') }}</h5>
+            <p id="deleteModalText">{{ __('games.cannot_undo') }}</p>
             <div class="d-flex gap-2 justify-content-center mt-3">
-                <button onclick="closeDeleteModal()" class="btn-register" style="background: var(--border); color: var(--font) !important;">Cancel</button>
-                <button onclick="confirmDelete()" class="btn-register" style="background: #c62828;">Delete</button>
+                <button onclick="closeDeleteModal()" class="btn-register" style="background: var(--border); color: var(--font) !important;">{{ __('games.cancel') }}</button>
+                <button onclick="confirmDelete()" class="btn-register" style="background: #c62828;">{{ __('games.delete_btn') }}</button>
             </div>
         </div>
     </div>
@@ -139,9 +139,9 @@
     let formToSubmit = null;
 
     const messages = {
-        post: 'Do you want to delete this post? This action cannot be undone.',
-        comment: 'Do you want to delete this comment?',
-        reply: 'Do you want to delete this reply?',
+        post: '{{ __('games.delete_post_confirm') }}',
+        comment: '{{ __('games.delete_comment_confirm') }}',
+        reply: '{{ __('games.delete_reply_confirm') }}',
     };
 
     function openDeleteModal(formId, type) {

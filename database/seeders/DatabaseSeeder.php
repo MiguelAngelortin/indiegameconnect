@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([GenreSeeder::class,
         AdminSeeder::class,
         ]);
+        $this->call(IndieGamesSeeder::class);
 
         User::factory()->create([
             'name' => 'Test User',

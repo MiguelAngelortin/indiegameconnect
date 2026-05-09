@@ -6,11 +6,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="text-center">Discover your next great indie</h1>
-                    <p class="text-center">The platform where indie developers share their games and players discover them
-                        before anyone else.</p>
+                    <h1 class="text-center">{{ __('home.hero_title') }}</h1>
+                    <p class="text-center">{{ __('home.hero_text') }}</p>
                     <div class="text-center">
-                        <a href="/games" class="btn-register">Let's discover games</a>
+                        <a href="/games" class="btn-register">{{ __('home.lets_discover') }}</a>
                     </div>
                 </div>
             </div>
@@ -22,17 +21,17 @@
         <div class="row align-items-center g-0 mx-0">
             <div class="feature-card col-12 col-md-6">
                 @guest
-                    <h2 class="doubles-title">Join the community</h2>
+                    <h2 class="doubles-title">{{ __('home.join') }}</h2>
                 @endguest
                 @auth
-                    <h2 class="doubles-title">Support the community</h2>
+                    <h2 class="doubles-title">{{ __('home.support') }}</h2>
                 @endauth
                 @guest
-                    <p>Support indie games and developers is easier if you are logged.</p>
-                    <a class="btn-register" href="/register">Register</a>
+                    <p>{{ __('home.join_text') }}</p>
+                    <a class="btn-register" href="/register">{{ __('nav.register') }}</a>
                 @endguest
                 @auth
-                    <p>Want to support IndieGameConnect? Help us keep the platform alive.</p>
+                    <p>{{ __('home.support_text') }}</p>
                     <div class="d-flex gap-3 justify-content-center mt-3">
                         <a href="https://ko-fi.com/indiegameconnect" target="_blank" class="btn-donation">
                             <img src="{{ asset('img/kofi.png') }}" alt="Ko-fi">
@@ -47,10 +46,10 @@
                 @endauth
             </div>
             <div class="feature-card col-12 col-md-6">
-                <h2 class="doubles-title">Feel Lucky?</h2>
-                <p>Don't know what to play next? <br> Press the button and find a random game.</p>
+                <h2 class="doubles-title">{{ __('home.feel_lucky') }}</h2>
+                <p>{{ __('home.feel_lucky_text') }}</p>
                 @if ($randomGame)
-                    <a class="btn-register" href="/games/{{ $randomGame->id }}">Random Game</a>
+                    <a class="btn-register" href="/games/{{ $randomGame->id }}">{{ __('home.random_game') }}</a>
                 @endif
             </div>
         </div>
@@ -63,7 +62,7 @@
                 {{-- Top Games --}}
                 <div class="col-12 col-md-4">
                     <div class="home-section-card">
-                        <h2 class="section-title mb-3">Top Games</h2>
+                        <h2 class="section-title mb-3">{{ __('home.top_games') }}</h2>
                         <div class="d-flex flex-column">
                             @forelse($topGames as $game)
                                 <a href="/games/{{ $game->id }}" class="text-decoration-none">
@@ -73,7 +72,7 @@
                                     </div>
                                 </a>
                             @empty
-                                <p>No games yet.</p>
+                                <p>{{ __('home.no_games') }}</p>
                             @endforelse
                         </div>
                     </div>
@@ -81,7 +80,7 @@
                 {{-- Top Developers --}}
                 <div class="col-12 col-md-4">
                     <div class="home-section-card">
-                        <h2 class="section-title mb-3">Top Developers</h2>
+                        <h2 class="section-title mb-3">{{ __('home.top_developers') }}</h2>
                         <div class="d-flex flex-column">
                             @forelse($topDevelopers as $dev)
                                 <a href="/users/{{ $dev->id }}" class="text-decoration-none">
@@ -92,7 +91,7 @@
                                     </div>
                                 </a>
                             @empty
-                                <p>No developers yet.</p>
+                                <p>{{ __('home.no_developers') }}</p>
                             @endforelse
                         </div>
                     </div>
@@ -100,7 +99,7 @@
                 {{-- In Development --}}
                 <div class="col-12 col-md-4">
                     <div class="home-section-card">
-                        <h2 class="section-title mb-3">In Development</h2>
+                        <h2 class="section-title mb-3">{{ __('home.in_development') }}</h2>
                         <div class="d-flex flex-column">
                             @forelse($inDevelopment as $game)
                                 <a href="/games/{{ $game->id }}" class="text-decoration-none">
@@ -110,7 +109,7 @@
                                     </div>
                                 </a>
                             @empty
-                                <p>No games in development.</p>
+                                <p>{{ __('home.no_in_development') }}</p>
                             @endforelse
                         </div>
                     </div>

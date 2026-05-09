@@ -8,11 +8,11 @@
                 @auth
                     @if (Auth::user()->id === $game->user_id)
                         <div class="d-flex gap-2 mb-1 justify-content-end">
-                            <a href="/games/{{ $game->id }}/edit" class="game-edit-link">Edit</a>
+                            <a href="/games/{{ $game->id }}/edit" class="game-edit-link">{{ __('games.edit') }}</a>
                             <form method="POST" action="/games/{{ $game->id }}" class="game-delete-form">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="game-delete-link" onclick="return confirm('¿Seguro que quieres borrar este juego?')">Delete</button>
+                                <button type="submit" class="game-delete-link" onclick="return confirm('{{ __('games.delete_confirm') }}')">{{ __('games.delete') }}</button>
                             </form>
                         </div>
                     @endif
@@ -30,19 +30,19 @@
                 <p>{{ $game->description }}</p>
                 <div class="d-flex gap-2 mt-3">
                     <div class="game-details-card">
-                        <small class="game-details">Game details:</small><br>
-                        <small>Engine: {{ $game->engine }}</small><br>
-                        <small>Status: {{ $game->status }}</small><br>
-                        <small>Version: {{ $game->version }}</small>
+                        <small class="game-details">{{ __('games.game_details') }}</small><br>
+                        <small>{{ __('games.engine') }} {{ $game->engine }}</small><br>
+                        <small>{{ __('games.status') }} {{ $game->status }}</small><br>
+                        <small>{{ __('games.version') }} {{ $game->version }}</small>
                     </div>
                     @if ($game->download_url)
-    <a href="{{ $game->download_url }}" target="_blank" class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill">Download Game</a>
-@else
-    <span class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill" style="opacity: 0.4; cursor: not-allowed;">Not available yet</span>
-@endif
+                        <a href="{{ $game->download_url }}" target="_blank" class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill">{{ __('games.download') }}</a>
+                    @else
+                        <span class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill" style="opacity: 0.4; cursor: not-allowed;">{{ __('games.not_available') }}</span>
+                    @endif
                     @guest
                         <button onclick="document.getElementById('loginModal').classList.add('active')" class="btn-download d-flex align-items-center justify-content-center">
-                            Follow<br>Game
+                            {{ __('games.follow_game') }}
                         </button>
                     @endguest
                     @auth
@@ -53,11 +53,7 @@
                                     $isFollowingGame = $game->follows()->where('user_id', Auth::user()->id)->exists();
                                 @endphp
                                 <button type="submit" class="btn-download d-flex align-items-center justify-content-center {{ $isFollowingGame ? 'btn-unfollow' : '' }}">
-                                    @if($isFollowingGame)
-                                        Unfollow<br>Game
-                                    @else
-                                        Follow<br>Game
-                                    @endif
+                                    {{ $isFollowingGame ? __('games.unfollow_game') : __('games.follow_game') }}
                                 </button>
                             </form>
                         @endif
@@ -65,16 +61,16 @@
                 </div>
             </div>
             {{-- Card developer --}}
-            <div class="col-12 col-lg-game-img d-flex">
+            <div class="col-12 col-lg-game-img d-flex mt-3 mt-lg-0">
                 <div class="dev-card w-100 text-center">
                     <h5>{{ $game->user->name }}</h5>
                     @if ($game->user->profile_img)
                         <img src="{{ $game->user->profile_img }}" alt="profile_image" class="profile-img my-3">
                     @endif
                     <div class="mt-2">
-                        <small>👥 {{ $game->user->follows()->count() }} followers</small>
+                        <small>{{ $game->user->follows()->count() }} {{ __('games.followers') }}</small>
                     </div>
-                    <a href="/users/{{ $game->user->id }}" class="btn-register mt-3 d-inline-block">Show Profile</a>
+                    <a href="/users/{{ $game->user->id }}" class="btn-register mt-3 d-inline-block">{{ __('games.show_profile') }}</a>
                 </div>
             </div>
         </div>
@@ -83,7 +79,7 @@
             <div class="col-12 col-lg-8">
                 @auth
                     @if (Auth::user()->id === $game->user_id)
-                        <a href="/games/{{ $game->id }}/posts/create" class="btn-post mb-3">Create a new Post</a>
+                        <a href="/games/{{ $game->id }}/posts/create" class="btn-post mb-3">{{ __('games.new_post') }}</a>
                     @endif
                 @endauth
                 @forelse ($posts as $post)
@@ -99,13 +95,13 @@
                                 @endif
                             </div>
                             <div class="post-meta mt-2">
-                                <small>🤍 {{ $post->likes->count() }} likes</small>
+                                <small>🤍 {{ $post->likes->count() }} {{ __('games.likes') }}</small>
                                 <small>{{ $post->created_at->diffForHumans() }}</small>
                             </div>
                         </div>
                     </a>
                 @empty
-                    <p>No posts yet.</p>
+                    <p>{{ __('games.no_posts') }}</p>
                 @endforelse
                 {{ $posts->links() }}
             </div>
