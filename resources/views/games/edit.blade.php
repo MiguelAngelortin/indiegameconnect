@@ -87,27 +87,27 @@
 
         {{-- Cover image --}}
         <div class="mb-3">
-    <label for="cover_image">Cover image:</label>
-    @if($game->cover_image)
-        <div class="mb-2">
-            <img src="{{ $game->cover_image }}" style="width: 80px; border-radius: 4px;">
-            <small class="d-block text-muted">Current cover</small>
+            <label for="cover_image">Cover image:</label>
+            @if($game->cover_image)
+                <div class="mb-2">
+                    <img src="{{ asset($game->cover_image) }}" style="width: 80px; border-radius: 4px;">
+                    <small class="d-block text-muted">Current cover</small>
+                </div>
+            @endif
+            <input class="form-control" type="file" name="cover_image" id="cover_image" accept="image/*">
+            <small class="text-muted">Recommended size: 600x900px or 2/3. Leave empty to keep current.</small>
         </div>
-    @endif
-    <input class="form-control" type="file" name="cover_image" id="cover_image" accept="image/*">
-    <small class="text-muted">Recommended size: 600x900px or 2/3. Leave empty to keep current.</small>
-</div>
 
         {{-- Download URL --}}
-<div class="mb-3">
-    <label for="download_url">Download URL:</label>
-    <input class="form-control" type="text" name="download_url" id="download_url" value="{{ $game->download_url }}">
-    <small class="text-muted">Don't have a link yet? Upload your game to one of these services:</small>
-    <div class="d-flex gap-2 mt-1">
-        <a href="https://itch.io/upload-new" target="_blank" class="btn btn-sm btn-outline-light">itch.io</a>
-        <a href="https://gamejolt.com/dashboard" target="_blank" class="btn btn-sm btn-outline-light">GameJolt</a>
-    </div>
-</div>
+        <div class="mb-3">
+            <label for="download_url">Download URL:</label>
+            <input class="form-control" type="text" name="download_url" id="download_url" value="{{ $game->download_url }}">
+            <small class="text-muted">Don't have a link yet? Upload your game to one of these services:</small>
+            <div class="d-flex gap-2 mt-1">
+                <a href="https://itch.io/upload-new" target="_blank" class="btn btn-sm btn-outline-light">itch.io</a>
+                <a href="https://gamejolt.com/dashboard" target="_blank" class="btn btn-sm btn-outline-light">GameJolt</a>
+            </div>
+        </div>
 
         {{-- Version --}}
         <div class="mb-3">
