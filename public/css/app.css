@@ -913,3 +913,53 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-family: var(--nunito);
 }
 
+/* ===== HELP ===== */
+.help-section {
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.help-toggle {
+    width: 100%;
+    background-color: var(--background-nav);
+    color: var(--font);
+    border: none;
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-family: var(--orbitron);
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.help-toggle:hover {
+    background-color: var(--border);
+    color: var(--purple);
+}
+
+.help-content {
+    display: none;
+    padding: 1.25rem;
+    background-color: var(--background);
+    border-top: 1px solid var(--border);
+    color: var(--font);
+    line-height: 1.7;
+}
+
+.help-content ul {
+    padding-left: 1.25rem;
+}
+
+.help-content li {
+    margin-bottom: 0.4rem;
+}
+
+.help-arrow {
+    font-size: 0.75rem;
+    opacity: 0.6;
+}

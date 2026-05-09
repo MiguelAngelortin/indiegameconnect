@@ -19,6 +19,23 @@
 
         <hr style="border-color: var(--border); margin: 2rem 0;">
 
+        {{-- COOKIES --}}
+        <h4 class="game-title mb-3" style="color: var(--purple);">Cookie Policy</h4>
+
+        <p style="opacity: 0.85;">IndieGameConnect uses a small number of technical cookies strictly necessary for the platform to function correctly. We do not use advertising, tracking or third-party analytics cookies.</p>
+
+        <p style="opacity: 0.85;">The cookies we use are:</p>
+
+        <ul style="opacity: 0.85; line-height: 2;">
+            <li><strong>Session cookie</strong> — keeps you logged in while you browse the platform. It is deleted when you close your browser.</li>
+            <li><strong>CSRF token</strong> — protects forms against cross-site request forgery attacks. Required for the platform to work securely.</li>
+            <li><strong>visited</strong> — remembers that you have already visited the platform so the welcome guide is not shown again. It expires after 365 days.</li>
+        </ul>
+
+        <p style="opacity: 0.85;">Because these cookies are technically necessary for the service to function, they do not require your explicit consent under current EU regulations (RGPD / ePrivacy Directive). However, you may delete them at any time through your browser settings.</p>
+
+        <hr style="border-color: var(--border); margin: 2rem 0;">
+
         {{-- TERMS OF USE --}}
         <h4 class="game-title mb-3" style="color: var(--purple);">Terms of Use</h4>
 
@@ -36,7 +53,7 @@
 
         {{-- CONTACT --}}
         <p class="text-center" style="opacity: 0.6; font-size: 0.9rem;">
-            If you have any questions about these terms <br>  
+            If you have any questions about these terms <br>
             <a href="/contact" style="color: var(--purple);">contact us here</a>.
         </p>
     </div>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'IndieGameConnect')</title>
+    <link rel="icon" type="image/png" href="{{ asset('img/4.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -69,7 +70,10 @@
     <footer>
         <div
             class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-center">
-            <p class="mb-0">IndieGameConnect &copy; {{ date('Y') }}</p>
+            <div>
+                <a class="footer-link me-3" href="/help">Help</a>
+                <p class="mb-0 d-inline">IndieGameConnect &copy; {{ date('Y') }}</p>
+            </div>
             <div>
                 <a class="footer-link me-3" href="/contact">Contact</a>
                 <a class="footer-link" href="/legal">Legal</a>
@@ -150,6 +154,20 @@
             </div>
         </div>
     @endif
+
+{{-- Modal primera visita --}}
+@if(isset($firstVisit) && $firstVisit)
+    <div id="welcomeVisitorModal" class="modal-overlay active">
+        <div class="games-form text-center" style="position:relative;">
+            <button onclick="document.getElementById('welcomeVisitorModal').classList.remove('active')"
+                class="modal-close">&times;</button>
+            <h5 class="modal-app-title mb-1">IndieGameConnect</h5>
+            <p>Discover, follow and support indie games and their developers.</p>
+            <p>New here? Check the user manual to get started.</p>
+            <a href="/help" class="btn-register">View Manual</a>
+        </div>
+    </div>
+@endif
 
 </body>
 

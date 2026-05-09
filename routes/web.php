@@ -19,7 +19,7 @@ Route::get('/feed', [FeedController::class, 'index'])->middleware('auth');
 // ===== GAMES =====
 Route::get('/games', [GameController::class, 'index']);
 Route::get('/games/create', [GameController::class, 'create'])->middleware(['auth', 'role:developer']);
-Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:1,1440']);
+Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:100,1']);
 Route::get('/games/{game_id}', [GameController::class, 'show']);
 Route::get('/games/{game_id}/edit', [GameController::class, 'edit'])->middleware(['auth', 'role:developer']);
 Route::patch('/games/{game_id}', [GameController::class, 'update'])->middleware(['auth', 'role:developer']);
@@ -61,6 +61,11 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 // ===== LEGAL =====
 Route::get('/legal', function () {
     return view('legal');
+});
+
+// ===== HELP =====
+Route::get('/help', function () {
+    return view('help');
 });
 
 // ===== ADMIN =====

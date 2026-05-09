@@ -6,11 +6,14 @@ use App\Models\Game;
 use App\Models\User;
 use App\Models\GameFollow;
 use App\Models\UserFollow;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        // Detectar primera visita
+        $firstVisit = !request()->cookie('visited');
 
         // Top 5 juegos más seguidos del mes
         $topGames = Game::with(['genres', 'user'])
@@ -41,6 +44,12 @@ class HomeController extends Controller
         // Juego aleatorio
         $randomGame = Game::inRandomOrder()->first();
 
-        return view('home', compact('topGames', 'topDevelopers', 'inDevelopment', 'randomGame'));
+        $response = response()->view('home', compact('topGames', 'topDevelopers', 'inDevelopment', 'randomGame', 'firstVisit'));
+
+        if ($firstVisit) {
+            $response->cookie('visited', 'true', 60 * 24 * 365);
+        }
+
+        return $response;
     }
 }

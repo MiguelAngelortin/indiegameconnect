@@ -14,10 +14,10 @@
                             @if(Auth::user()->id === $post->user_id)
                                 <div class="d-flex gap-2">
                                     <a href="/games/{{ $game->id }}/posts/{{ $post->id }}/edit" class="game-edit-link">Edit</a>
-                                    <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}" class="game-delete-form">
+                                    <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}" class="game-delete-form" id="form-post-{{ $post->id }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="game-delete-link" onclick="return confirm('¿Seguro que quieres borrar este post?')">Delete</button>
+                                        <button type="button" class="game-delete-link" onclick="openDeleteModal('form-post-{{ $post->id }}', 'post')">Delete</button>
                                     </form>
                                 </div>
                             @endif
@@ -28,16 +28,17 @@
                         <img class="post-img mb-3" src="{{ $post->image_url }}" alt="post_img">
                     @endif
                     <button type="button" class="btn-register mt-2 mb-2"
-    @auth onclick="document.getElementById('like-form').submit()" @endauth
-    @guest onclick="document.getElementById('loginModal').classList.add('active')" @endguest>
-   {!! $userLiked ? '<span style="filter: drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000);">❤️</span>' : '🤍' !!} {{ $post->likes->count() }} Likes
-</button>
+                        @auth onclick="document.getElementById('like-form').submit()" @endauth
+                        @guest onclick="document.getElementById('loginModal').classList.add('active')" @endguest>
+                        {!! $userLiked ? '<span style="filter: drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000);">❤️</span>' : '🤍' !!} {{ $post->likes->count() }} Likes
+                    </button>
                     @auth
                         <form id="like-form" method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/like" style="display:none;">
                             @csrf
                         </form>
                     @endauth
                 </div>
+
                 {{-- Comments --}}
                 <div class="mt-4">
                     <h5 class="game-title">Comments</h5>
@@ -53,6 +54,7 @@
                             <button type="submit" class="btn-register">Comment</button>
                         </form>
                     @endauth
+
                     @forelse($comments as $comment)
                         <div class="card mb-3 comment-card">
                             <div class="card-body">
@@ -64,10 +66,10 @@
                                     </div>
                                     @auth
                                         @if(Auth::user()->id === $comment->user_id || Auth::user()->role === 'admin')
-                                            <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/{{ $comment->id }}" class="game-delete-form">
+                                            <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/{{ $comment->id }}" class="game-delete-form" id="form-comment-{{ $comment->id }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="game-delete-link" onclick="return confirm('¿Seguro que quieres borrar este comentario?')">Delete</button>
+                                                <button type="button" class="game-delete-link" onclick="openDeleteModal('form-comment-{{ $comment->id }}', 'comment')">Delete</button>
                                             </form>
                                         @endif
                                     @endauth
@@ -85,7 +87,8 @@
                                         </form>
                                     </div>
                                 @endauth
-                                {{-- Respuestas --}}
+
+                                {{-- Replies --}}
                                 @foreach($comment->replies as $reply)
                                     <div class="card mt-2 reply-card">
                                         <div class="card-body">
@@ -97,10 +100,10 @@
                                                 </div>
                                                 @auth
                                                     @if(Auth::user()->id === $reply->user_id || Auth::user()->role === 'admin')
-                                                        <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/{{ $reply->id }}" class="game-delete-form">
+                                                        <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/{{ $reply->id }}" class="game-delete-form" id="form-reply-{{ $reply->id }}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="game-delete-link" onclick="return confirm('¿Seguro que quieres borrar esta respuesta?')">Delete</button>
+                                                            <button type="button" class="game-delete-link" onclick="openDeleteModal('form-reply-{{ $reply->id }}', 'reply')">Delete</button>
                                                         </form>
                                                     @endif
                                                 @endauth
@@ -117,8 +120,45 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal confirmación borrado --}}
+    <div id="deleteModal" class="modal-overlay">
+        <div class="games-form text-center" style="position:relative;">
+            <button onclick="closeDeleteModal()" class="modal-close">&times;</button>
+            <h5 class="game-title mb-3" id="deleteModalTitle">Are you sure?</h5>
+            <p id="deleteModalText">This action cannot be undone.</p>
+            <div class="d-flex gap-2 justify-content-center mt-3">
+                <button onclick="closeDeleteModal()" class="btn-register" style="background: var(--border); color: var(--font) !important;">Cancel</button>
+                <button onclick="confirmDelete()" class="btn-register" style="background: #c62828;">Delete</button>
+            </div>
+        </div>
+    </div>
+
 @push('scripts')
 <script>
+    let formToSubmit = null;
+
+    const messages = {
+        post: 'Do you want to delete this post? This action cannot be undone.',
+        comment: 'Do you want to delete this comment?',
+        reply: 'Do you want to delete this reply?',
+    };
+
+    function openDeleteModal(formId, type) {
+        formToSubmit = document.getElementById(formId);
+        document.getElementById('deleteModalText').textContent = messages[type];
+        document.getElementById('deleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('active');
+        formToSubmit = null;
+    }
+
+    function confirmDelete() {
+        if (formToSubmit) formToSubmit.submit();
+    }
+
     function toggleReply(id) {
         const div = document.getElementById(id);
         div.style.display = div.style.display === 'none' ? 'block' : 'none';
