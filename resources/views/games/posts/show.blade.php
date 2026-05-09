@@ -25,7 +25,7 @@
                     </div>
                     <p class="mt-3">{{ $post->content }}</p>
                     @if($post->image_url)
-                        <img class="post-img mb-3" src="{{ $post->image_url }}" alt="post_img">
+                        <img class="post-img mb-3" src="{{ asset($post->image_url) }}" alt="post_img">
                     @endif
                     <button type="button" class="btn-register mt-2 mb-2"
                         @auth onclick="document.getElementById('like-form').submit()" @endauth
