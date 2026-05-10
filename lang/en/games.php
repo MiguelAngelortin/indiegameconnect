@@ -37,4 +37,5 @@
         'all_status' => 'All status',
         'search_btn' => 'Search',
         'no_games_found' => 'No games found.',
+        'delete_game_confirm' => 'Do you want to delete this game? This action cannot be undone and all its posts will be lost.',
     ];

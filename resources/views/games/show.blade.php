@@ -9,10 +9,10 @@
                     @if (Auth::user()->id === $game->user_id)
                         <div class="d-flex gap-2 mb-1 justify-content-end">
                             <a href="/games/{{ $game->id }}/edit" class="game-edit-link">{{ __('games.edit') }}</a>
-                            <form method="POST" action="/games/{{ $game->id }}" class="game-delete-form">
+                            <form method="POST" action="/games/{{ $game->id }}" class="game-delete-form" id="form-delete-game">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="game-delete-link" onclick="return confirm('{{ __('games.delete_confirm') }}')">{{ __('games.delete') }}</button>
+                                <button type="button" class="game-delete-link" onclick="openGameDeleteModal()">{{ __('games.delete') }}</button>
                             </form>
                         </div>
                     @endif
@@ -107,4 +107,28 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal confirmación borrar juego --}}
+    <div id="gameDeleteModal" class="modal-overlay">
+        <div class="games-form text-center" style="position:relative;">
+            <button onclick="closeGameDeleteModal()" class="modal-close">&times;</button>
+            <h5 class="game-title mb-3">{{ __('games.are_you_sure') }}</h5>
+            <p>{{ __('games.delete_game_confirm') }}</p>
+            <div class="d-flex gap-2 justify-content-center mt-3">
+                <button onclick="closeGameDeleteModal()" class="btn-register" style="background: var(--border); color: var(--font) !important;">{{ __('games.cancel') }}</button>
+                <button onclick="document.getElementById('form-delete-game').submit()" class="btn-register" style="background: #c62828;">{{ __('games.delete') }}</button>
+            </div>
+        </div>
+    </div>
+
+@push('scripts')
+<script>
+    function openGameDeleteModal() {
+        document.getElementById('gameDeleteModal').classList.add('active');
+    }
+    function closeGameDeleteModal() {
+        document.getElementById('gameDeleteModal').classList.remove('active');
+    }
+</script>
+@endpush
 @endsection

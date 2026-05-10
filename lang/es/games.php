@@ -37,4 +37,5 @@ return [
     'all_status' => 'Todos los estados',
     'search_btn' => 'Buscar',
     'no_games_found' => 'No se encontraron juegos.',
+    'delete_game_confirm' => '¿Quieres borrar este juego? Esta acción no se puede deshacer y se perderán todos sus posts.',
 ];
