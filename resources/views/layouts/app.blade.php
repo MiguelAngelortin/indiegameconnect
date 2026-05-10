@@ -52,7 +52,7 @@
                         <li class="nav-item"><a class="nav-link btn-register" href="/register">{{ __('nav.register') }}</a></li>
                     @endguest
                     @auth
-                        <li class="nav-item"><a class="nav-link" href="/users/{{ Auth::user()->id }}">{{ Auth::user()->name }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/users/{{ Auth::user()->id }}" style="border: 1px solid var(--purple); border-radius: 6px; padding: 4px 10px; font-weight: bold; color: var(--purple) !important;">{{ Auth::user()->name }}</a></li>
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
