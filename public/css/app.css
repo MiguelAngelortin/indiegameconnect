@@ -782,6 +782,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* ===== USERS ===== */
+.nav-profile-link {
+    border: 1px solid var(--purple);
+    border-radius: 6px;
+    padding: 4px 10px !important;
+    font-weight: bold;
+    color: var(--purple) !important;
+    margin: 0 12px;
+    transition: background 0.2s;
+}
+
+.nav-profile-link:hover {
+    background: var(--purple);
+    color: var(--dark) !important;
+}
+
 .profile-img {
     width: 120px;
     height: 120px;

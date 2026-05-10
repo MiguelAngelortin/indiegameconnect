@@ -42,9 +42,9 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item me-2 lang-item">
                         <div class="lang-switcher">
-                            <a href="{{ route('lang.switch', 'en') }}" class="nav-link py-0 {{ app()->getLocale() === 'en' ? 'active-lang' : '' }}">EN</a>
+                            <a href="{{ route('lang.switch', 'en') }}" class="nav-link py-0 {{ app()->getLocale() === 'en' ? 'active-lang' : '' }}">EN 🇬🇧</a>
                             <span style="opacity: 0.4;">|</span>
-                            <a href="{{ route('lang.switch', 'es') }}" class="nav-link py-0 {{ app()->getLocale() === 'es' ? 'active-lang' : '' }}">ES</a>
+                            <a href="{{ route('lang.switch', 'es') }}" class="nav-link py-0 {{ app()->getLocale() === 'es' ? 'active-lang' : '' }}">ES 🇪🇦</a>
                         </div>
                     </li>
                     @guest
@@ -52,7 +52,7 @@
                         <li class="nav-item"><a class="nav-link btn-register" href="/register">{{ __('nav.register') }}</a></li>
                     @endguest
                     @auth
-                        <li class="nav-item"><a class="nav-link" href="/users/{{ Auth::user()->id }}" style="border: 1px solid var(--purple); border-radius: 6px; padding: 4px 10px; font-weight: bold; color: var(--purple) !important;">{{ Auth::user()->name }}</a></li>
+                        <li class="nav-item"><a class="nav-link nav-profile-link" href="/users/{{ Auth::user()->id }}">{{ Auth::user()->name }}</a></li>
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
