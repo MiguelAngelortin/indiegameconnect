@@ -1,4 +1,5 @@
 <?php
+// GameController.php
 
 namespace App\Http\Controllers;
 
@@ -6,9 +7,26 @@ use App\Models\Game;
 use App\Models\GameFollow;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use Cloudinary\Cloudinary;
+use Cloudinary\Configuration\Configuration;
 
 class GameController extends Controller
 {
+    private function uploadToCloudinary($file): string
+    {
+        $cloudinary = new Cloudinary(
+            Configuration::instance([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key'    => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ]
+            ])
+        );
+        $uploaded = $cloudinary->uploadApi()->upload($file->getRealPath());
+        return $uploaded['secure_url'];
+    }
+
     public function index(Request $request)
     {
         $genres = Genre::all();
@@ -64,8 +82,7 @@ class GameController extends Controller
 
         $coverPath = null;
         if ($request->hasFile('cover_image')) {
-            $uploaded = cloudinary()->upload($request->file('cover_image')->getRealPath());
-            $coverPath = $uploaded->getSecurePath();
+            $coverPath = $this->uploadToCloudinary($request->file('cover_image'));
         }
 
         $game = Game::create([
@@ -119,8 +136,7 @@ class GameController extends Controller
         $data = $request->except('genres', '_token', '_method', 'cover_image');
 
         if ($request->hasFile('cover_image')) {
-            $uploaded = cloudinary()->upload($request->file('cover_image')->getRealPath());
-            $data['cover_image'] = $uploaded->getSecurePath();
+            $data['cover_image'] = $this->uploadToCloudinary($request->file('cover_image'));
         }
 
         $game->update($data);

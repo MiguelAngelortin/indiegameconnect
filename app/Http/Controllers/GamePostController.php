@@ -1,4 +1,5 @@
 <?php
+// GamePostController.php
 
 namespace App\Http\Controllers;
 
@@ -7,9 +8,26 @@ use App\Models\Game;
 use App\Models\GamePost;
 use App\Models\GamePostLike;
 use App\Models\GamePostComment;
+use Cloudinary\Cloudinary;
+use Cloudinary\Configuration\Configuration;
 
 class GamePostController extends Controller
 {
+    private function uploadToCloudinary($file): string
+    {
+        $cloudinary = new Cloudinary(
+            Configuration::instance([
+                'cloud' => [
+                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                    'api_key'    => env('CLOUDINARY_API_KEY'),
+                    'api_secret' => env('CLOUDINARY_API_SECRET'),
+                ]
+            ])
+        );
+        $uploaded = $cloudinary->uploadApi()->upload($file->getRealPath());
+        return $uploaded['secure_url'];
+    }
+
     public function create($game_id)
     {
         $game = Game::findOrFail($game_id);
@@ -26,8 +44,7 @@ class GamePostController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image_url')) {
-            $uploaded = cloudinary()->upload($request->file('image_url')->getRealPath());
-            $imagePath = $uploaded->getSecurePath();
+            $imagePath = $this->uploadToCloudinary($request->file('image_url'));
         }
 
         GamePost::create([
@@ -110,8 +127,7 @@ class GamePostController extends Controller
         $data = $request->only('title', 'content');
 
         if ($request->hasFile('image_url')) {
-            $uploaded = cloudinary()->upload($request->file('image_url')->getRealPath());
-            $data['image_url'] = $uploaded->getSecurePath();
+            $data['image_url'] = $this->uploadToCloudinary($request->file('image_url'));
         }
 
         $post->update($data);
