@@ -19,22 +19,23 @@ class GamePostController extends Controller
     public function store(Request $request, $game_id)
     {
         $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string'],
-            'image_url' => ['nullable', 'image', 'max:2048'],
+            'title'     => ['required', 'string', 'max:255'],
+            'content'   => ['required', 'string'],
+            'image_url' => ['nullable', 'image', 'max:4096'],
         ]);
 
         $imagePath = null;
         if ($request->hasFile('image_url')) {
-            $imagePath = $request->file('image_url')->store('posts', 'public');
+            $uploaded = cloudinary()->upload($request->file('image_url')->getRealPath());
+            $imagePath = $uploaded->getSecurePath();
         }
 
         GamePost::create([
-            'game_id' => $game_id,
-            'user_id' => auth()->user()->id,
-            'title' => $request->title,
-            'content' => $request->content,
-            'image_url' => $imagePath ? asset('storage/' . $imagePath) : null,
+            'game_id'   => $game_id,
+            'user_id'   => auth()->user()->id,
+            'title'     => $request->title,
+            'content'   => $request->content,
+            'image_url' => $imagePath,
         ]);
 
         return redirect('/games/' . $game_id);
@@ -60,7 +61,7 @@ class GamePostController extends Controller
         } else {
             GamePostLike::create([
                 'game_post_id' => $post_id,
-                'user_id' => auth()->user()->id,
+                'user_id'      => auth()->user()->id,
             ]);
         }
 
@@ -75,9 +76,9 @@ class GamePostController extends Controller
 
         GamePostComment::create([
             'game_post_id' => $post_id,
-            'user_id' => auth()->user()->id,
-            'content' => $request->content,
-            'parent_id' => $request->parent_id ?? null,
+            'user_id'      => auth()->user()->id,
+            'content'      => $request->content,
+            'parent_id'    => $request->parent_id ?? null,
         ]);
 
         return redirect()->back();
@@ -101,15 +102,16 @@ class GamePostController extends Controller
         }
 
         $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string'],
-            'image_url' => ['nullable', 'image', 'max:2048'],
+            'title'     => ['required', 'string', 'max:255'],
+            'content'   => ['required', 'string'],
+            'image_url' => ['nullable', 'image', 'max:4096'],
         ]);
 
         $data = $request->only('title', 'content');
+
         if ($request->hasFile('image_url')) {
-            $imagePath = $request->file('image_url')->store('posts', 'public');
-            $data['image_url'] = asset('storage/' . $imagePath);
+            $uploaded = cloudinary()->upload($request->file('image_url')->getRealPath());
+            $data['image_url'] = $uploaded->getSecurePath();
         }
 
         $post->update($data);
