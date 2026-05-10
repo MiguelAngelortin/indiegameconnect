@@ -11,6 +11,14 @@ use App\Models\GamePost;
 
 class IndieGamesSeeder extends Seeder
 {
+
+/**
+ * Puebla la BD con datos de prueba inspirados en estudios indie reales para poder
+ * navegar y probar todas las funcionalidades de la plataforma sin datos reales.
+ * Crea un admin, 24 developers con perfil completo, 29 juegos con géneros asociados
+ * y posts en sus devlogs.
+ */
+
     public function run(): void
     {
         // ─── ADMIN ────────────────────────────────────────────────

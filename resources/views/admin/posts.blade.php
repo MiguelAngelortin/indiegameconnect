@@ -3,11 +3,13 @@
 @section('title', 'Manage Posts')
 
 @section('content')
+{{-- Listado de posts para el panel admin con búsqueda, ordenación y paginación --}}
 <div class="container py-4">
     <div class="text-center mb-4">
         <h2 class="section-title d-inline-block px-4">MANAGE POSTS</h2>
     </div>
 
+    {{-- Buscador por título --}}
     <form method="GET" action="/admin/posts" class="mb-4 d-flex gap-2">
         <input type="text" name="search" class="form-control" placeholder="Search by title..." value="{{ request('search') }}">
         <button type="submit" class="btn-register">Search</button>
@@ -43,11 +45,7 @@
                         <td class="align-middle">
                             <div class="d-flex gap-2">
                                 <a href="/games/{{ $post->game->id }}/posts/{{ $post->id }}" class="game-edit-link">View</a>
-                                <form method="POST" action="/admin/posts/{{ $post->id }}" class="m-0">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="game-delete-link" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                                </form>
+                                <button type="button" class="game-delete-link" onclick="openDeletePostModal({{ $post->id }}, '{{ addslashes($post->title) }}')">Delete</button>
                             </div>
                         </td>
                     </tr>
@@ -59,7 +57,33 @@
     </div>
 
     <div class="mt-4">
-        {{ $posts->links() }}
+        {{ $posts->appends(request()->query())->links('pagination::bootstrap-5') }}
     </div>
 </div>
+
+{{-- Modal confirmación borrar post --}}
+<div id="deletePostModal" class="modal-overlay">
+    <div class="games-form text-center" style="position:relative;">
+        <button onclick="document.getElementById('deletePostModal').classList.remove('active')" class="modal-close">&times;</button>
+        <h5 class="game-title mb-3">Delete Post</h5>
+        <p id="deletePostText"></p>
+        <form id="deletePostForm" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="game-delete-link me-2">Delete</button>
+            <button type="button" onclick="document.getElementById('deletePostModal').classList.remove('active')" class="btn-register">Cancel</button>
+        </form>
+    </div>
+</div>
+
 @endsection
+
+@push('scripts')
+<script>
+    function openDeletePostModal(postId, postTitle) {
+        document.getElementById('deletePostText').textContent = 'Are you sure you want to delete "' + postTitle + '"?';
+        document.getElementById('deletePostForm').action = '/admin/posts/' + postId;
+        document.getElementById('deletePostModal').classList.add('active');
+    }
+</script>
+@endpush

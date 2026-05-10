@@ -3,15 +3,18 @@
 @section('title', 'Admin Panel')
 
 @section('content')
-    <div class="container py-4">
-        <div class="text-center mb-4">
-            <h2 class="section-title d-inline-block px-4">ADMIN PANEL</h2>
-        </div>
-        <div class=" mb-3 justify-content-end d-flex">
-            <a href="/admin/report" class="btn-pdf" target="blank"><h4>Download Report PDF</h4></a>
-        </div>
-        <div class="admin-content">
-        {{-- Quick links --}}
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="section-title d-inline-block px-4">ADMIN PANEL</h2>
+    </div>
+
+    <div class="mb-3 justify-content-end d-flex">
+        <a href="/admin/report" class="btn-pdf" target="blank"><h4>Download Report PDF</h4></a>
+    </div>
+
+    <div class="admin-content">
+
+        {{-- Accesos rápidos a las secciones de gestión --}}
         <div class="row g-3 mb-4">
             <div class="col-12 col-md-4">
                 <a href="/admin/users" class="text-decoration-none">
@@ -23,7 +26,6 @@
             <div class="col-12 col-md-4">
                 <a href="/admin/games" class="text-decoration-none">
                     <div class="dev-card text-center admin-link-card">
-
                         <h4 class="game-title" style="color: var(--font);">Games</h4>
                     </div>
                 </a>
@@ -31,7 +33,6 @@
             <div class="col-12 col-md-4">
                 <a href="/admin/posts" class="text-decoration-none">
                     <div class="dev-card text-center admin-link-card">
-
                         <h4 class="game-title" style="color: var(--font);">Posts</h4>
                     </div>
                 </a>
@@ -41,7 +42,7 @@
         <hr style="border-color: var(--purple); opacity: 1;">
         <h4 class="game-title text-center my-4" style="color: var(--purple);">Platform Statistics</h4>
 
-        {{-- Stats --}}
+        {{-- Estadísticas generales de la plataforma, calculadas en AdminController --}}
         <div class="row g-3">
             <div class="col-6 col-md-4">
                 <div class="dev-card text-center">
@@ -74,7 +75,7 @@
                 </div>
             </div>
         </div>
+
     </div>
-    </div>
-    
+</div>
 @endsection

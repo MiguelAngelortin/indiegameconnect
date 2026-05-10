@@ -10,12 +10,21 @@ use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
+    /**
+     * Muestra la página principal con rankings, juegos en desarrollo,
+     * un juego aleatorio y la detección de primera visita para el modal
+     * de bienvenida.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        // Detectar primera visita
+        // Comprueba si el usuario ya visitó la web buscando la cookie 'visited'
+        // Si no existe la cookie, es la primera visita y se mostrará el modal de bienvenida
         $firstVisit = !request()->cookie('visited');
 
-        // Top 5 juegos más seguidos del mes
+        // Top 5 juegos más seguidos en los últimos 30 días
+        // withCount con closure filtra el conteo solo al último mes, no todos los follows históricos
         $topGames = Game::with(['genres', 'user'])
             ->withCount(['follows' => function($query) {
                 $query->where('created_at', '>=', now()->subDays(30));
@@ -24,7 +33,7 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        // Top 5 developers del mes
+        // Top 5 developers y admins más seguidos en los últimos 30 días
         $topDevelopers = User::where('role', 'developer')
             ->orWhere('role', 'admin')
             ->withCount(['follows' => function($query) {
@@ -34,18 +43,24 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        // Juegos en desarrollo
+        // Juegos actualmente en desarrollo (alpha o beta), ordenados del más reciente
         $inDevelopment = Game::with(['genres', 'user'])
             ->whereIn('status', ['alpha', 'beta'])
             ->latest()
             ->take(5)
             ->get();
 
-        // Juego aleatorio
+        // Juego aleatorio para el botón "Feel Lucky?" de la home
         $randomGame = Game::inRandomOrder()->first();
 
-        $response = response()->view('home', compact('topGames', 'topDevelopers', 'inDevelopment', 'randomGame', 'firstVisit'));
+        // Se construye la respuesta manualmente en lugar de usar return view()
+        // porque necesitamos adjuntar una cookie a la respuesta HTTP
+        $response = response()->view('home', compact(
+            'topGames', 'topDevelopers', 'inDevelopment', 'randomGame', 'firstVisit'
+        ));
 
+        // Solo se escribe la cookie en la primera visita — dura 1 año (60min * 24h * 365días)
+        // Las visitas siguientes ya tendrán la cookie y no verán el modal de bienvenida
         if ($firstVisit) {
             $response->cookie('visited', 'true', 60 * 24 * 365);
         }

@@ -3,6 +3,7 @@
 @section('title', 'Edit User')
 
 @section('content')
+{{-- Formulario de edición de usuario — solo accesible desde el panel admin --}}
 <div class="container py-4">
     <div class="text-center mb-4">
         <h2 class="section-title d-inline-block px-4">EDIT USER</h2>
@@ -12,6 +13,7 @@
         <div class="col-12 col-lg-6">
             <div class="games-form">
 
+                {{-- Errores de validación --}}
                 @if($errors->any())
                     <div class="alert-box alert-box-error mb-3">
                         @foreach($errors->all() as $error)
@@ -34,6 +36,7 @@
                         <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
                     </div>
 
+                    {{-- El select muestra preseleccionado el rol actual del usuario --}}
                     <div class="mb-3">
                         <label class="form-label">Role</label>
                         <select name="role" class="form-select">
