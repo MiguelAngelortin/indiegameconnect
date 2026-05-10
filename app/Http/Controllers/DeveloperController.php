@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\UserFollow;
 
 class DeveloperController extends Controller
 {
     public function index(Request $request)
     {
-        $developers = User::where('role', 'developer')
-            ->orWhere('role', 'admin')
-            ->withCount('follows')
-            ->when($request->search, function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->search . '%');
+        $developers = User::where(function ($query) use ($request) {
+                if ($request->search) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                } else {
+                    $query->where('role', 'developer')->orWhere('role', 'admin');
+                }
             })
+            ->withCount('follows')
             ->paginate(12);
 
         $topDevelopers = User::where('role', 'developer')
@@ -35,6 +36,7 @@ class DeveloperController extends Controller
             ->sortByDesc('score')
             ->take(3)
             ->values();
+
         return view("developers", compact('developers', 'topDevelopers'));
     }
 }
