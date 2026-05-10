@@ -19,7 +19,7 @@ Route::get('/feed', [FeedController::class, 'index'])->middleware('auth');
 // ===== GAMES =====
 Route::get('/games', [GameController::class, 'index']);
 Route::get('/games/create', [GameController::class, 'create'])->middleware(['auth', 'role:developer']);
-Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:100,1']);
+Route::post('/games/store', [GameController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:3,1440']);
 Route::get('/games/{game_id}', [GameController::class, 'show']);
 Route::get('/games/{game_id}/edit', [GameController::class, 'edit'])->middleware(['auth', 'role:developer']);
 Route::patch('/games/{game_id}', [GameController::class, 'update'])->middleware(['auth', 'role:developer']);
@@ -28,7 +28,7 @@ Route::post('/games/{game_id}/follow', [GameController::class, 'follow'])->middl
 
 // ===== GAME POSTS =====
 Route::get('/games/{game_id}/posts/create', [GamePostController::class, 'create'])->middleware(['auth', 'role:developer']);
-Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:5,60']);
+Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])->middleware(['auth', 'role:developer', 'throttle:20,60']);
 Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
 Route::post('/games/{game_id}/posts/{post_id}/like', [GamePostController::class, 'like'])->middleware('auth');
 Route::post('/games/{game_id}/posts/{post_id}/comments/store', [GamePostController::class, 'storeComment'])->middleware(['auth', 'throttle:30,60']);
