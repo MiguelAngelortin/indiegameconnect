@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('developers.title'))
+@section('title', 'Developers')
 @section('content')
     <div class="container mt-4">
 
@@ -81,9 +81,16 @@
 
         {{-- Buscador --}}
         <div class="mb-4">
-            <form method="GET" action="/developers">
-                <label for="search"><h2>{{ __('developers.search_label') }}</h2></label>
-                <input type="text" name="search" class="form-control" placeholder="{{ __('developers.search_placeholder') }}" value="{{ request('search') }}">
+            <form method="GET" action="/developers" class="row g-2">
+                <div class="col-12">
+                    <label for="search"><h2>{{ __('developers.search_label') }}</h2></label>
+                </div>
+                <div class="col-12 col-md-10">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('developers.search_placeholder') }}" value="{{ request('search') }}">
+                </div>
+                <div class="col-12 col-md-2">
+                    <button type="submit" class="btn-register w-100">{{ __('developers.search_btn') }}</button>
+                </div>
             </form>
         </div>
 
