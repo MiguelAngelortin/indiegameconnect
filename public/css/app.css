@@ -944,6 +944,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-bottom: 0;
     border-radius: 0.5rem 0.5rem 5.5rem 0;
     color: var(--background-nav);
+    font-size: 0.95rem;
+    word-break: break-word;
+    white-space: normal;
 }
 
 .home-section-card {
