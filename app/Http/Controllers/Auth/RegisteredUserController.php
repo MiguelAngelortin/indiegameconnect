@@ -47,10 +47,15 @@ class RegisteredUserController extends Controller
             'role' => $request->role,
         ]);
 
-        Auth::login($user);
+Auth::login($user);
 
-Mail::to($user->email)->send(new WelcomeMail($user));
+try {
+    Mail::to($user->email)->send(new WelcomeMail($user));
+} catch (\Exception $e) {
+    // El email falla pero el registro continúa
+}
 
 return redirect('/')->with('registered', true);
+
     }
 }
