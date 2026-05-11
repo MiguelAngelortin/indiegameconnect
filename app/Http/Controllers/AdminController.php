@@ -278,34 +278,65 @@ class AdminController extends Controller
  *
  * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
  */
+/**
+ * Exporta la base de datos completa en formato SQL usando PDO puro.
+ * No depende de mysqldump, funciona en cualquier servidor.
+ * Genera el volcado tabla por tabla con CREATE TABLE e INSERT INTO.
+ *
+ * @return \Illuminate\Http\Response
+ */
 public function exportDatabase()
 {
-    // Credenciales de la BD obtenidas desde la configuración de Laravel
+    // Conexión PDO directa desde la configuración de Laravel
     $host     = config('database.connections.mysql.host');
     $port     = config('database.connections.mysql.port');
     $database = config('database.connections.mysql.database');
     $username = config('database.connections.mysql.username');
     $password = config('database.connections.mysql.password');
 
-    // Comando mysqldump con todas las opciones necesarias para un volcado completo
-    $command = sprintf(
-        'mysqldump --user=%s --password=%s --host=%s --port=%s %s 2>&1',
-        escapeshellarg($username),
-        escapeshellarg($password),
-        escapeshellarg($host),
-        escapeshellarg($port),
-        escapeshellarg($database)
-    );
+    $pdo = new \PDO("mysql:host=$host;port=$port;dbname=$database;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-    $output = shell_exec($command);
+    $sql = "-- IndieGameConnect Database Export\n";
+    $sql .= "-- Date: " . date('Y-m-d H:i:s') . "\n\n";
+    $sql .= "SET FOREIGN_KEY_CHECKS=0;\n\n";
 
-    // Si mysqldump no está disponible o falla, redirige con error
-    if (!$output || str_contains($output, 'command not found') || str_contains($output, 'error')) {
-        return redirect('/admin')->with('throttle_error', 'Database export failed. mysqldump may not be available on this server.');
+    // Obtiene todas las tablas de la BD
+    $tables = $pdo->query("SHOW TABLES")->fetchAll(\PDO::FETCH_COLUMN);
+
+    foreach ($tables as $table) {
+
+        // DROP + CREATE TABLE
+        $createStmt = $pdo->query("SHOW CREATE TABLE `$table`")->fetch(\PDO::FETCH_ASSOC);
+        $sql .= "DROP TABLE IF EXISTS `$table`;\n";
+        $sql .= $createStmt['Create Table'] . ";\n\n";
+
+        // Filas de datos — INSERT INTO
+        $rows = $pdo->query("SELECT * FROM `$table`")->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (count($rows) > 0) {
+            $columns = array_keys($rows[0]);
+            $columnList = '`' . implode('`, `', $columns) . '`';
+
+            $sql .= "INSERT INTO `$table` ($columnList) VALUES\n";
+
+            $values = [];
+            foreach ($rows as $row) {
+                $escaped = array_map(function ($val) use ($pdo) {
+                    // Escapa nulls y strings correctamente
+                    return is_null($val) ? 'NULL' : $pdo->quote($val);
+                }, array_values($row));
+                $values[] = '(' . implode(', ', $escaped) . ')';
+            }
+
+            $sql .= implode(",\n", $values) . ";\n\n";
+        }
     }
 
-    // Devuelve el SQL directamente como descarga sin guardar nada en el servidor
-    return response($output)
+    $sql .= "SET FOREIGN_KEY_CHECKS=1;\n";
+
+    // Devuelve el SQL como descarga directa
+    return response($sql)
         ->header('Content-Type', 'application/sql')
         ->header('Content-Disposition', 'attachment; filename="backup_' . date('Y-m-d_H-i-s') . '.sql"');
 }
