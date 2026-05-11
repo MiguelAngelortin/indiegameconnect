@@ -268,4 +268,74 @@ class AdminController extends Controller
 
         return $pdf->stream('indiegameconnect-report.pdf');
     }
+
+    /**
+ * Exporta la base de datos completa en formato SQL y la devuelve como descarga.
+ * Utiliza mysqldump para generar el volcado directamente en el response HTTP
+ * sin guardar ningún archivo en el servidor.
+ * Nota: requiere que mysqldump esté disponible en el servidor.
+ * En Railway puede no estar disponible dependiendo del contenedor.
+ *
+ * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+ */
+public function exportDatabase()
+{
+    // Credenciales de la BD obtenidas desde la configuración de Laravel
+    $host     = config('database.connections.mysql.host');
+    $port     = config('database.connections.mysql.port');
+    $database = config('database.connections.mysql.database');
+    $username = config('database.connections.mysql.username');
+    $password = config('database.connections.mysql.password');
+
+    // Comando mysqldump con todas las opciones necesarias para un volcado completo
+    $command = sprintf(
+        'mysqldump --user=%s --password=%s --host=%s --port=%s %s 2>&1',
+        escapeshellarg($username),
+        escapeshellarg($password),
+        escapeshellarg($host),
+        escapeshellarg($port),
+        escapeshellarg($database)
+    );
+
+    $output = shell_exec($command);
+
+    // Si mysqldump no está disponible o falla, redirige con error
+    if (!$output || str_contains($output, 'command not found') || str_contains($output, 'error')) {
+        return redirect('/admin')->with('throttle_error', 'Database export failed. mysqldump may not be available on this server.');
+    }
+
+    // Devuelve el SQL directamente como descarga sin guardar nada en el servidor
+    return response($output)
+        ->header('Content-Type', 'application/sql')
+        ->header('Content-Disposition', 'attachment; filename="backup_' . date('Y-m-d_H-i-s') . '.sql"');
+}
+
+/**
+ * Importa un fichero SQL a la base de datos.
+ * Utiliza el cliente mysql para ejecutar el volcado directamente
+ * desde el fichero subido sin guardar nada permanente en el servidor.
+ * Nota: requiere que mysql esté disponible en el servidor.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @return \Illuminate\Http\RedirectResponse
+ */
+public function importDatabase(Request $request)
+{
+    // Valida que el fichero sea obligatorio y tenga extensión sql o txt
+    $request->validate(['sql_file' => 'required|file|mimes:sql,txt']);
+
+    // Ruta temporal del fichero subido en el servidor
+    $file = $request->file('sql_file')->getPathname();
+
+    // Credenciales de la BD obtenidas desde la configuración de Laravel
+    $db   = config('database.connections.mysql.database');
+    $user = config('database.connections.mysql.username');
+    $pass = config('database.connections.mysql.password');
+    $host = config('database.connections.mysql.host');
+
+    // Ejecuta el cliente mysql con el fichero SQL como entrada estándar
+    shell_exec("mysql -h $host -u $user -p$pass $db < $file");
+
+    return back()->with('success', 'Base de datos importada correctamente.');
+}
 }

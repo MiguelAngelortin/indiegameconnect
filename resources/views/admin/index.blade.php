@@ -8,10 +8,6 @@
         <h2 class="section-title d-inline-block px-4">ADMIN PANEL</h2>
     </div>
 
-    <div class="mb-3 justify-content-end d-flex">
-        <a href="/admin/report" class="btn-pdf" target="blank"><h4>Download Report PDF</h4></a>
-    </div>
-
     <div class="admin-content">
 
         {{-- Accesos rápidos a las secciones de gestión --}}
@@ -74,6 +70,24 @@
                     <small>New Games this month</small>
                 </div>
             </div>
+        </div>
+
+        {{-- Herramientas de administración — separadas visualmente del resto --}}
+        <hr style="border-color: var(--purple); opacity: 1;" class="mt-4">
+        <h4 class="game-title text-center my-4" style="color: var(--purple);">Admin Tools</h4>
+
+        <div class="d-flex justify-content-center gap-2 align-items-center flex-wrap mb-4">
+            <a href="/admin/report" class="btn-pdf" target="_blank"><h4>Download Report PDF</h4></a>
+            <a href="/admin/export-database" class="btn-database"><h4>Export Database</h4></a>
+            
+            {{-- Importación agrupada visualmente --}}
+<form action="{{ route('admin.import-database') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+   <div class="d-flex gap-2 align-items-center px-3 py-2 mt-3" style="border: 1px solid var(--purple); border-radius: 8px;">
+        <input type="file" name="sql_file" accept=".sql,.txt" class="form-control">
+        <button type="submit" class="btn-database"><h4>Import Database</h4></button>
+    </div>
+</form>
         </div>
 
     </div>

@@ -1,3 +1,4 @@
+{{-- Extiende el layout maestro que incluye navbar, footer y assets globales --}}
 @extends('layouts.app')
 
 @section('title', 'Help — IndieGameConnect')
@@ -8,9 +9,17 @@
         <div class="col-12 col-lg-8">
 
             <h1 class="form-title mb-2">Help & User Manual</h1>
-            <p class="mb-4" style="color: var(--font);">Everything you need to know to get the most out of IndieGameConnect.</p>
+            <p class="mb-4" style="color: var(--font);">
+                Everything you need to know to get the most out of IndieGameConnect.
+            </p>
 
-            {{-- 1. Getting started --}}
+            {{-- ===== SECCIONES DESPLEGABLES ===== --}}
+            {{-- Cada sección sigue la misma estructura: --}}
+            {{-- - help-toggle: botón que llama a toggleHelp() con el id de la sección --}}
+            {{-- - help-content: div oculto por defecto que se muestra/oculta con JS --}}
+            {{-- - help-arrow: indicador visual ▼/▲ del estado abierto/cerrado --}}
+
+            {{-- 1. Getting Started --}}
             <div class="help-section">
                 <button class="help-toggle" onclick="toggleHelp('help-1')">
                     <span>1. Getting Started</span>
@@ -27,7 +36,7 @@
                 </div>
             </div>
 
-            {{-- 2. Exploring games and developers --}}
+            {{-- 2. Exploring Games and Developers --}}
             <div class="help-section">
                 <button class="help-toggle" onclick="toggleHelp('help-2')">
                     <span>2. Exploring Games and Developers</span>
@@ -45,7 +54,7 @@
                 </div>
             </div>
 
-            {{-- 3. Following games and developers --}}
+            {{-- 3. Following Games and Developers --}}
             <div class="help-section">
                 <button class="help-toggle" onclick="toggleHelp('help-3')">
                     <span>3. Following Games and Developers</span>
@@ -75,7 +84,7 @@
                 </div>
             </div>
 
-            {{-- 5. Creating and uploading a game --}}
+            {{-- 5. Creating and Uploading a Game --}}
             <div class="help-section">
                 <button class="help-toggle" onclick="toggleHelp('help-5')">
                     <span>5. Creating and Uploading a Game</span>
@@ -108,7 +117,7 @@
                 </div>
             </div>
 
-            {{-- 6. Devlog posts --}}
+            {{-- 6. Devlog Posts --}}
             <div class="help-section">
                 <button class="help-toggle" onclick="toggleHelp('help-6')">
                     <span>6. Devlog Posts</span>
@@ -127,7 +136,7 @@
                 </div>
             </div>
 
-            {{-- 7. Your profile --}}
+            {{-- 7. Your Profile --}}
             <div class="help-section">
                 <button class="help-toggle" onclick="toggleHelp('help-7')">
                     <span>7. Your Profile</span>
@@ -146,7 +155,7 @@
                 </div>
             </div>
 
-            {{-- 8. Supporting developers --}}
+            {{-- 8. Supporting Developers --}}
             <div class="help-section">
                 <button class="help-toggle" onclick="toggleHelp('help-8')">
                     <span>8. Supporting Developers</span>
@@ -180,7 +189,7 @@
                 </div>
             </div>
 
-            {{-- 10. Contact and legal --}}
+            {{-- 10. Contact and Legal --}}
             <div class="help-section">
                 <button class="help-toggle" onclick="toggleHelp('help-10')">
                     <span>10. Contact and Legal</span>
@@ -203,14 +212,26 @@
 </div>
 @endsection
 
+{{-- @push añade el script al stack 'scripts' definido en el layout con @stack('scripts') --}}
+{{-- Esto garantiza que el JS se carga al final del body, después de que el DOM esté listo --}}
 @push('scripts')
 <script>
+    /**
+     * Alterna la visibilidad de una sección del manual de usuario.
+     * Muestra u oculta el contenido y cambia la flecha indicadora.
+     *
+     * @param {string} id - ID del elemento help-content a mostrar u ocultar
+     */
     function toggleHelp(id) {
         const content = document.getElementById(id);
-        const arrow = document.getElementById('arrow-' + id);
-        const isOpen = content.style.display === 'block';
+        const arrow   = document.getElementById('arrow-' + id);
+
+        // Comprueba si la sección ya está abierta
+        const isOpen  = content.style.display === 'block';
+
+        // Alterna visibilidad y dirección de la flecha según el estado actual
         content.style.display = isOpen ? 'none' : 'block';
-        arrow.textContent = isOpen ? '▼' : '▲';
+        arrow.textContent      = isOpen ? '▼' : '▲';
     }
 </script>
 @endpush

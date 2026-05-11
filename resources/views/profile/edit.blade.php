@@ -4,12 +4,16 @@
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
-                {{-- Actualizar info de perfil --}}
+
+                {{-- Formulario de actualización de datos de perfil --}}
                 <div class="games-form mb-4">
                     <h2 class="form-title mb-4">Edit Profile</h2>
+                    {{-- El formulario usa multipart para permitir subida de imagen de perfil --}}
                     <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
+
+                        {{-- Nombre del usuario --}}
                         <div class="mb-3">
                             <label for="name" class="form-label">Name:</label>
                             <input type="text" id="name" name="name" class="form-control"
@@ -18,6 +22,8 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        {{-- Email del usuario --}}
                         <div class="mb-3">
                             <label for="email" class="form-label">Email:</label>
                             <input type="email" id="email" name="email" class="form-control"
@@ -26,6 +32,8 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        {{-- Biografía del usuario --}}
                         <div class="mb-3">
                             <label for="bio" class="form-label">Bio:</label>
                             <textarea id="bio" name="bio" class="form-control" rows="3">{{ auth()->user()->bio }}</textarea>
@@ -33,9 +41,12 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        {{-- Imagen de perfil — si ya existe se muestra una previsualización antes del input --}}
                         <div class="mb-3">
                             <label for="profile_img" class="form-label">Profile image:</label>
                             @if (auth()->user()->profile_img)
+                                {{-- Previsualización de la imagen actual almacenada en Cloudinary --}}
                                 <div class="mb-2">
                                     <img src="{{ auth()->user()->profile_img }}"
                                         style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%; border: 2px solid var(--purple);">
@@ -47,6 +58,8 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        {{-- Links de donación visibles solo para developers y admins --}}
                         @if (auth()->user()->role === 'developer' || auth()->user()->role === 'admin')
                             <h4 class="form-title mt-4 mb-3">Donation links</h4>
                             <div class="mb-3">
@@ -70,15 +83,19 @@
                                     value="{{ auth()->user()->donation_other }}" placeholder="https://...">
                             </div>
                         @endif
+
                         <button type="submit" class="btn-register">Save changes</button>
                     </form>
                 </div>
-                {{-- Cambiar contraseña --}}
+
+                {{-- Formulario de cambio de contraseña separado del resto del perfil --}}
                 <div class="games-form mb-4">
                     <h2 class="form-title mb-4">Change Password</h2>
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
                         @method('PUT')
+
+                        {{-- Contraseña actual para verificar la identidad del usuario --}}
                         <div class="mb-3">
                             <label for="current_password" class="form-label">Current password:</label>
                             <input type="password" id="current_password" name="current_password" class="form-control">
@@ -86,6 +103,8 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        {{-- Nueva contraseña --}}
                         <div class="mb-3">
                             <label for="password" class="form-label">New password:</label>
                             <input type="password" id="password" name="password" class="form-control">
@@ -93,11 +112,14 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        {{-- Confirmación de la nueva contraseña -- debe coincidir con el campo password --}}
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">Confirm new password:</label>
                             <input type="password" id="password_confirmation" name="password_confirmation"
                                 class="form-control">
                         </div>
+
                         <button type="submit" class="btn-register">Update password</button>
                     </form>
                 </div>

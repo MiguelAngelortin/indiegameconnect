@@ -1,30 +1,46 @@
+{{-- Extiende el layout maestro que incluye navbar, footer y assets globales --}}
 @extends('layouts.app')
-@section('title', 'Developers')
-@section('content')
-    <div class="container mt-4">
 
-        {{-- Top 3 del mes --}}
-        @if($topDevelopers->count() > 0)
+@section('title', 'Developers')
+
+@section('content')
+<div class="container mt-4">
+
+    {{-- ===== PODIO TOP 3 DEL MES ===== --}}
+    {{-- Solo se muestra si hay al menos un developer con actividad este mes --}}
+    @if($topDevelopers->count() > 0)
         <div class="text-center">
             <h1 class="section-title mb-3">{{ __('developers.top_this_month') }}</h1>
             <br>
         </div>
+
+        {{-- align-items-end alinea las cards por la base para efecto visual de podio --}}
         <div class="row g-3 mb-5 align-items-end justify-content-center">
 
-            {{-- 2º puesto --}}
+            {{-- 2º puesto — se renderiza antes en el HTML pero order-md-gold lo recoloca visualmente --}}
             @if(isset($topDevelopers[1]))
             <div class="col-12 col-md-3">
                 <a href="/users/{{ $topDevelopers[1]->id }}" class="text-decoration-none">
                     <div class="dev-card text-center">
                         <i class="bi bi-trophy-fill medal medal-silver"></i>
+                        {{-- Fallback a avatar genérico si el developer no tiene foto de perfil --}}
                         <img src="{{ $topDevelopers[1]->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
                             alt="avatar" class="profile-img my-2">
                         <h5>{{ $topDevelopers[1]->name }}</h5>
-                        <small><i class="bi bi-people-fill me-1"></i>{{ $topDevelopers[1]->follows_count }} {{ __('developers.new_followers') }}</small>
+                        <small>
+                            <i class="bi bi-people-fill me-1"></i>
+                            {{ $topDevelopers[1]->follows_count }} {{ __('developers.new_followers') }}
+                        </small>
+                        {{-- trustLevel es el accessor definido en el modelo User --}}
+                        {{-- Devuelve array con percent, label y class, o null si no tiene valoraciones --}}
                         @if($topDevelopers[1]->trustLevel)
-                            <small class="d-block">{{ $topDevelopers[1]->trustLevel['label'] }} — {{ $topDevelopers[1]->trustLevel['percent'] }}%</small>
+                            <small class="d-block">
+                                {{ $topDevelopers[1]->trustLevel['label'] }} — {{ $topDevelopers[1]->trustLevel['percent'] }}%
+                            </small>
                             <div class="trust-bar-container mt-1">
-                                <div class="trust-bar {{ $topDevelopers[1]->trustLevel['class'] }}" style="width: {{ $topDevelopers[1]->trustLevel['percent'] }}%"></div>
+                                {{-- El ancho de la barra refleja el porcentaje de valoraciones positivas --}}
+                                <div class="trust-bar {{ $topDevelopers[1]->trustLevel['class'] }}"
+                                     style="width: {{ $topDevelopers[1]->trustLevel['percent'] }}%"></div>
                             </div>
                         @endif
                     </div>
@@ -32,7 +48,7 @@
             </div>
             @endif
 
-            {{-- 1º puesto --}}
+            {{-- 1º puesto — card más grande con estilos dorados --}}
             @if(isset($topDevelopers[0]))
             <div class="col-12 col-md-4 order-md-gold">
                 <a href="/users/{{ $topDevelopers[0]->id }}" class="text-decoration-none">
@@ -41,11 +57,17 @@
                         <img src="{{ $topDevelopers[0]->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
                             alt="avatar" class="profile-img-gold my-2">
                         <h5>{{ $topDevelopers[0]->name }}</h5>
-                        <small><i class="bi bi-people-fill me-1"></i>{{ $topDevelopers[0]->follows_count }} {{ __('developers.new_followers') }}</small>
+                        <small>
+                            <i class="bi bi-people-fill me-1"></i>
+                            {{ $topDevelopers[0]->follows_count }} {{ __('developers.new_followers') }}
+                        </small>
                         @if($topDevelopers[0]->trustLevel)
-                            <small class="d-block">{{ $topDevelopers[0]->trustLevel['label'] }} — {{ $topDevelopers[0]->trustLevel['percent'] }}%</small>
+                            <small class="d-block">
+                                {{ $topDevelopers[0]->trustLevel['label'] }} — {{ $topDevelopers[0]->trustLevel['percent'] }}%
+                            </small>
                             <div class="trust-bar-container mt-1">
-                                <div class="trust-bar {{ $topDevelopers[0]->trustLevel['class'] }}" style="width: {{ $topDevelopers[0]->trustLevel['percent'] }}%"></div>
+                                <div class="trust-bar {{ $topDevelopers[0]->trustLevel['class'] }}"
+                                     style="width: {{ $topDevelopers[0]->trustLevel['percent'] }}%"></div>
                             </div>
                         @endif
                     </div>
@@ -62,11 +84,17 @@
                         <img src="{{ $topDevelopers[2]->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
                             alt="avatar" class="profile-img my-2">
                         <h5>{{ $topDevelopers[2]->name }}</h5>
-                        <small><i class="bi bi-people-fill me-1"></i>{{ $topDevelopers[2]->follows_count }} {{ __('developers.new_followers') }}</small>
+                        <small>
+                            <i class="bi bi-people-fill me-1"></i>
+                            {{ $topDevelopers[2]->follows_count }} {{ __('developers.new_followers') }}
+                        </small>
                         @if($topDevelopers[2]->trustLevel)
-                            <small class="d-block">{{ $topDevelopers[2]->trustLevel['label'] }} — {{ $topDevelopers[2]->trustLevel['percent'] }}%</small>
+                            <small class="d-block">
+                                {{ $topDevelopers[2]->trustLevel['label'] }} — {{ $topDevelopers[2]->trustLevel['percent'] }}%
+                            </small>
                             <div class="trust-bar-container mt-1">
-                                <div class="trust-bar {{ $topDevelopers[2]->trustLevel['class'] }}" style="width: {{ $topDevelopers[2]->trustLevel['percent'] }}%"></div>
+                                <div class="trust-bar {{ $topDevelopers[2]->trustLevel['class'] }}"
+                                     style="width: {{ $topDevelopers[2]->trustLevel['percent'] }}%"></div>
                             </div>
                         @endif
                     </div>
@@ -75,51 +103,68 @@
             @endif
 
         </div>
-        @endif
+    @endif
 
-        <hr>
+    <hr>
 
-        {{-- Buscador --}}
-        <div class="mb-4">
-            <form method="GET" action="/developers" class="row g-2">
-                <div class="col-12">
-                    <label for="search"><h2>{{ __('developers.search_label') }}</h2></label>
-                </div>
-                <div class="col-12 col-md-10">
-                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('developers.search_placeholder') }}" value="{{ request('search') }}">
-                </div>
-                <div class="col-12 col-md-2">
-                    <button type="submit" class="btn-register w-100">{{ __('developers.search_btn') }}</button>
-                </div>
-            </form>
-        </div>
-
-        {{-- Grid developers --}}
-        <div class="row g-3">
-            @forelse ($developers as $developer)
-                <div class="col-6 col-md-4 col-lg-3">
-                    <a href="/users/{{ $developer->id }}" class="text-decoration-none">
-                        <div class="dev-card text-center">
-                            <img src="{{ $developer->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
-                                alt="avatar" class="profile-img mb-3">
-                            <h5>{{ $developer->name }}</h5>
-                            <small><i class="bi bi-people-fill me-1"></i>{{ $developer->follows_count }} {{ __('developers.followers') }}</small>
-                            @if($developer->trustLevel)
-                                <small class="d-block mt-1">{{ $developer->trustLevel['label'] }} — {{ $developer->trustLevel['percent'] }}%</small>
-                                <div class="trust-bar-container mt-1">
-                                    <div class="trust-bar {{ $developer->trustLevel['class'] }}" style="width: {{ $developer->trustLevel['percent'] }}%"></div>
-                                </div>
-                            @endif
-                        </div>
-                    </a>
-                </div>
-            @empty
-                <p>{{ __('developers.no_developers') }}</p>
-            @endforelse
-        </div>
-
-        <div class="mt-4">
-            {{ $developers->appends(request()->query())->links('pagination::bootstrap-5') }}
-        </div>
+    {{-- ===== BUSCADOR ===== --}}
+    {{-- GET en lugar de POST porque la búsqueda es una consulta, no una acción --}}
+    {{-- Permite compartir la URL con el filtro aplicado --}}
+    <div class="mb-4">
+        <form method="GET" action="/developers" class="row g-2">
+            <div class="col-12">
+                <label for="search"><h2>{{ __('developers.search_label') }}</h2></label>
+            </div>
+            <div class="col-12 col-md-10">
+                {{-- request('search') mantiene el valor buscado visible en el input --}}
+                <input type="text" name="search" id="search" class="form-control"
+                       placeholder="{{ __('developers.search_placeholder') }}"
+                       value="{{ request('search') }}">
+            </div>
+            <div class="col-12 col-md-2">
+                <button type="submit" class="btn-register w-100">{{ __('developers.search_btn') }}</button>
+            </div>
+        </form>
     </div>
+
+    {{-- ===== GRID DE DEVELOPERS ===== --}}
+    <div class="row g-3">
+        {{-- @forelse muestra el grid si hay developers, o el mensaje vacío si no hay ninguno --}}
+        @forelse ($developers as $developer)
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="/users/{{ $developer->id }}" class="text-decoration-none">
+                    <div class="dev-card text-center">
+                        {{-- Fallback a avatar genérico si no tiene foto de perfil --}}
+                        <img src="{{ $developer->profile_img ?? 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg' }}"
+                            alt="avatar" class="profile-img mb-3">
+                        <h5>{{ $developer->name }}</h5>
+                        <small>
+                            <i class="bi bi-people-fill me-1"></i>
+                            {{ $developer->follows_count }} {{ __('developers.followers') }}
+                        </small>
+                        {{-- Trust level calculado por el accessor del modelo User --}}
+                        @if($developer->trustLevel)
+                            <small class="d-block mt-1">
+                                {{ $developer->trustLevel['label'] }} — {{ $developer->trustLevel['percent'] }}%
+                            </small>
+                            <div class="trust-bar-container mt-1">
+                                <div class="trust-bar {{ $developer->trustLevel['class'] }}"
+                                     style="width: {{ $developer->trustLevel['percent'] }}%"></div>
+                            </div>
+                        @endif
+                    </div>
+                </a>
+            </div>
+        @empty
+            {{-- Se muestra si no hay developers o si la búsqueda no devuelve resultados --}}
+            <p>{{ __('developers.no_developers') }}</p>
+        @endforelse
+    </div>
+
+    {{-- Paginación con Bootstrap 5 — appends() conserva el parámetro search al cambiar de página --}}
+    <div class="mt-4">
+        {{ $developers->appends(request()->query())->links('pagination::bootstrap-5') }}
+    </div>
+
+</div>
 @endsection

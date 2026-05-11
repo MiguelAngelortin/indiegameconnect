@@ -10,10 +10,12 @@
                             <h2 class="game-title">{{ $post->title }}</h2>
                             <small>{{ $post->created_at->diffForHumans() }} — {{ $post->user->name }}</small>
                         </div>
+                        {{-- Botones de edición y borrado visibles solo para el autor del post --}}
                         @auth
                             @if(Auth::user()->id === $post->user_id)
                                 <div class="d-flex gap-2">
                                     <a href="/games/{{ $game->id }}/posts/{{ $post->id }}/edit" class="game-edit-link">{{ __('games.edit_post') }}</a>
+                                    {{-- El formulario DELETE se envía desde el modal de confirmación, no directamente --}}
                                     <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}" class="game-delete-form" id="form-post-{{ $post->id }}">
                                         @csrf
                                         @method('DELETE')
@@ -24,14 +26,18 @@
                         @endauth
                     </div>
                     <p class="mt-3">{{ $post->content }}</p>
+                    {{-- Imagen del post si existe --}}
                     @if($post->image_url)
                         <img class="post-img mb-3" src="{{ asset($post->image_url) }}" alt="post_img">
                     @endif
+                    {{-- Botón de like — guests ven el modal de login, usuarios autenticados envían el formulario --}}
                     <button type="button" class="btn-register mt-2 mb-2"
                         @auth onclick="document.getElementById('like-form').submit()" @endauth
                         @guest onclick="document.getElementById('loginModal').classList.add('active')" @endguest>
+                        {{-- Corazón lleno si el usuario ya dio like, vacío si no --}}
                         {!! $userLiked ? '<span style="filter: drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000);">❤️</span>' : '🤍' !!} {{ $post->likes->count() }} {{ __('games.likes') }}
                     </button>
+                    {{-- Formulario oculto de like enviado al hacer clic en el botón --}}
                     @auth
                         <form id="like-form" method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/like" style="display:none;">
                             @csrf
@@ -39,9 +45,10 @@
                     @endauth
                 </div>
 
-                {{-- Comments --}}
+                {{-- Sección de comentarios --}}
                 <div class="mt-4">
                     <h5 class="game-title">{{ __('games.comments') }}</h5>
+                    {{-- Formulario de nuevo comentario visible solo para usuarios autenticados --}}
                     @auth
                         <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/store" class="mb-4">
                             @csrf
@@ -64,6 +71,7 @@
                                         <small class="ms-2">{{ $comment->created_at->diffForHumans() }}</small>
                                         <p class="mt-2">{{ $comment->content }}</p>
                                     </div>
+                                    {{-- Pueden borrar el comentario su autor o cualquier admin --}}
                                     @auth
                                         @if(Auth::user()->id === $comment->user_id || Auth::user()->role === 'admin')
                                             <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/{{ $comment->id }}" class="game-delete-form" id="form-comment-{{ $comment->id }}">
@@ -74,11 +82,14 @@
                                         @endif
                                     @endauth
                                 </div>
+                                {{-- Botón para mostrar/ocultar el formulario de respuesta --}}
                                 @auth
                                     <button class="btn btn-sm btn-outline-secondary mb-2" onclick="toggleReply('reply-{{ $comment->id }}')">{{ __('games.reply_btn') }}</button>
+                                    {{-- Formulario de respuesta oculto por defecto, se muestra con toggleReply() --}}
                                     <div id="reply-{{ $comment->id }}" style="display:none;" class="mt-2 mb-2">
                                         <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/store">
                                             @csrf
+                                            {{-- parent_id vincula la respuesta al comentario padre --}}
                                             <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                                             <div class="mb-2">
                                                 <textarea name="content" class="form-control" rows="2" placeholder="{{ __('games.write_reply') }}" required></textarea>
@@ -88,7 +99,7 @@
                                     </div>
                                 @endauth
 
-                                {{-- Replies --}}
+                                {{-- Respuestas anidadas del comentario -- relación recursiva parent/replies --}}
                                 @foreach($comment->replies as $reply)
                                     <div class="card mt-2 reply-card">
                                         <div class="card-body">
@@ -98,6 +109,7 @@
                                                     <small class="ms-2">{{ $reply->created_at->diffForHumans() }}</small>
                                                     <p class="mt-2">{{ $reply->content }}</p>
                                                 </div>
+                                                {{-- Pueden borrar la respuesta su autor o cualquier admin --}}
                                                 @auth
                                                     @if(Auth::user()->id === $reply->user_id || Auth::user()->role === 'admin')
                                                         <form method="POST" action="/games/{{ $game->id }}/posts/{{ $post->id }}/comments/{{ $reply->id }}" class="game-delete-form" id="form-reply-{{ $reply->id }}">
@@ -121,11 +133,12 @@
         </div>
     </div>
 
-    {{-- Modal confirmación borrado --}}
+    {{-- Modal de confirmación de borrado reutilizable para posts, comentarios y respuestas --}}
     <div id="deleteModal" class="modal-overlay">
         <div class="games-form text-center" style="position:relative;">
             <button onclick="closeDeleteModal()" class="modal-close">&times;</button>
             <h5 class="game-title mb-3" id="deleteModalTitle">{{ __('games.are_you_sure') }}</h5>
+            {{-- El texto del modal cambia según el tipo de elemento a borrar --}}
             <p id="deleteModalText">{{ __('games.cannot_undo') }}</p>
             <div class="d-flex gap-2 justify-content-center mt-3">
                 <button onclick="closeDeleteModal()" class="btn-register" style="background: var(--border); color: var(--font) !important;">{{ __('games.cancel') }}</button>
@@ -136,14 +149,17 @@
 
 @push('scripts')
 <script>
+    // Referencia al formulario que se enviará al confirmar el borrado
     let formToSubmit = null;
 
+    // Mensajes del modal según el tipo de elemento a borrar
     const messages = {
         post: '{{ __('games.delete_post_confirm') }}',
         comment: '{{ __('games.delete_comment_confirm') }}',
         reply: '{{ __('games.delete_reply_confirm') }}',
     };
 
+    // Abre el modal, guarda el formulario a enviar y actualiza el mensaje según el tipo
     function openDeleteModal(formId, type) {
         formToSubmit = document.getElementById(formId);
         document.getElementById('deleteModalText').textContent = messages[type];
@@ -155,10 +171,12 @@
         formToSubmit = null;
     }
 
+    // Envía el formulario guardado al confirmar
     function confirmDelete() {
         if (formToSubmit) formToSubmit.submit();
     }
 
+    // Muestra u oculta el formulario de respuesta de un comentario concreto
     function toggleReply(id) {
         const div = document.getElementById(id);
         div.style.display = div.style.display === 'none' ? 'block' : 'none';

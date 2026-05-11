@@ -1,3 +1,4 @@
+{{-- Extiende el layout maestro que incluye navbar, footer y assets globales --}}
 @extends('layouts.app')
 
 @section('title', 'Legal — IndieGameConnect')
@@ -5,10 +6,12 @@
 @section('content')
 <div class="container d-flex justify-content-center mt-5 mb-5">
     <div class="games-form col-md-8">
+
         <h2 class="form-title mb-1">Legal</h2>
+        {{-- date('Y') genera el año actual dinámicamente para no tener que actualizarlo manualmente --}}
         <p class="text-center mb-4" style="opacity: 0.7; font-size: 0.95rem;">Last updated: {{ date('Y') }}</p>
 
-        {{-- PRIVACY POLICY --}}
+        {{-- ===== PRIVACY POLICY ===== --}}
         <h4 class="game-title mb-3" style="color: var(--purple);">Privacy Policy</h4>
 
         <p style="opacity: 0.85;">IndieGameConnect collects only the data necessary to provide the service: name, email address and role. This data is used exclusively to manage your account and is never shared with third parties.</p>
@@ -19,7 +22,9 @@
 
         <hr style="border-color: var(--border); margin: 2rem 0;">
 
-        {{-- COOKIES --}}
+        {{-- ===== COOKIE POLICY ===== --}}
+        {{-- Documenta las tres cookies técnicas que usa la plataforma --}}
+        {{-- Exentas de consentimiento explícito bajo RGPD por ser estrictamente necesarias --}}
         <h4 class="game-title mb-3" style="color: var(--purple);">Cookie Policy</h4>
 
         <p style="opacity: 0.85;">IndieGameConnect uses a small number of technical cookies strictly necessary for the platform to function correctly. We do not use advertising, tracking or third-party analytics cookies.</p>
@@ -27,8 +32,11 @@
         <p style="opacity: 0.85;">The cookies we use are:</p>
 
         <ul style="opacity: 0.85; line-height: 2;">
+            {{-- Cookie de sesión — gestionada por Laravel, se elimina al cerrar el navegador --}}
             <li><strong>Session cookie</strong> — keeps you logged in while you browse the platform. It is deleted when you close your browser.</li>
+            {{-- Token CSRF — generado por @csrf en los formularios, protege contra ataques de falsificación --}}
             <li><strong>CSRF token</strong> — protects forms against cross-site request forgery attacks. Required for the platform to work securely.</li>
+            {{-- Cookie 'visited' — establecida en HomeController, dura 365 días, evita mostrar el modal de bienvenida repetidamente --}}
             <li><strong>visited</strong> — remembers that you have already visited the platform so the welcome guide is not shown again. It expires after 365 days.</li>
         </ul>
 
@@ -36,7 +44,8 @@
 
         <hr style="border-color: var(--border); margin: 2rem 0;">
 
-        {{-- TERMS OF USE --}}
+        {{-- ===== TERMS OF USE ===== --}}
+        {{-- Aceptados mediante checkbox en el formulario de registro --}}
         <h4 class="game-title mb-3" style="color: var(--purple);">Terms of Use</h4>
 
         <p style="opacity: 0.85;">By creating an account on IndieGameConnect you agree to the following terms:</p>
@@ -51,11 +60,12 @@
 
         <hr style="border-color: var(--border); margin: 2rem 0;">
 
-        {{-- CONTACT --}}
+        {{-- Enlace al formulario de contacto para dudas legales --}}
         <p class="text-center" style="opacity: 0.6; font-size: 0.9rem;">
             If you have any questions about these terms <br>
             <a href="/contact" style="color: var(--purple);">contact us here</a>.
         </p>
+
     </div>
 </div>
 @endsection

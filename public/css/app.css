@@ -210,7 +210,7 @@ footer {
 .btn-pdf {
     font-family: var(--orbitron);
     font-weight: bold;
-    background: #890606;
+    background: #620909;
     color: white !important;
     border-radius: 6px;
     padding: 6px 14px !important;
@@ -219,7 +219,19 @@ footer {
     border: 2px solid white !important;
 }
 
-.btn-pdf:hover {
+.btn-database {
+    font-family: var(--orbitron);
+    font-weight: bold;
+    background: rgb(37, 14, 112);
+    color: white !important;
+    border-radius: 6px;
+    padding: 6px 14px !important;
+    text-decoration: none;
+    display: inline-block;
+    border: 2px solid white !important;
+}
+
+.btn-pdf:hover, .btn-database:hover {
     background: white;
     color: var(--dark) !important;
 }
