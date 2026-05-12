@@ -350,22 +350,43 @@ public function exportDatabase()
  * @param  \Illuminate\Http\Request  $request
  * @return \Illuminate\Http\RedirectResponse
  */
+/**
+ * Importa un fichero SQL a la base de datos usando PDO puro.
+ * No depende del cliente mysql, funciona en cualquier servidor.
+ * Ejecuta el fichero sentencia a sentencia.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @return \Illuminate\Http\RedirectResponse
+ */
 public function importDatabase(Request $request)
 {
     // Valida que el fichero sea obligatorio y tenga extensión sql o txt
     $request->validate(['sql_file' => 'required|file|mimes:sql,txt']);
 
-    // Ruta temporal del fichero subido en el servidor
-    $file = $request->file('sql_file')->getPathname();
+    // Conexión PDO directa desde la configuración de Laravel
+    $host     = config('database.connections.mysql.host');
+    $port     = config('database.connections.mysql.port');
+    $database = config('database.connections.mysql.database');
+    $username = config('database.connections.mysql.username');
+    $password = config('database.connections.mysql.password');
 
-    // Credenciales de la BD obtenidas desde la configuración de Laravel
-    $db   = config('database.connections.mysql.database');
-    $user = config('database.connections.mysql.username');
-    $pass = config('database.connections.mysql.password');
-    $host = config('database.connections.mysql.host');
+    $pdo = new \PDO("mysql:host=$host;port=$port;dbname=$database;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-    // Ejecuta el cliente mysql con el fichero SQL como entrada estándar
-    shell_exec("mysql -h $host -u $user -p$pass $db < $file");
+    // Lee el contenido del fichero subido
+    $sql = file_get_contents($request->file('sql_file')->getPathname());
+
+    // Separa el SQL en sentencias individuales y las ejecuta una a una
+    $pdo->exec("SET FOREIGN_KEY_CHECKS=0;");
+
+    foreach (explode(";\n", $sql) as $statement) {
+        $statement = trim($statement);
+        if ($statement !== '') {
+            $pdo->exec($statement);
+        }
+    }
+
+    $pdo->exec("SET FOREIGN_KEY_CHECKS=1;");
 
     return back()->with('success', 'Base de datos importada correctamente.');
 }
