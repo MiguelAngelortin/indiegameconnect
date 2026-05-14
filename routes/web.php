@@ -43,11 +43,11 @@ Route::post('/games/{game_id}/follow', [GameController::class, 'follow'])
 // POSTS DEL DEVLOG
 // =========================================================
 
-Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
 Route::get('/games/{game_id}/posts/create', [GamePostController::class, 'create'])
     ->middleware(['auth', 'role:developer']);
 Route::post('/games/{game_id}/posts/store', [GamePostController::class, 'store'])
     ->middleware(['auth', 'role:developer', 'throttle:20,60']);
+Route::get('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'show']);
 Route::get('/games/{game_id}/posts/{post_id}/edit', [GamePostController::class, 'edit'])
     ->middleware(['auth', 'role:developer']);
 Route::patch('/games/{game_id}/posts/{post_id}', [GamePostController::class, 'update'])
