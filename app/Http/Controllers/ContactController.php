@@ -36,9 +36,9 @@ class ContactController extends Controller
             'message' => 'required|string|max:2000',
         ]);
 
-        // Envía el email al buzón del administrador definido en .env (MAIL_USERNAME)
+        // Envía el email al buzón del administrador definido en .env (MAIL_TO)
         // ContactMail construye el Mailable con los datos del remitente
-        Mail::to(env('MAIL_USERNAME'))->send(
+        Mail::to(env('MAIL_TO'))->send(
             new ContactMail($validated['name'], $validated['email'], $validated['message'], $validated['subject'])
         );
 
