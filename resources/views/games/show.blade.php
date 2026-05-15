@@ -15,13 +15,16 @@
                             <form method="POST" action="/games/{{ $game->id }}" class="game-delete-form" id="form-delete-game">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="game-delete-link" onclick="openGameDeleteModal()">{{ __('games.delete') }}</button>
+                                <button type="button" class="game-delete-link"
+                                    onclick="openGameDeleteModal()">{{ __('games.delete') }}</button>
                             </form>
                         </div>
                     @endif
                 @endauth
                 {{-- Si no hay portada se muestra la imagen por defecto --}}
-                <img class="game_img" src="{{ $game->cover_image ? asset($game->cover_image) : asset('img/default_cover.jpg') }}" alt="game_img">
+                <img class="game_img"
+                    src="{{ $game->cover_image ? asset($game->cover_image) : asset('img/default_cover.jpg') }}"
+                    alt="game_img">
             </div>
 
             {{-- Información principal del juego --}}
@@ -44,13 +47,16 @@
                     </div>
                     {{-- Botón de descarga deshabilitado visualmente si no hay URL --}}
                     @if ($game->download_url)
-                        <a href="{{ $game->download_url }}" target="_blank" class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill">{{ __('games.download') }}</a>
+                        <a href="{{ $game->download_url }}" target="_blank"
+                            class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill">{{ __('games.download') }}</a>
                     @else
-                        <span class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill" style="opacity: 0.4; cursor: not-allowed;">{{ __('games.not_available') }}</span>
+                        <span class="btn-download d-none d-md-flex align-items-center justify-content-center flex-fill"
+                            style="opacity: 0.4; cursor: not-allowed;">{{ __('games.not_available') }}</span>
                     @endif
                     {{-- Guests ven el botón Follow pero se les redirige al modal de login --}}
                     @guest
-                        <button onclick="document.getElementById('loginModal').classList.add('active')" class="btn-download d-flex align-items-center justify-content-center">
+                        <button onclick="document.getElementById('loginModal').classList.add('active')"
+                            class="btn-download d-flex align-items-center justify-content-center">
                             {{ __('games.follow_game') }}
                         </button>
                     @endguest
@@ -61,9 +67,13 @@
                                 @csrf
                                 {{-- Comprueba si el usuario ya sigue el juego para mostrar Follow o Unfollow --}}
                                 @php
-                                    $isFollowingGame = $game->follows()->where('user_id', Auth::user()->id)->exists();
+                                    $isFollowingGame = $game
+                                        ->follows()
+                                        ->where('user_id', Auth::user()->id)
+                                        ->exists();
                                 @endphp
-                                <button type="submit" class="btn-download d-flex align-items-center justify-content-center {{ $isFollowingGame ? 'btn-unfollow' : '' }}">
+                                <button type="submit"
+                                    class="{{ $isFollowingGame ? 'btn-unfollow' : 'btn-download' }} d-flex align-items-center justify-content-center">
                                     {{ $isFollowingGame ? __('games.unfollow_game') : __('games.follow_game') }}
                                 </button>
                             </form>
@@ -82,7 +92,8 @@
                     <div class="mt-2">
                         <small>{{ $game->user->follows()->count() }} {{ __('games.followers') }}</small>
                     </div>
-                    <a href="/users/{{ $game->user->id }}" class="btn-register mt-3 d-inline-block">{{ __('games.show_profile') }}</a>
+                    <a href="/users/{{ $game->user->id }}"
+                        class="btn-register mt-3 d-inline-block">{{ __('games.show_profile') }}</a>
                 </div>
             </div>
         </div>
@@ -106,7 +117,9 @@
                                 {{-- Imagen del post si existe --}}
                                 @if ($post->image_url)
                                     <div class="post-img-container">
-                                        <img class="post-img" src="{{ $post->image_url ? asset($post->image_url) : asset('img/default_cover.jpg') }}" alt="post_img">
+                                        <img class="post-img"
+                                            src="{{ $post->image_url ? asset($post->image_url) : asset('img/default_cover.jpg') }}"
+                                            alt="post_img">
                                     </div>
                                 @endif
                             </div>
@@ -131,21 +144,24 @@
             <h5 class="game-title mb-3">{{ __('games.are_you_sure') }}</h5>
             <p>{{ __('games.delete_game_confirm') }}</p>
             <div class="d-flex gap-2 justify-content-center mt-3">
-                <button onclick="closeGameDeleteModal()" class="btn-register" style="background: var(--border); color: var(--font) !important;">{{ __('games.cancel') }}</button>
+                <button onclick="closeGameDeleteModal()" class="btn-register"
+                    style="background: var(--border); color: var(--font) !important;">{{ __('games.cancel') }}</button>
                 {{-- Al confirmar se envía el formulario DELETE definido arriba --}}
-                <button onclick="document.getElementById('form-delete-game').submit()" class="btn-register" style="background: #c62828;">{{ __('games.delete') }}</button>
+                <button onclick="document.getElementById('form-delete-game').submit()" class="btn-register"
+                    style="background: #c62828;">{{ __('games.delete') }}</button>
             </div>
         </div>
     </div>
 
-@push('scripts')
-<script>
-    function openGameDeleteModal() {
-        document.getElementById('gameDeleteModal').classList.add('active');
-    }
-    function closeGameDeleteModal() {
-        document.getElementById('gameDeleteModal').classList.remove('active');
-    }
-</script>
-@endpush
+    @push('scripts')
+        <script>
+            function openGameDeleteModal() {
+                document.getElementById('gameDeleteModal').classList.add('active');
+            }
+
+            function closeGameDeleteModal() {
+                document.getElementById('gameDeleteModal').classList.remove('active');
+            }
+        </script>
+    @endpush
 @endsection
