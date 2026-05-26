@@ -24,15 +24,14 @@ class DeveloperController extends Controller
                     $query->where('name', 'like', '%' . $request->search . '%');
                 } else {
                     // Sin búsqueda: muestra developers
-                    $query->where('role', 'developer')->orWhere('role', 'admin');
+                    $query->where('role', 'developer');
                 }
             })
             ->withCount('follows') // Añade follows_count a cada usuario para mostrarlo en la card
             ->paginate(12);
 
-        // Podio top 3 — solo developers y admins, ordenados por puntuación del último mes
+        // Podio top 3 — solo developers, ordenados por puntuación del último mes
         $topDevelopers = User::where('role', 'developer')
-            ->orWhere('role', 'admin')
             ->withCount(['follows' => function ($query) {
                 // Solo cuenta los follows recibidos en los últimos 30 días
                 $query->where('created_at', '>=', now()->subDays(30));
